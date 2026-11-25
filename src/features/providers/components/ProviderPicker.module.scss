@@ -157,8 +157,8 @@
   padding: 0 16px;
   border: 0;
   border-radius: $radius-full;
-  background: var(--text-primary);
-  color: var(--bg-secondary);
+  background: var(--button-bg);
+  color: var(--button-fg);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -166,12 +166,21 @@
     transform var(--dur-press) var(--ease-out-strong),
     background-color var(--dur-hover) var(--ease-out-strong);
 
+  &:hover:not(:disabled) {
+    background: var(--button-hover);
+  }
+
   &:active {
     transform: scale(0.97);
   }
 
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
   &:focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
 }
@@ -189,18 +198,14 @@
   white-space: nowrap;
 
   &:focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid var(--ring);
     outline-offset: 1px;
   }
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .connectButton:hover {
-    background: color-mix(in srgb, var(--text-primary) 86%, var(--bg-secondary));
-  }
-
   .registerLink:hover {
-    color: var(--text-primary);
+    color: var(--ring);
     text-decoration: underline;
     text-underline-offset: 3px;
   }

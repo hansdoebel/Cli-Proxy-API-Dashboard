@@ -1,16 +1,13 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Select } from '@/components/ui/Select';
-import { useAuthStore, useLanguageStore, useNotificationStore } from '@/stores';
+import { useAuthStore, useNotificationStore } from '@/stores';
 import {
   getLoginTransitionTimings,
   useLoginTransitionStore,
 } from '@/stores/useLoginTransitionStore';
 import { prefersReducedMotion } from '@/hooks/motion';
 import { detectApiBaseFromLocation, normalizeApiBase } from '@/utils/connection';
-import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
-import { isSupportedLanguage } from '@/utils/language';
 import { INLINE_LOGO_JPEG } from '@/assets/logoInline';
 import { formatManagementError } from '@/utils/managementError';
 import { DotMatrixHero } from './login/DotMatrixHero';
@@ -23,16 +20,11 @@ export type LoginPhase = 'idle' | 'connecting' | 'success' | 'exiting';
 /** 左上角品牌名：产品全称，所有语言下保持英文，不走 i18n */
 export const LOGIN_BRAND_NAME = 'CLI Proxy API Management Center';
 
-/** 语言下拉层最小宽度：最长的语言名（繁體中文（台灣））单行显示 */
-const LANGUAGE_DROPDOWN_MIN_WIDTH = 180;
-
 export function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { showNotification } = useNotificationStore();
-  const language = useLanguageStore((state) => state.language);
-  const setLanguage = useLanguageStore((state) => state.setLanguage);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const login = useAuthStore((state) => state.login);
   const restoreSession = useAuthStore((state) => state.restoreSession);
@@ -83,24 +75,6 @@ export function LoginPage() {
     },
     [navigate, startReveal]
   );
-  const languageOptions = useMemo(
-    () =>
-      LANGUAGE_ORDER.map((lang) => ({
-        value: lang,
-        label: t(LANGUAGE_LABEL_KEYS[lang]),
-      })),
-    [t]
-  );
-  const handleLanguageChange = useCallback(
-    (selectedLanguage: string) => {
-      if (!isSupportedLanguage(selectedLanguage)) {
-        return;
-      }
-      setLanguage(selectedLanguage);
-    },
-    [setLanguage]
-  );
-
   useEffect(() => {
     const splashStartedAt = performance.now();
     const init = async () => {
@@ -193,17 +167,6 @@ export function LoginPage() {
                 {LOGIN_BRAND_NAME}
               </span>
             </div>
-            <Select
-              className={styles.languageSelect}
-              dropdownClassName={styles.languageDropdown}
-              dropdownMinWidth={LANGUAGE_DROPDOWN_MIN_WIDTH}
-              value={language}
-              options={languageOptions}
-              onChange={handleLanguageChange}
-              fullWidth={false}
-              size="sm"
-              ariaLabel={t('language.switch')}
-            />
           </header>
         )}
 

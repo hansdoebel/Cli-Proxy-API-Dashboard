@@ -9,15 +9,16 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-primary text-primary-foreground hover:bg-[var(--primary-hover)] disabled:hover:bg-primary',
+          'border border-transparent bg-[var(--button-bg)] text-[var(--button-fg)] hover:bg-[var(--button-hover)] active:bg-[var(--button-active)]',
         destructive:
-          'bg-destructive text-white hover:bg-[var(--danger-hover)] disabled:hover:bg-destructive',
+          'border border-[var(--button-danger-border)] bg-transparent text-[var(--button-danger-fg)] hover:bg-[var(--button-danger-hover)]',
         outline:
-          'border border-input bg-card text-foreground hover:bg-accent hover:text-accent-foreground',
+          'border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-fg)] hover:bg-[var(--button-secondary-hover)]',
         secondary:
-          'border border-border bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground',
-        ghost: 'text-foreground hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'border border-[var(--button-secondary-border)] bg-[var(--button-secondary-bg)] text-[var(--button-secondary-fg)] hover:bg-[var(--button-secondary-hover)]',
+        ghost:
+          'text-[var(--button-ghost-fg)] hover:bg-[var(--button-ghost-hover)] hover:text-foreground',
+        link: 'text-[var(--ring)] underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2',

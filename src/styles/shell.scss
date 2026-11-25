@@ -199,12 +199,12 @@
 
     &.active {
       border-color: transparent;
-      background: color-mix(in srgb, var(--primary) 12%, transparent);
-      color: var(--primary);
+      background: var(--bg-hover);
+      color: var(--foreground);
       box-shadow: none;
 
       .nav-icon {
-        color: var(--primary);
+        color: inherit;
       }
     }
   }

@@ -6,7 +6,7 @@
   background:
     radial-gradient(
       ellipse 80% 50% at 50% -10%,
-      color-mix(in srgb, var(--primary) 18%, transparent),
+      color-mix(in srgb, var(--foreground) 8%, transparent),
       transparent 60%
     ),
     var(--background);

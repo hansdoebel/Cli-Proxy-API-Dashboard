@@ -41,7 +41,6 @@ import {
   useAuthStore,
   useLoginTransitionStore,
   useConfigStore,
-  useLanguageStore,
   useNotificationStore,
   useThemeStore,
 } from '@/stores';
@@ -53,8 +52,6 @@ import {
   type PluginResourceEntry,
 } from '@/features/plugins/pluginResources';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
-import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
-import { isSupportedLanguage } from '@/utils/language';
 import { getSidebarShortcutLabel, isSidebarToggleShortcut } from '@/utils/sidebarShortcut';
 import type { Theme } from '@/types';
 
@@ -192,13 +189,6 @@ const headerIcons = {
   chevronRight: (
     <svg {...headerIconProps}>
       <path d="m10 6 6 6-6 6" />
-    </svg>
-  ),
-  language: (
-    <svg {...headerIconProps}>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </svg>
   ),
   sun: (
@@ -341,8 +331,6 @@ export function MainLayout() {
   const clearCache = useConfigStore((state) => state.clearCache);
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
-  const language = useLanguageStore((state) => state.language);
-  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -354,7 +342,6 @@ export function MainLayout() {
     anchorTop: number;
     top: number;
   } | null>(null);
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const [keyDialogOpen, setKeyDialogOpen] = useState(false);
   const [pluginData, setPluginData] = useState<{
@@ -375,7 +362,6 @@ export function MainLayout() {
   const authFilesCountRequestRef = useRef(0);
   const railTooltipRef = useRef<HTMLDivElement | null>(null);
   const focusedRailItemRef = useRef<HTMLElement | null>(null);
-  const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const themeMenuRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -474,19 +460,11 @@ export function MainLayout() {
     };
   }, []);
 
-  const closeLanguageMenu = useCallback(() => setLanguageMenuOpen(false), []);
   const closeThemeMenu = useCallback(() => setThemeMenuOpen(false), []);
-  useMenuDismiss(languageMenuOpen, languageMenuRef, closeLanguageMenu);
   useMenuDismiss(themeMenuOpen, themeMenuRef, closeThemeMenu);
-
-  const toggleLanguageMenu = useCallback(() => {
-    setLanguageMenuOpen((prev) => !prev);
-    setThemeMenuOpen(false);
-  }, []);
 
   const toggleThemeMenu = useCallback(() => {
     setThemeMenuOpen((prev) => !prev);
-    setLanguageMenuOpen(false);
   }, []);
 
   const handleThemeSelect = useCallback(
@@ -495,17 +473,6 @@ export function MainLayout() {
       setThemeMenuOpen(false);
     },
     [setTheme]
-  );
-
-  const handleLanguageSelect = useCallback(
-    (nextLanguage: string) => {
-      if (!isSupportedLanguage(nextLanguage)) {
-        return;
-      }
-      setLanguage(nextLanguage);
-      setLanguageMenuOpen(false);
-    },
-    [setLanguage]
   );
 
   useEffect(() => {
@@ -1121,40 +1088,6 @@ export function MainLayout() {
               >
                 {headerIcons.refresh}
               </Button>
-              <div className={`language-menu ${languageMenuOpen ? 'open' : ''}`} ref={languageMenuRef}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={toggleLanguageMenu}
-                  title={t('language.switch')}
-                  aria-label={t('language.switch')}
-                  aria-haspopup="menu"
-                  aria-expanded={languageMenuOpen}
-                >
-                  {headerIcons.language}
-                </Button>
-                {languageMenuOpen && (
-                  <div
-                    className="notification entering language-menu-popover"
-                    role="menu"
-                    aria-label={t('language.switch')}
-                  >
-                    {LANGUAGE_ORDER.map((lang) => (
-                      <button
-                        key={lang}
-                        type="button"
-                        className={`language-menu-option ${language === lang ? 'active' : ''}`}
-                        onClick={() => handleLanguageSelect(lang)}
-                        role="menuitemradio"
-                        aria-checked={language === lang}
-                      >
-                        <span>{t(LANGUAGE_LABEL_KEYS[lang])}</span>
-                        {language === lang ? <span className="language-menu-check">✓</span> : null}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
               <div className={`theme-menu ${themeMenuOpen ? 'open' : ''}`} ref={themeMenuRef}>
                 <Button
                   variant="ghost"

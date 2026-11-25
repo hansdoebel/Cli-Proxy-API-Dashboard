@@ -179,15 +179,15 @@
 }
 
 .primaryAction {
-  background: var(--primary-color);
-  color: var(--primary-contrast);
+  background: var(--button-bg);
+  color: var(--button-fg);
   border: 1px solid transparent;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       transform: translateY(-1px);
-      background: var(--primary-hover);
-      box-shadow: 0 12px 26px color-mix(in srgb, var(--primary-color) 28%, transparent);
+      background: var(--button-hover);
+      box-shadow: none;
     }
   }
 
@@ -473,7 +473,7 @@
 
   &::before {
     content: '▍';
-    color: var(--primary-color);
+    color: var(--text-tertiary);
     font-size: 12px;
     line-height: 1;
   }
@@ -519,7 +519,7 @@
   margin-top: auto;
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary-active);
+  color: var(--ring);
   text-decoration: none;
 
   @media (hover: hover) and (pointer: fine) {

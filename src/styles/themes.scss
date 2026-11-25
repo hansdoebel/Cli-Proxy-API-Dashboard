@@ -53,6 +53,20 @@
   --primary-active: #4450b8;
   --primary-contrast: var(--primary-foreground);
   --danger-hover: #d94848;
+  /* Filled actions are neutral. Indigo stays on focus, links, and small controls. */
+  --button-bg: #e6e6e8;
+  --button-fg: #08090a;
+  --button-hover: #d2d2d4;
+  --button-active: #c4c4c6;
+  --button-secondary-bg: #1c1c1f;
+  --button-secondary-fg: #f7f8f8;
+  --button-secondary-border: #3e3e44;
+  --button-secondary-hover: #232326;
+  --button-ghost-fg: #8a8f98;
+  --button-ghost-hover: #232326;
+  --button-danger-fg: #eb5757;
+  --button-danger-border: rgb(235 87 87 / 0.45);
+  --button-danger-hover: rgb(235 87 87 / 0.14);
 
   --success-color: var(--success);
   --quota-medium-color: #f0bf00;
@@ -73,8 +87,8 @@
   --failure-badge-text: #ffb4b4;
   --failure-badge-border: rgb(235 87 87 / 0.42);
 
-  --count-badge-bg: rgb(94 106 210 / 0.22);
-  --count-badge-text: #c5caf5;
+  --count-badge-bg: #232326;
+  --count-badge-text: #f7f8f8;
 
   --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.45);
@@ -147,6 +161,19 @@
   --primary-hover: #4f5bc4;
   --primary-active: #4450b8;
   --danger-hover: #d94848;
+  --button-bg: #282a30;
+  --button-fg: #f7f8f8;
+  --button-hover: #1c1e24;
+  --button-active: #12141a;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-fg: #282a30;
+  --button-secondary-border: #e9e8ea;
+  --button-secondary-hover: #f1f0f2;
+  --button-ghost-fg: #6f6e77;
+  --button-ghost-hover: #eeedef;
+  --button-danger-fg: #c93c3c;
+  --button-danger-border: rgb(201 60 60 / 0.4);
+  --button-danger-hover: rgb(201 60 60 / 0.08);
   --quota-medium-color: #c49a12;
   --warning-color: #9a7200;
   --warning-bg: rgb(240 191 0 / 0.16);
@@ -158,8 +185,8 @@
   --failure-badge-bg: rgb(235 87 87 / 0.1);
   --failure-badge-text: #a33b3b;
   --failure-badge-border: rgb(235 87 87 / 0.35);
-  --count-badge-bg: rgb(94 106 210 / 0.12);
-  --count-badge-text: #3f4cb0;
+  --count-badge-bg: #eeedef;
+  --count-badge-text: #282a30;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.06);
   --shadow-lg: 0 12px 28px rgb(0 0 0 / 0.08);
   --tooltip-bg: #282a30;
@@ -204,6 +231,19 @@
   --primary-hover: #533afd;
   --primary-active: #4434f0;
   --danger-hover: #c41636;
+  --button-bg: #0a2540;
+  --button-fg: #ffffff;
+  --button-hover: #16365a;
+  --button-active: #0d2944;
+  --button-secondary-bg: #ffffff;
+  --button-secondary-fg: #0a2540;
+  --button-secondary-border: #e3e8ee;
+  --button-secondary-hover: #eef2f7;
+  --button-ghost-fg: #425466;
+  --button-ghost-hover: #eef2f7;
+  --button-danger-fg: #df1b41;
+  --button-danger-border: rgb(223 27 65 / 0.4);
+  --button-danger-hover: rgb(223 27 65 / 0.08);
   --quota-medium-color: #e3a008;
   --warning-color: #b54708;
   --warning-bg: rgb(181 71 8 / 0.1);
@@ -215,8 +255,8 @@
   --failure-badge-bg: rgb(223 27 65 / 0.1);
   --failure-badge-text: #a10f2b;
   --failure-badge-border: rgb(223 27 65 / 0.35);
-  --count-badge-bg: rgb(99 91 255 / 0.12);
-  --count-badge-text: #4434f0;
+  --count-badge-bg: #eef2f7;
+  --count-badge-text: #0a2540;
   --shadow: 0 2px 5px rgb(50 50 93 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
   --shadow-lg: 0 13px 27px -5px rgb(50 50 93 / 0.16), 0 8px 16px -8px rgb(0 0 0 / 0.08);
   --tooltip-bg: #0a2540;
@@ -261,6 +301,19 @@
   --primary-hover: #918bff;
   --primary-active: #aaa6ff;
   --danger-hover: #ff6b84;
+  --button-bg: #e6e6e8;
+  --button-fg: #0a1628;
+  --button-hover: #d2d2d4;
+  --button-active: #c4c4c6;
+  --button-secondary-bg: #1a2f4d;
+  --button-secondary-fg: #f6f9fc;
+  --button-secondary-border: #3a5680;
+  --button-secondary-hover: #24395a;
+  --button-ghost-fg: #adbdcc;
+  --button-ghost-hover: #1f3657;
+  --button-danger-fg: #ff8fa3;
+  --button-danger-border: rgb(255 77 106 / 0.45);
+  --button-danger-hover: rgb(255 77 106 / 0.14);
   --quota-medium-color: #ffd36a;
   --warning-color: #ffc14d;
   --warning-bg: rgb(255 193 77 / 0.16);
@@ -272,8 +325,8 @@
   --failure-badge-bg: rgb(255 77 106 / 0.16);
   --failure-badge-text: #ffb3c0;
   --failure-badge-border: rgb(255 77 106 / 0.45);
-  --count-badge-bg: rgb(122 115 255 / 0.22);
-  --count-badge-text: #d5d2ff;
+  --count-badge-bg: #1f3657;
+  --count-badge-text: #f6f9fc;
   --shadow: 0 1px 3px rgb(0 0 0 / 0.35);
   --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.4);
   --tooltip-bg: #142847;

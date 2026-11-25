@@ -28,47 +28,51 @@
   }
 
   &.btn-primary {
-    background-color: var(--primary-color);
-    color: var(--primary-contrast, #fff);
-    border-color: var(--primary-color);
+    background-color: var(--button-bg);
+    color: var(--button-fg);
+    border-color: transparent;
 
     &:hover:not(:disabled) {
-      background-color: var(--primary-hover);
-      border-color: var(--primary-hover);
+      background-color: var(--button-hover);
+      border-color: transparent;
+    }
+
+    &:active:not(:disabled) {
+      background-color: var(--button-active);
     }
   }
 
   &.btn-secondary {
-    background-color: var(--bg-tertiary);
-    border-color: var(--border-color);
-    color: var(--text-primary);
+    background-color: var(--button-secondary-bg);
+    border-color: var(--button-secondary-border);
+    color: var(--button-secondary-fg);
 
     &:hover:not(:disabled) {
-      background-color: var(--bg-hover);
-      border-color: var(--border-hover);
+      background-color: var(--button-secondary-hover);
+      border-color: var(--button-secondary-border);
     }
   }
 
   &.btn-ghost {
     background: transparent;
     border-color: transparent;
-    color: var(--text-secondary);
+    color: var(--button-ghost-fg);
 
     &:hover:not(:disabled) {
       color: var(--text-primary);
-      background: var(--accent-bg);
+      background: var(--button-ghost-hover);
       border-color: transparent;
     }
   }
 
   &.btn-danger {
-    background-color: var(--danger-color);
-    border-color: var(--danger-color);
-    color: var(--destructive-foreground, #fff);
+    background-color: transparent;
+    border-color: var(--button-danger-border);
+    color: var(--button-danger-fg);
 
     &:hover:not(:disabled) {
-      background-color: var(--danger-hover);
-      border-color: var(--danger-hover);
+      background-color: var(--button-danger-hover);
+      border-color: var(--button-danger-border);
     }
   }
 
@@ -101,8 +105,8 @@ textarea {
 
   &:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.18);
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 28%, transparent);
   }
 }
 

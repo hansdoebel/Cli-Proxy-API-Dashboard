@@ -90,18 +90,23 @@ Kept as a selectable backup. See the previous notes: [stripe.com brand colors](h
 | `--destructive` | `#FF4D6A` | Danger |
 | `--danger-hover` | `#FF6B84` | Danger hover |
 
-## Buttons and interactive states
+## Buttons and accents
 
-Shared `.btn` rules in `src/styles/components.scss` and the shadcn button in `src/components/ui/shadcn/button.tsx` both read these tokens. They do not hard-code a dark-mode text color.
+Linear’s product chrome is grayscale. Indigo (`#5E6AD2`, focus `#7170FF`) is reserved for focus rings, text links, checkboxes, and switches. Filled buttons are neutral: a light pill on dark canvases (`#E6E6E8` on `#08090A`) and a dark pill on light canvases. Secondary and ghost buttons are a hairline border or a transparent control with a gray hover fill. Destructive actions are red text with a faint red border, not a solid red slab. The selected sidebar item is `#232326` with primary text, not an indigo wash.
 
-| State | Primary | Secondary | Ghost | Destructive |
-| --- | --- | --- | --- | --- |
-| Rest | `--primary` / white label | `--bg-tertiary` fill, `--border`, `--text-primary` | Transparent, `--text-secondary` | `--danger-color` / white label |
-| Hover | `--primary-hover` | `--bg-hover`, `--border-hover` | `--accent` fill, `--text-primary` | `--danger-hover` |
-| Focus | 2px `--background` gap plus 2px `--ring` | Same | Same | Same |
-| Disabled | 45% opacity, no hover repaint | Same | Same | Same |
+Stripe uses the same structure. Its accent (`#635BFF` / `#7A73FF`) is only the focus ring, links, and small controls. Primary buttons are navy on Stripe light and a light pill on Stripe dark.
 
-Ink pills elsewhere (Add provider, Connect) use `--text-primary` on `--bg-secondary`, so they flip with the palette: a light pill on Linear dark, a dark pill on Linear light.
+| Token | Use |
+| --- | --- |
+| `--button-bg` / `--button-fg` | Primary button |
+| `--button-hover` / `--button-active` | Primary hover and press |
+| `--button-secondary-*` | Secondary and outline |
+| `--button-ghost-fg` / `--button-ghost-hover` | Ghost and icon buttons |
+| `--button-danger-*` | Destructive |
+| `--ring` / `--primary` | Focus, links, checkbox, switch |
+| `--bg-hover` | Selected nav item and selected rows |
+
+Disabled controls drop to 45% opacity and do not take a hover fill. Focus is a 2px `--ring` outside a 2px background gap.
 
 ## Where the tokens live
 
