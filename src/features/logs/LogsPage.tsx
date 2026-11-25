@@ -904,7 +904,15 @@ export function LogsPage() {
                               )}
 
                               {line.message && (
-                                <span className={styles.message}>{line.message}</span>
+                                <span className={styles.message}>
+                                  {line.message.replace(
+                                    new RegExp(
+                                      `^(?:[TZ]\\s+)?${line.level ?? 'info'}\\b[:\\s-]*`,
+                                      'i'
+                                    ),
+                                    ''
+                                  )}
+                                </span>
                               )}
                               <Button
                                 variant="ghost"

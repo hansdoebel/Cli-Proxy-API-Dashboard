@@ -213,6 +213,10 @@
   }
 }
 
+.moreMenu {
+  display: none;
+}
+
 /* ---------- 删除筛选结果（工具栏右端的 ghost danger） ---------- */
 
 .deleteAction {
@@ -271,6 +275,42 @@
 }
 
 @include mobile {
+  .deleteActionDesktop {
+    display: none;
+  }
+
+  .moreMenu {
+    display: block;
+    position: relative;
+    margin-left: auto;
+  }
+
+  .moreMenu summary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .moreMenu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .moreMenu .deleteAction {
+    position: absolute;
+    right: 0;
+    z-index: 5;
+    margin-top: 4px;
+    min-height: 40px;
+    background: var(--card);
+    border-color: var(--border);
+  }
+
   .segmented {
     overflow-x: auto;
     max-width: 100%;

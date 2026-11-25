@@ -1013,6 +1013,7 @@ export function MainLayout() {
         />
 
         <aside
+          data-slot="sheet"
           className={`sidebar ${sidebarOpen ? 'open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`}
         >
           <div className="sidebar-header">

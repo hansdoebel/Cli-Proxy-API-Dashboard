@@ -63,6 +63,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+  overflow-x: auto;
 }
 
 .skeletons {

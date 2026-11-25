@@ -167,6 +167,17 @@
   grid-column: 1 / -1;
 }
 
+@media (max-width: 768px) {
+  .row,
+  .size_sm,
+  .size_md,
+  .size_lg {
+    grid-template-columns: minmax(0, 1fr);
+    --setting-control: auto;
+    align-items: stretch;
+  }
+}
+
 /* 区块编辑器行：标题区在上，编辑器独占下方整行。 */
 .rowBlock {
   grid-template-columns: minmax(0, 1fr);

@@ -430,18 +430,25 @@ textarea {
 
 @media (max-width: $breakpoint-mobile) {
   .modal-overlay {
-    padding: $spacing-md;
+    align-items: flex-end;
+    padding: 0;
   }
 
   .modal {
-    max-height: calc(100vh - #{$spacing-md * 2});
-    border-radius: $radius-md;
+    width: 100% !important;
+    max-width: 100%;
+    max-height: 100dvh;
+    height: auto;
+    border-radius: 16px 16px 0 0;
   }
 
-  @supports (height: 100dvh) {
-    .modal {
-      max-height: calc(100dvh - #{$spacing-md * 2});
-    }
+  .modal-body {
+    max-height: calc(100dvh - 140px);
+  }
+
+  .modal-footer .btn,
+  .modal-footer button {
+    min-height: 40px;
   }
 
   .modal-header {

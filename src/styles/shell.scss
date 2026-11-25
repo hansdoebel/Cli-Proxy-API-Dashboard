@@ -80,7 +80,9 @@
   }
 
   .header-heading {
-    gap: 2px;
+    flex: 1 1 auto;
+    gap: 8px;
+    overflow: hidden;
   }
 
   .header-status {
@@ -274,9 +276,24 @@
   gap: 8px;
 }
 
+@media (max-width: 480px) {
+  .header-heading ol > li:nth-child(-n + 2) {
+    display: none;
+  }
+}
+
 @media (max-width: $breakpoint-mobile) {
   :root {
     --header-height: 56px;
+    --sidebar-active-width: 0px;
+  }
+
+  html,
+  body,
+  #root,
+  .app-shell {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   .main-header {
@@ -289,14 +306,48 @@
     }
 
     .header-actions {
-      position: static;
+      position: static !important;
       top: auto;
       right: auto;
+      flex: 0 0 auto;
       max-width: none;
       padding: 0;
       border: 0;
       background: transparent;
       box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .header-icon-btn,
+    .header-actions .btn,
+    .header-actions button {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+    }
+
+
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      bottom: 0;
+      left: 0;
+      z-index: 40;
+      width: min(300px, calc(100vw - 48px));
+      height: auto;
+      transform: translateX(-105%);
+      border-right: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+      box-shadow: var(--floating-shadow);
+    }
+
+    .sidebar-backdrop.visible {
+      z-index: 50;
     }
 
     .header-status {

@@ -121,7 +121,7 @@
 
 .searchWrapper {
   flex: 1 1 180px;
-  min-width: 120px;
+  min-width: 0;
 }
 
 .searchInput:global(.input),
@@ -519,6 +519,22 @@
   color: var(--text-primary);
   overflow-wrap: anywhere;
   min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .logRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .rowMain {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .timestamp {
+    white-space: normal;
+  }
 }
 .copyButton:global(.btn) {
   position: sticky;
