@@ -21,8 +21,6 @@
   --accent-foreground: #f7f8f8;
   --destructive: #eb5757;
   --destructive-foreground: #ffffff;
-  --border: #23252a;
-  --input: #34343a;
   --ring: #7170ff;
   --radius: 0.5rem;
   --success: #4cb782;
@@ -38,15 +36,17 @@
   --floating-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
 
   --text-primary: var(--foreground);
-  --text-secondary: #8a8f98;
-  --text-tertiary: #62666d;
-  --text-quaternary: #4a4e55;
+  --text-secondary: #a1a7b0;
+  --text-tertiary: #8e949e;
+  --text-quaternary: #8e949e;
   --text-muted: var(--text-tertiary);
 
+  --border: #3c3f46;
+  --input: #6b6e76;
   --border-color: var(--border);
   --border-secondary: var(--border-color);
   --border-primary: var(--input);
-  --border-hover: #3e3e44;
+  --border-hover: #80838c;
 
   --primary-color: var(--primary);
   --primary-hover: #4f5bc4;
@@ -62,7 +62,7 @@
   --button-secondary-fg: #f7f8f8;
   --button-secondary-border: #3e3e44;
   --button-secondary-hover: #232326;
-  --button-ghost-fg: #8a8f98;
+  --button-ghost-fg: #a1a7b0;
   --button-ghost-hover: #232326;
   --button-danger-fg: #eb5757;
   --button-danger-border: rgb(235 87 87 / 0.45);
@@ -283,8 +283,6 @@
   --accent-foreground: #f6f9fc;
   --destructive: #ff4d6a;
   --destructive-foreground: #ffffff;
-  --border: #24395a;
-  --input: #2c4468;
   --ring: #7a73ff;
   --success: #3ecf8e;
   --warning: #ffc14d;
@@ -294,10 +292,12 @@
   --bg-error-light: rgb(255 77 106 / 0.16);
   --floating-surface: #142847;
   --floating-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
-  --text-secondary: #adbdcc;
-  --text-tertiary: #8ea0b8;
-  --text-quaternary: #6d82a0;
-  --border-hover: #3a5680;
+  --text-secondary: #c5d0de;
+  --text-tertiary: #a9b9cc;
+  --text-quaternary: #a9b9cc;
+  --border: #3d5678;
+  --input: #6d8aaf;
+  --border-hover: #7f9cbf;
   --primary-hover: #918bff;
   --primary-active: #aaa6ff;
   --danger-hover: #ff6b84;

@@ -2588,5 +2588,8 @@
     "saved": "Yönetim anahtarı güncellendi",
     "forget": "Anahtarı unut",
     "missing": "Devam etmek için yönetim anahtarını girin."
+  },
+  "mock": {
+    "banner": "Örnek veriler gösteriliyor. Bu canlı bir CLIProxyAPI sunucusu değil."
   }
 }

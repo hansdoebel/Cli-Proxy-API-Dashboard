@@ -2588,5 +2588,8 @@
     "saved": "Management key updated",
     "forget": "Forget key",
     "missing": "Enter the management key to continue."
+  },
+  "mock": {
+    "banner": "Showing sample data. This is not a live CLIProxyAPI server."
   }
 }

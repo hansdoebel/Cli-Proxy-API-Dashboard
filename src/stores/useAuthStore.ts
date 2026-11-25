@@ -15,6 +15,7 @@ import { useConfigStore } from './useConfigStore';
 import { useModelsStore } from './useModelsStore';
 import { useQuotaStore } from './useQuotaStore';
 import { detectApiBaseFromLocation, normalizeApiBase } from '@/utils/connection';
+import { isMockSession } from '@/services/api/mock/flag';
 import {
   consumeManagementKeyFromLocation,
   readManagementKeyFromLocation,
@@ -69,6 +70,27 @@ export const useAuthStore = create<AuthStoreState>()(
 
         restoreSessionPromise = (async () => {
           await useAuthStore.persist.rehydrate();
+          if (isMockSession()) {
+            const resolvedBase = normalizeApiBase(detectApiBaseFromLocation());
+            set({
+              apiBase: resolvedBase,
+              managementKey: 'preview',
+              rememberPassword: false,
+              lastEntryError: null,
+            });
+            try {
+              await get().login({
+                apiBase: resolvedBase,
+                managementKey: 'preview',
+                rememberPassword: false,
+              });
+              return true;
+            } catch (error) {
+              console.warn('Mock preview login failed:', error);
+              set({ lastEntryError: error });
+              return false;
+            }
+          }
           const wasLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
           const urlKey = consumeManagementKeyFromLocation();
           const legacyBase =

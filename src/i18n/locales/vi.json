@@ -2588,5 +2588,8 @@
     "saved": "Đã cập nhật khóa quản trị",
     "forget": "Quên khóa",
     "missing": "Nhập khóa quản trị để tiếp tục."
+  },
+  "mock": {
+    "banner": "Đang hiển thị dữ liệu mẫu. Đây không phải máy chủ CLIProxyAPI thật."
   }
 }

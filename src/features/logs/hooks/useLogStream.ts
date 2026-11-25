@@ -253,11 +253,33 @@ export function useLogStream({ active, isFollowing, onFollow }: LogStreamOptions
     if (!autoRefresh || !active || connectionStatus !== 'connected' || showFileLoggingRequired) {
       return;
     }
-    const id = window.setInterval(() => {
-      if (document.visibilityState === 'hidden' || Date.now() < nextReadAtRef.current) return;
-      void loadLogs(true);
-    }, 1000);
-    return () => window.clearInterval(id);
+    let id = 0;
+    const stop = () => {
+      if (!id) return;
+      window.clearInterval(id);
+      id = 0;
+    };
+    const start = () => {
+      if (id || document.visibilityState === 'hidden') return;
+      id = window.setInterval(() => {
+        if (Date.now() < nextReadAtRef.current) return;
+        void loadLogs(true);
+      }, 1000);
+    };
+    const sync = () => {
+      if (document.visibilityState === 'hidden') {
+        stop();
+        return;
+      }
+      start();
+      if (Date.now() >= nextReadAtRef.current) void loadLogs(true);
+    };
+    sync();
+    document.addEventListener('visibilitychange', sync);
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', sync);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoRefresh, active, connectionStatus, showFileLoggingRequired]);
 

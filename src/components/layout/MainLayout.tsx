@@ -11,7 +11,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type SyntheticEvent,
 } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/common/PageTransition';
@@ -21,6 +21,16 @@ import {
   PluginProviderLogos,
 } from '@/features/plugins/providerLogos';
 import { ManagementKeyDialog } from '@/components/session/ManagementKeyDialog';
+import { MockPreviewBanner } from '@/components/session/MockPreviewBanner';
+import { Badge } from '@/components/ui/shadcn/badge';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/shadcn/breadcrumb';
 import { MainRoutes } from '@/router/MainRoutes';
 import { authFilesApi, pluginsApi } from '@/services/api';
 import {
@@ -1075,8 +1085,22 @@ export function MainLayout() {
                 {sidebarCollapsed ? headerIcons.chevronRight : headerIcons.chevronLeft}
               </button>
               <div className="header-heading">
-                <div className="header-title">{pageTitle}</div>
-                <div className={`header-status is-${connectionStatus}`}>{connectionLabel}</div>
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to="/">{t('title.abbr')}</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                <Badge variant={connectionStatus === 'connected' ? 'secondary' : 'outline'}>
+                  {connectionLabel}
+                </Badge>
               </div>
             </div>
             <div className="header-actions floating-actions">
@@ -1179,6 +1203,7 @@ export function MainLayout() {
             }`}
           >
             <PluginProviderLogos.Provider value={currentPluginData?.logos ?? EMPTY_PROVIDER_LOGOS}>
+              <MockPreviewBanner />
               <PageTransition
                 render={(location) => <MainRoutes location={location} />}
                 getRouteOrder={getRouteOrder}

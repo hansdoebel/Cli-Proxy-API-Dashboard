@@ -6,7 +6,9 @@
   "packageManager": "bun@1.4.3",
   "scripts": {
     "dev": "vite",
+    "dev:mock": "VITE_MOCK=1 VITE_MOCK_DEFAULT=1 vite",
     "build": "tsc && vite build",
+    "build:mock": "tsc && VITE_MOCK=1 vite build",
     "preview": "vite preview",
     "test": "bun test",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",

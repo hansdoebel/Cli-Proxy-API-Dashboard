@@ -25,10 +25,10 @@ The app uses indigo for primary actions (the in-product accent), not the light-g
 | `--card` | `#0F1011` | Sidebar, cards, inputs |
 | `--popover` | `#161718` | Menus and dialogs |
 | `--foreground` | `#F7F8F8` | Primary text |
-| `--text-secondary` | `#8A8F98` | Secondary text |
-| `--text-tertiary` | `#62666D` | Meta text |
-| `--border` | `#23252A` | Hairlines |
-| `--input` | `#34343A` | Input borders |
+| `--text-secondary` | `#A1A7B0` | Secondary text (above 4.5:1 on the canvas and on cards) |
+| `--text-tertiary` | `#8E949E` | Meta text and placeholders. Body text on `#08090A` and `#0F1011` stays above 4.5:1. `#62666D` was about 3.3:1 and is not used for text. |
+| `--border` | `#3C3F46` | Hairlines (stronger than the marketing 5% white so inputs stay identifiable) |
+| `--input` | `#6B6E76` | Input borders, about 3:1 against cards |
 | `--primary` | `#5E6AD2` | Indigo actions and active nav |
 | `--primary-hover` | `#4F5BC4` | Primary hover (darkened so white label text stays above 4.5:1) |
 | `--primary-active` | `#4450B8` | Primary pressed |
