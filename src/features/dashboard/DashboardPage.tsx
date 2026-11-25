@@ -13,13 +13,12 @@ import { useAuthStore } from '@/stores';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { formatCompactNumber, formatDateValue, formatPercent } from '@/utils/format';
 import { useDashboardOverview } from './hooks/useDashboardOverview';
-import { LiveWire } from './components/LiveWire';
 import { Meter } from './components/Meter';
 import { Sparkline } from './components/Sparkline';
 import { ThroughputChart } from './components/ThroughputChart';
 import { Card } from '@/components/ui/shadcn/card';
 import { useCountUp, useRevealGroup, useRevealOnScroll } from '@/hooks/motion';
-import { providerLabel, splitWindowMinutes, toneForSuccessRate, type MeterTone } from './utils';
+import { providerLabel, toneForSuccessRate, type MeterTone } from './utils';
 import styles from './dashboard.module.scss';
 
 const DASH = '—';
@@ -55,19 +54,6 @@ export function DashboardPage() {
   const ctaRef = useRevealGroup<HTMLElement>();
 
   const animatedTotal = useCountUp(traffic.total, connected);
-
-  const windowLabel = useMemo(() => {
-    if (traffic.windowMinutes <= 0) return DASH;
-    const { hours, minutes } = splitWindowMinutes(traffic.windowMinutes);
-    if (hours === 0) return t('dashboard.window_m', { minutes });
-    if (minutes === 0) return t('dashboard.window_h', { hours });
-    return t('dashboard.window_hm', { hours, minutes });
-  }, [traffic.windowMinutes, t]);
-
-  const heroSparkPoints = useMemo(
-    () => traffic.buckets.map((bucket) => bucket.success + bucket.failed),
-    [traffic.buckets]
-  );
 
   const routingStrategy = useMemo(() => {
     const raw = config?.routingStrategy?.trim() ?? '';
@@ -205,11 +191,6 @@ export function DashboardPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.ambient} aria-hidden="true">
-        <span className={styles.washTop} />
-        <span className={styles.gridWash} />
-      </div>
-
       {/* ---------- Hero ---------- */}
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroCopy}>
@@ -278,12 +259,6 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <div className={styles.heroWire}>
-          <LiveWire
-            points={heroSparkPoints}
-            ariaLabel={t('dashboard.hero_spark_label', { window: windowLabel })}
-          />
-        </div>
       </section>
 
       {/* ---------- KPI ---------- */}
@@ -294,11 +269,6 @@ export function DashboardPage() {
             key={tile.key}
             className={styles.statTile}
             data-reveal
-            style={
-              {
-                '--tile-accent': tile.tone ? TILE_ACCENTS[tile.tone] : 'var(--border-hover)',
-              } as React.CSSProperties
-            }
           >
             <div className={styles.statLabelRow}>
               <span className={styles.statLabel}>{tile.label}</span>

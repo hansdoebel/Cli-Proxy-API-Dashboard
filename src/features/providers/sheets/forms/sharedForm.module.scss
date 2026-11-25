@@ -27,12 +27,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: $font-mono;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-size: 14px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 
   /* 标题后的发丝线把分区切开，不再需要卡片边框 */
   &::after {
@@ -1194,12 +1192,10 @@
 }
 
 .sponsorProtocolName {
-  font-family: $font-mono;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 .sponsorProtocolUrl {

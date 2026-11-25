@@ -657,8 +657,7 @@
 /* ---------- 赞助商对话框（Kimi）：延续卡片的品牌蓝 ---------- */
 
 :global(.modal).sponsorDialog {
-  background:
-    radial-gradient(90% 60% at 100% 0%, sponsor-tint(12%), transparent 60%), var(--bg-primary);
+  background: var(--bg-primary);
 
   /* 与赞助卡一致：图标自带圆角方块，直接铺满，不再套一层描边容器 */
   .headingGlyph {

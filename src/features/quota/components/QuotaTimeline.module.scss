@@ -113,10 +113,9 @@ $lane-width: 210px;
 .axisLabel {
   padding: 8px 12px;
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-quaternary);
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-tertiary);
   display: flex;
   align-items: flex-end;
 }

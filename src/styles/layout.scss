@@ -540,10 +540,9 @@
   .nav-group-label {
     padding: 0 10px 2px;
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--text-primary) 42%, transparent);
+    font-weight: 590;
+    letter-spacing: -0.011em;
+    color: var(--text-tertiary);
     user-select: none;
   }
 

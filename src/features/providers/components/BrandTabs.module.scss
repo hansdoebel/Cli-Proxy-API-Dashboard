@@ -131,12 +131,10 @@
   margin: 0 4px 3px 6px;
   padding-left: 12px;
   border-left: 1px solid var(--border-color);
-  font-family: $font-mono;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--amber-text);
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 

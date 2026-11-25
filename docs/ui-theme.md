@@ -108,6 +108,12 @@ Stripe uses the same structure. Its accent (`#635BFF` / `#7A73FF`) is only the f
 
 Disabled controls drop to 45% opacity and do not take a hover fill. Focus is a 2px `--ring` outside a 2px background gap.
 
+## Type
+
+The UI uses the system font, in this order: `-apple-system`, `BlinkMacSystemFont`, `SF Pro Text`, `SF Pro Display`, `Inter`, `Segoe UI`, `Roboto`, then the generic sans-serif. No webfont is bundled, so the single-file build does not grow. Headings use a tracking of `-0.022em` and a line-height of `1.15`. Body text is 16px with a line-height of `1.5`.
+
+Labels are sentence case in that sans font. `font-variant-numeric: tabular-nums` is used for counts. Monospace stays on log lines, the YAML editor, and raw keys or IDs.
+
 ## Layout rules
 
 Every authenticated page sits in the same frame: a 24px page gutter (16px below 768px), content capped at 1200px and centered, and 24px between sections. `PageContainer` and `PageHeader` in `src/components/layout/PageContainer.tsx` are that frame.
