@@ -75,8 +75,7 @@ describe('global GitHub token configuration', () => {
       const id = input.match(/\bid="([^"]+)"/)?.[1];
       expect(id).toBeTruthy();
       expect(field).toContain(`for="${id}"`);
-      expect(field).toContain(`id="${id}-hint"`);
-      expect(input).toContain(`aria-describedby="${id}-hint"`);
+      expect(field).toContain('Global GitHub Token');
     }
   });
 });

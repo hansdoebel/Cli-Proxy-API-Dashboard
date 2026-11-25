@@ -467,7 +467,6 @@ function SponsorKeyEntryCard({
                   className={styles.sponsorUrlOptions}
                   role="radiogroup"
                   aria-labelledby={`${formId}-group-${index}-base-url-label`}
-                  aria-describedby={`${formId}-group-${index}-base-url-hint`}
                 >
                   {definition.baseUrlOptions.map((option) => {
                     const checked = definition.resolveBaseUrl(entry.baseUrl) === option.baseUrl;

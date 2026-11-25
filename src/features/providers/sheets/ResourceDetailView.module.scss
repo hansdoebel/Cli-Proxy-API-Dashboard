@@ -86,7 +86,7 @@
 
 .healthLabel {
   font-family: $font-mono;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -204,7 +204,7 @@
 
 .endpointName {
   font-family: $font-mono;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -213,7 +213,7 @@
 
 .endpointUrl {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
@@ -275,7 +275,7 @@
 
 .keyProxy {
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-tertiary);
   @include text-ellipsis;
 }

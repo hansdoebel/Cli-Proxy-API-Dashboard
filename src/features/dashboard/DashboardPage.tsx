@@ -9,7 +9,6 @@ import {
   IconSidebarQuota,
   IconSidebarSystem,
 } from '@/components/ui/icons';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { useAuthStore } from '@/stores';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { formatCompactNumber, formatDateValue, formatPercent } from '@/utils/format';
@@ -105,22 +104,11 @@ export function DashboardPage() {
   /* 句号状态灯只在「有活着的流量」时呼吸；离线/静默时保持安静 */
   const heroAlive = connected && traffic.total > 0;
 
-  const connectionLabel = t(
-    connectionStatus === 'connected'
-      ? 'common.connected'
-      : connectionStatus === 'connecting'
-        ? 'common.connecting'
-        : 'common.disconnected'
-  );
-  const versionLabel = serverVersion ? `v${serverVersion.trim().replace(/^[vV]+/, '')}` : null;
-  const heroMetaLine = [versionLabel, connectionLabel].filter(Boolean).join(' · ');
-
   const statTiles = [
     {
       key: 'success',
       label: t('dashboard.success_rate'),
       value: traffic.successRate === null ? DASH : formatPercent(traffic.successRate),
-      info: null,
       meter: traffic.successRate,
       tone: successRateTone,
     },
@@ -128,7 +116,6 @@ export function DashboardPage() {
       key: 'credentials',
       label: t('dashboard.stat_credentials'),
       value: credentials ? credentials.total.toLocaleString() : DASH,
-      info: null,
       meter:
         credentials && credentials.total > 0
           ? (credentials.active / credentials.total) * 100
@@ -139,7 +126,6 @@ export function DashboardPage() {
       key: 'providerKeys',
       label: t('dashboard.stat_provider_keys'),
       value: counts.providerKeys === null ? DASH : counts.providerKeys.toLocaleString(),
-      info: t('dashboard.stat_provider_keys_hint'),
       meter: null,
       tone: undefined,
     },
@@ -147,7 +133,6 @@ export function DashboardPage() {
       key: 'models',
       label: t('dashboard.stat_models'),
       value: counts.models === null ? DASH : counts.models.toLocaleString(),
-      info: t('dashboard.stat_models_hint'),
       meter: null,
       tone: undefined,
     },
@@ -230,9 +215,6 @@ export function DashboardPage() {
               {t('dashboard.hero_period')}
             </span>
           </h1>
-          <p className={styles.heroMeta} data-reveal>
-            {heroMetaLine}
-          </p>
           <div className={styles.heroActions} data-reveal>
             <Link to="/ai-providers" className={styles.primaryAction}>
               {t('dashboard.cta_manage_providers')}
@@ -259,9 +241,6 @@ export function DashboardPage() {
           <strong className={styles.heroFigure}>
             {connected ? formatHeadline(animatedTotal) : DASH}
           </strong>
-          <span className={styles.heroPanelMeta}>
-            {t('dashboard.hero_window_meta', { window: windowLabel })}
-          </span>
           {traffic.total > 0 && (
             <div className={styles.ratioBar} aria-hidden="true">
               {traffic.totalSuccess > 0 && (
@@ -315,7 +294,6 @@ export function DashboardPage() {
           >
             <div className={styles.statLabelRow}>
               <span className={styles.statLabel}>{tile.label}</span>
-              {tile.info && <InfoTip content={tile.info} label={tile.label} />}
             </div>
             <strong className={styles.statValue}>{tile.value}</strong>
             {tile.meter !== null && tile.meter !== undefined && (

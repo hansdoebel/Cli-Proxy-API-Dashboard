@@ -90,10 +90,9 @@ describe('advanced section copy', () => {
     expect(row).toContain(t('sections.system.devin_sensitive_words_hint'));
     expect(row).not.toContain('data-info-tip');
     expect(row).not.toContain('visually-hidden');
-    // The group's scope explanation moved into the group title's InfoTip.
     const header = headerWith(markup, t('sections.system.devin_sensitive_words'));
-    expect(header).toContain('data-info-tip');
-    expect(header).toContain(t('sections.system.devin_sensitive_words_desc'));
+    expect(header).not.toContain('data-info-tip');
+    expect(header).not.toContain(t('sections.system.devin_sensitive_words_desc'));
   });
 
   test('plugin store auth: "env var names only" is visible under the group title', () => {
@@ -108,14 +107,14 @@ describe('advanced section copy', () => {
     const header = headerWith(markup, t('sections.system.antigravity_sensitive_words'));
     expect(header).not.toContain('data-info-tip');
     const row = rowOf(markup, 'antigravitySensitiveWords');
-    expect(row.match(/data-info-tip/g)).toHaveLength(1);
-    expect(row).toContain(t('sections.system.antigravity_sensitive_words_desc'));
-    expect(row).toContain(t('sections.system.antigravity_sensitive_words_hint'));
+    expect(row).not.toContain('data-info-tip');
+    expect(row).not.toContain(t('sections.system.antigravity_sensitive_words_desc'));
+    expect(row).not.toContain(t('sections.system.antigravity_sensitive_words_hint'));
   });
 
   test('restating copy is gone: plugin source rows, header defaults summary', () => {
     expect(markup).not.toContain(t('sections.system.plugin_store_sources_hint'));
-    expect(headerWith(markup, t('sections.system.plugin_store_sources'))).toContain(
+    expect(headerWith(markup, t('sections.system.plugin_store_sources'))).not.toContain(
       'data-info-tip'
     );
     expect(markup).not.toContain(t('sections.headers.description'));
@@ -159,17 +158,11 @@ describe('plugin store auth rule editor', () => {
     expect(markup).not.toContain('<small');
     const group = markup.match(/<div\b[^>]*role="group"[^>]*>/)?.[0] ?? '';
     const labelId = group.match(/aria-labelledby="([^"]+)"/)?.[1];
-    const hintId = group.match(/aria-describedby="([^"]+)"/)?.[1];
     expect(markup).toMatch(
       new RegExp(`<span id="${labelId}">${t('sections.system.store_auth_apply_to')}</span>`)
     );
-    expect(markup).toContain(
-      `<span id="${hintId}" hidden="">${t('sections.system.store_auth_apply_to_hint')}</span>`
-    );
-    const tip = markup.match(/<button\b[^>]*data-info-tip=""[^>]*>/)?.[0] ?? '';
-    expect(tip).toContain(`aria-describedby="${hintId}"`);
-    // Exactly one copy of the hint: the InfoTip reuses the group's hidden description.
-    expect(markup.split(t('sections.system.store_auth_apply_to_hint'))).toHaveLength(2);
+    expect(group).not.toContain('aria-describedby');
+    expect(markup).not.toContain(t('sections.system.store_auth_apply_to_hint'));
   });
 });
 

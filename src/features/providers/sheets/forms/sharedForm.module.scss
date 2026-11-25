@@ -345,7 +345,7 @@
 
 .disclosureCount {
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
   line-height: 1.6;
@@ -411,7 +411,7 @@
   align-items: center;
   gap: 6px;
   padding: 0 4px 0 6px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-tertiary);
   white-space: nowrap;
   cursor: pointer;
@@ -475,7 +475,7 @@
 
 .memberPanelHint {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--text-tertiary);
 }
@@ -619,7 +619,7 @@
 
 .entrySummaryKey {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);
   @include text-ellipsis;
@@ -642,7 +642,7 @@
   background: none;
   padding: 4px 10px;
   border-radius: $radius-full;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--text-secondary);
   cursor: pointer;
@@ -774,7 +774,7 @@
 }
 
 .connectivityError {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--danger-color);
   background: var(--bg-error-light);
@@ -788,7 +788,7 @@
 }
 
 .connectivityHintSuccess {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--viz-success);
 }
@@ -982,7 +982,7 @@
 
 .discoveryCount {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--text-tertiary);
 }
@@ -1038,7 +1038,7 @@
 
 .discoveryName {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
@@ -1070,7 +1070,7 @@
   align-items: baseline;
   gap: 8px;
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--text-tertiary);
 
@@ -1100,13 +1100,13 @@
 }
 
 .sponsorSummaryKey {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--text-secondary);
 }
 
 .sponsorSummaryUrl {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
   color: var(--text-tertiary);
 }
@@ -1163,7 +1163,7 @@
 
   small {
     font-family: $font-mono;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 400;
     color: var(--text-tertiary);
     overflow-wrap: anywhere;
@@ -1195,7 +1195,7 @@
 
 .sponsorProtocolName {
   font-family: $font-mono;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1204,7 +1204,7 @@
 
 .sponsorProtocolUrl {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
@@ -1241,7 +1241,7 @@
 
 .sponsorUsageMeta {
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-secondary);
 }
 

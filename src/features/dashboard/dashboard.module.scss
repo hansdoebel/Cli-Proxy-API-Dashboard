@@ -261,7 +261,7 @@
 
 .heroPanelLabel {
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -277,7 +277,7 @@
   border: 1px solid color-mix(in srgb, var(--viz-success) 35%, transparent);
   background: color-mix(in srgb, var(--viz-success) 8%, transparent);
   font-family: $font-mono;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -309,7 +309,7 @@
 
 .heroPanelMeta {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 }
 
@@ -333,7 +333,7 @@
   gap: $spacing-md;
   padding-top: $spacing-sm;
   border-top: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 }
 
@@ -422,7 +422,7 @@
 }
 
 .statLabel {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -465,7 +465,7 @@
   align-items: center;
   gap: 7px;
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -474,7 +474,7 @@
   &::before {
     content: '▍';
     color: var(--text-tertiary);
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1;
   }
 }
@@ -572,7 +572,7 @@
 /* 列表按流量排序，位次是真实信息 */
 .fleetRank {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-quaternary);
   font-variant-numeric: tabular-nums;
@@ -597,7 +597,7 @@
 }
 
 .fleetMeta {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-tertiary);
 }
 
@@ -626,7 +626,7 @@
 }
 
 .fleetTotalLabel {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-tertiary);
 }
 
@@ -695,7 +695,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-md;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   li {
@@ -727,7 +727,7 @@
 }
 
 .typeBreakdownLabel {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -751,7 +751,7 @@
   border-radius: $radius-full;
   border: 1px solid var(--border-color);
   background: color-mix(in srgb, var(--bg-secondary) 60%, transparent);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   b {
@@ -801,7 +801,7 @@
 .specMono {
   font-family: $font-mono;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .toggleList {
@@ -820,7 +820,7 @@
   padding: 5px 10px;
   border-radius: $radius-full;
   border: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   b {

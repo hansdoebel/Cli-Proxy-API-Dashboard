@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { FIELDS_ROOT_CLASS } from './fields/FieldPrimitives';
 import styles from './SectionCard.module.scss';
 
@@ -32,13 +31,7 @@ export function SectionCard({
 }: SectionCardProps) {
   return (
     <section className={`${styles.card} ${animateIn ? styles.cardEnter : ''}`}>
-      <header
-        className={
-          description && keepDescriptionVisible
-            ? `${styles.header} ${styles.headerWithDescription}`
-            : styles.header
-        }
-      >
+      <header className={styles.header}>
         <div className={styles.badges}>
           {indexLabel ? <span className={styles.indexBadge}>{indexLabel}</span> : null}
           {icon ? <span className={styles.iconBadge}>{icon}</span> : null}
@@ -46,12 +39,6 @@ export function SectionCard({
         <div className={styles.heading}>
           <div className={styles.titleLine}>
             <h2 className={styles.title}>{title}</h2>
-            {description && !keepDescriptionVisible ? (
-              <InfoTip
-                content={description}
-                label={typeof title === 'string' ? title : undefined}
-              />
-            ) : null}
           </div>
           {description && keepDescriptionVisible ? (
             <p className={styles.description}>{description}</p>

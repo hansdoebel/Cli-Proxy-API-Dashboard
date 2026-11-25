@@ -92,16 +92,7 @@ describe('credential policy structured forms', () => {
     // InfoTips explain the fields and change nothing, so they stay reachable while saving.
     const infoTips = controls.filter((control) => control.includes('data-info-tip'));
     const mutations = controls.filter((control) => !control.includes('data-info-tip'));
-    // At least the three policy-level tips (nested editors may add their own).
-    for (const label of [
-      en.auth_files.policy_retry_label,
-      en.auth_files.policy_aliases_label,
-      en.auth_files.policy_rules_label,
-    ]) {
-      const name = `More information about ${Bun.escapeHTML(label)}`;
-      expect(infoTips.some((tip) => tip.includes(`aria-label="${name}"`))).toBe(true);
-    }
-    for (const tip of infoTips) expect(tip).not.toContain('disabled=""');
+    expect(infoTips).toHaveLength(0);
     expect(mutations.length).toBeGreaterThan(12);
     for (const control of mutations) expect(control).toContain('disabled=""');
   });
@@ -118,18 +109,11 @@ describe('credential policy structured forms', () => {
       const labelId = html.match(new RegExp(`<label id="([^"]+)">${labelText}</label>`))?.[1];
       expect(labelId).toBeDefined();
       // InfoTip right after the label, named after it.
-      const afterLabel = html.slice(html.indexOf(`>${labelText}</label>`));
-      const tip = afterLabel.match(/^[^<]*<\/label><button\b[^>]*data-info-tip=""[^>]*>/)?.[0];
-      expect(tip).toBeDefined();
-      expect(tip).toContain(`aria-label="More information about ${labelText}"`);
-      const hintId = tip!.match(/aria-describedby="([^"]+)"/)?.[1];
-      // One hidden copy of the hint, shared by the InfoTip and the mode select.
-      expect(html).toContain(`<span id="${hintId}" hidden="">${hintText}</span>`);
-      expect(html.split(hintText)).toHaveLength(2);
+      expect(html).not.toContain(hintText);
       const select = html.match(
         new RegExp(`<button\\b[^>]*aria-labelledby="${labelId}"[^>]*>`)
       )?.[0];
-      expect(select).toContain(`aria-describedby="${hintId}"`);
+      expect(select).toBeTruthy();
     }
   });
 

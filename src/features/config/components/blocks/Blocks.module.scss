@@ -38,7 +38,7 @@
   border: 0;
   background: none;
   color: var(--text-secondary);
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1;
   cursor: pointer;
   opacity: 0.58;
@@ -70,7 +70,7 @@
 
 .blockLabel {
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -309,7 +309,7 @@
 
 .strengthLabel {
   min-height: 16px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
   color: var(--strength-color);
   transition: color var(--dur-hover, 200ms) var(--ease-out-strong, ease-out);
@@ -376,7 +376,7 @@
 
   > span {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
   }
 }
@@ -391,7 +391,7 @@
 .storeAuthApplyToLabel {
   min-width: 0;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -408,7 +408,7 @@
   gap: 7px;
   min-height: 28px;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
   line-height: 1.4;
 

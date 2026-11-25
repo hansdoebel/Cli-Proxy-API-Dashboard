@@ -1,6 +1,5 @@
 import { Fragment, useRef, useState, type DragEvent, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InfoTip } from '@/components/ui/Tooltip';
 import type { ResolvedTheme } from '@/types';
 import type {
   RoutePreview,
@@ -144,7 +143,6 @@ export function TierLadder({
         <span className={styles.entryLabel}>
           {t('routing.entry')}
           {/* What the preview below leaves out (the preview caveat). */}
-          <InfoTip content={t('routing.footnote')} label={t('routing.entry')} />
         </span>
         <div className={styles.entryControl}>{entryControl}</div>
       </li>

@@ -17,7 +17,7 @@
   :global(.form-group > .form-label-row),
   :global(.form-group > .form-label-row > label) {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.02em;
   }
@@ -58,7 +58,7 @@
 
   :global(.hint) {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.55;
   }
 
@@ -107,7 +107,7 @@
   margin: 0;
   max-width: 80ch;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
@@ -216,14 +216,14 @@
 .rowAside {
   max-width: 72ch;
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.55;
   overflow-wrap: anywhere;
 }
 
 .rowError {
   color: var(--error-color);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -288,7 +288,7 @@
   border-radius: 6px;
   background: var(--bg-primary);
   color: var(--text-secondary);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
   pointer-events: none;
@@ -406,20 +406,20 @@
 
 .fieldLabelLine {
   min-width: 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
 .fieldLabel {
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
 .fieldHint {
   color: var(--text-secondary);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.55;
 }
 

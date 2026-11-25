@@ -132,7 +132,7 @@
   border: 1px solid var(--border-color);
   background: var(--bg-secondary);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--text-secondary);
   white-space: nowrap;
@@ -247,7 +247,7 @@
 
 .popoverItemLabel {
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-primary);
   overflow-wrap: anywhere;
 }
@@ -272,7 +272,7 @@
   background: none;
   padding: 4px 8px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: var(--text-secondary);
   cursor: pointer;

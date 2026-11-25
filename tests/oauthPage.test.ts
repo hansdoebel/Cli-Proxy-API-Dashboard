@@ -308,21 +308,8 @@ describe('OAuth dialog secondary text', () => {
     // Literal on purpose: `vertex_import.description` is slated for removal from the locales.
     expect(markup).not.toContain('vertex-import helper');
     expect(markup).toContain(en.vertex_import.drop_hint);
-    // The file hint lives in one hidden element that describes both the drop zone and the InfoTip.
-    const hint = new RegExp(`<span id="([^"]+)" hidden="">${en.vertex_import.file_hint}</span>`);
-    const hintId = hint.exec(markup)?.[1];
-    expect(hintId).toBeTruthy();
-    expect(markup).toContain(
-      `data-info-tip="" aria-label="More information about ${en.vertex_import.file_label}" aria-describedby="${hintId}"`
-    );
-    expect(markup).toMatch(
-      new RegExp(
-        `aria-describedby="${hintId}"[^>]*>(?:(?!</button>).)*${en.vertex_import.drop_hint}`
-      )
-    );
-    // The region field keeps its explanation as the shared Input's InfoTip.
-    expect(markup).toContain(
-      `aria-label="More information about ${en.vertex_import.location_label}"`
-    );
+    expect(markup).not.toContain(en.vertex_import.file_hint);
+    expect(markup).not.toContain('data-info-tip');
+    expect(markup).toContain(en.vertex_import.location_label);
   });
 });

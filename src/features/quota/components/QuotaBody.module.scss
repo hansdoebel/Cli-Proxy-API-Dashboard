@@ -184,7 +184,7 @@
 
 .antigravityQuotaGroupTitle {
   font-family: $font-mono;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -259,7 +259,7 @@
   display: flex;
   align-items: center;
   gap: 6px 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
   flex-wrap: wrap;
 }
@@ -293,7 +293,7 @@
 }
 
 .codexResetCreditsTitle {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
   line-height: 1.35;
@@ -309,7 +309,7 @@
   border: 1px solid color-mix(in srgb, var(--border-color) 72%, transparent);
   border-radius: $radius-sm;
   background-color: color-mix(in srgb, var(--bg-secondary) 72%, transparent);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.35;
   min-width: 0;
 }
@@ -335,7 +335,7 @@
 }
 
 .codexResetCreditsError {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--warning-text);
   background-color: var(--warning-bg);
@@ -355,7 +355,7 @@
   display: inline-flex;
   align-items: center;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 14px;
   padding: 2px 8px;
   border-radius: 999px;
   white-space: nowrap;
@@ -557,7 +557,7 @@
   display: inline-flex;
   align-items: center;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.03em;
   /* 2px 金边，内边距各收 1px，外径与金卡等高 */
   padding: 1px 8px;

@@ -143,7 +143,6 @@ describe('routing board rendering', () => {
     );
     expect(html).toContain('role="radiogroup"');
     expect(html).toMatch(/role="radio" aria-checked="true" tabindex="0"[^>]*>.*Weighted/);
-    expect(html).toContain('Requests are split across the tier by weight.');
   });
 
   test('policy explanations sit in InfoTips after their labels, controls stay described', async () => {
@@ -159,47 +158,23 @@ describe('routing board rendering', () => {
         onChange: () => {},
       })
     );
-    const tips = html.match(/<button\b[^>]*data-info-tip=""[^>]*>/g) ?? [];
-    const attr = (tag: string, name: string) =>
-      tag.match(new RegExp(`\\b${name}="([^"]*)"`))?.[1] ?? '';
-    expect(tips.map((tip) => attr(tip, 'aria-label'))).toEqual([
-      'More information about Gateway policy',
-      'More information about Within a tier',
-      'More information about Session affinity',
-      'More information about Retry rounds',
-      'More information about Credentials per round',
-    ]);
-
-    // The strategy tip compares all three strategies, not just the selected one.
-    const strategyTip = html.slice(html.indexOf(tips[1]), html.indexOf(tips[2]));
-    for (const key of ['round_robin', 'weighted_round_robin', 'fill_first']) {
-      expect(strategyTip).toContain(i18n.t(`routing.strategy_${key}_desc`));
-    }
-
-    // Every explanation lives only in a hidden copy, never as a visible line.
-    for (const key of ['affinity_desc', 'request_retry_desc', 'max_retry_credentials_desc']) {
-      const text = i18n.t(`routing.${key}`);
-      expect(html.split(text).length - 1).toBe(1);
-      expect(html).toMatch(new RegExp(`<span id="[^"]+" hidden="">${text}</span>`));
-    }
-
-    // Number inputs: named by a real <label for>, described by their explanation.
-    for (const [label, desc] of [
-      ['request_retry', 'request_retry_desc'],
-      ['max_retry_credentials', 'max_retry_credentials_desc'],
+    expect(html.match(/<button\b[^>]*data-info-tip=""[^>]*>/g) ?? []).toHaveLength(0);
+    for (const key of [
+      'strategy_round_robin_desc',
+      'strategy_weighted_round_robin_desc',
+      'strategy_fill_first_desc',
+      'affinity_desc',
+      'request_retry_desc',
+      'max_retry_credentials_desc',
     ]) {
+      expect(html).not.toContain(i18n.t(`routing.${key}`));
+    }
+    for (const label of ['request_retry', 'max_retry_credentials']) {
       const labelTag = html.match(
         new RegExp(`<label for="([^"]+)"[^>]*>${i18n.t(`routing.${label}`)}</label>`)
       );
       expect(labelTag).not.toBeNull();
-      const input = html.match(new RegExp(`<input[^>]*id="${labelTag![1]}"[^>]*>`))?.[0] ?? '';
-      const descId = attr(input, 'aria-describedby');
-      expect(html).toContain(`<span id="${descId}" hidden="">${i18n.t(`routing.${desc}`)}</span>`);
     }
-    // The affinity switch is described by the same hidden copy its InfoTip uses.
-    const affinityTip = tips[2];
-    const affinitySwitch = html.match(/<input type="checkbox"[^>]*>/)?.[0] ?? '';
-    expect(attr(affinitySwitch, 'aria-describedby')).toBe(attr(affinityTip, 'aria-describedby'));
   });
 
   test('the preview caveat is an InfoTip on the entry label, not a footnote', async () => {
@@ -221,8 +196,8 @@ describe('routing board rendering', () => {
         onEditWeights: () => {},
       })
     );
-    expect(html).toContain('aria-label="More information about Request in"');
-    expect(html).toContain(`hidden="">${i18n.t('routing.footnote')}</span>`);
+    expect(html).not.toContain(i18n.t('routing.footnote'));
+    expect(html).not.toContain('data-info-tip');
   });
 
   test('styles respect reduced motion and the route is registered behind navigation', () => {

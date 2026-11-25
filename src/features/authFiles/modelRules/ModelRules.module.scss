@@ -348,7 +348,7 @@
     padding: 0;
     background: none;
     font-family: $font-mono;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text-primary);
 
     &::placeholder {
@@ -466,7 +466,7 @@
 .groupHint {
   flex: 1 1 280px;
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--text-tertiary);
 }
@@ -634,7 +634,7 @@
   grid-column: 1 / -1;
   margin: 0;
   padding: 0 10px 5px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--danger-color);
 }

@@ -26,6 +26,7 @@ export function ConfigHeader({
   extraActions,
 }: ConfigHeaderProps) {
   const { t } = useTranslation();
+  const visibleMeta = meta.filter((segment) => segment.tone === 'warning' || segment.tone === 'error');
   const toneClass: Record<HeaderMetaSegment['tone'], string> = {
     muted: styles.metaMuted,
     warning: styles.metaWarning,
@@ -39,8 +40,9 @@ export function ConfigHeader({
         <h1 className={styles.title} data-reveal>
           {t('config_management.title')}
         </h1>
+        {visibleMeta.length > 0 ? (
         <p className={styles.meta} data-reveal>
-          {meta.map((segment, index) => (
+          {visibleMeta.map((segment, index) => (
             <Fragment key={segment.key}>
               {index > 0 ? (
                 <span className={styles.metaDot} aria-hidden="true">
@@ -55,6 +57,7 @@ export function ConfigHeader({
             </Fragment>
           ))}
         </p>
+        ) : null}
       </div>
       <div className={styles.actions} data-reveal>
         {extraActions}

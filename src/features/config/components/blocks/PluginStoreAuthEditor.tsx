@@ -133,13 +133,10 @@ export const PluginStoreAuthEditor = memo(function PluginStoreAuthEditor({
               className={styles.storeAuthApplyTo}
               role="group"
               aria-labelledby={`${id}-${rule.id}-apply-to`}
-              aria-describedby={`${id}-${rule.id}-apply-to-hint`}
             >
               <FieldLabel
                 id={`${id}-${rule.id}-apply-to`}
                 label={t('config_management.visual.sections.system.store_auth_apply_to')}
-                hint={t('config_management.visual.sections.system.store_auth_apply_to_hint')}
-                hintId={`${id}-${rule.id}-apply-to-hint`}
                 className={styles.storeAuthApplyToLabel}
               />
               <div className={styles.storeAuthCheckboxes}>

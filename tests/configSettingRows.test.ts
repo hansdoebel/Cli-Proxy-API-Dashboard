@@ -76,21 +76,15 @@ describe('two-column row spans', () => {
     expect(spansOf(markup)).toEqual(['a:false', 'b:false', 'c:true', 'd:true', 'e:true']);
   });
 
-  test('renders an optional group heading with its description in an InfoTip', () => {
+  test('renders an optional group heading without the explanatory description', () => {
     const markup = render(
       createElement(SettingList, { title: 'Codex', description: 'Group hint' }, probe('a'))
     );
     expect(markup).toContain('<h3');
     expect(markup).toContain('Codex');
+    expect(markup).not.toContain('Group hint');
     expect(markup).not.toMatch(/<p\b/);
-    const [tip] = infoTipsOf(markup);
-    expect(attr(tip, 'aria-label')).toBe('More information about Codex');
-    // The InfoTip carries its own hidden copy for assistive tech.
-    const copy = elementById(markup, attr(tip, 'aria-describedby')!);
-    expect(copy).toContain(' hidden=""');
-    expect(copy).toContain('Group hint');
-    // The InfoTip is a sibling of the heading, never part of its accessible name.
-    expect(markup).toMatch(/<h3\b[^>]*>Codex<\/h3><button/);
+    expect(infoTipsOf(markup)).toHaveLength(0);
     expect(render(createElement(SettingList, null, probe('a')))).not.toContain('<h3');
   });
 
@@ -124,11 +118,11 @@ describe('setting row accessibility', () => {
     const id = attr(input, 'id');
     expect(id).toBeTruthy();
     expect(markup).toContain(`for="${id}"`);
-    expect(attr(input, 'aria-describedby')).toBe(`${id}-hint`);
-    expect(markup).toContain(`id="${id}-hint"`);
+    expect(input).not.toContain('aria-describedby');
+    expect(markup).not.toContain('Verbose logs');
   });
 
-  test('descriptions move into an InfoTip after the label and stay readable to assistive tech', () => {
+  test('explanatory descriptions are omitted from the row', () => {
     const markup = render(
       createElement(ToggleSetting, {
         fieldId: 'debug',
@@ -138,21 +132,9 @@ describe('setting row accessibility', () => {
         onChange: noop,
       })
     );
-    const input = markup.match(/<input\b[^>]*type="checkbox"[^>]*>/)?.[0] ?? '';
-    const hintId = `${attr(input, 'id')}-hint`;
-    // The described-by target is still in the DOM, visually hidden rather than removed.
-    const hint = elementById(markup, hintId);
-    expect(attr(hint, 'class')?.split(' ')).toContain('visually-hidden-focusable');
-    expect(hint).toContain('Verbose logs');
-    // One InfoTip, right after the <label> (outside it), reusing that same hidden copy.
-    const tips = infoTipsOf(markup);
-    expect(tips).toHaveLength(1);
-    expect(tips[0]).toContain('type="button"');
-    expect(attr(tips[0], 'aria-label')).toBe('More information about Debug');
-    expect(attr(tips[0], 'aria-describedby')).toBe(hintId);
-    expect(markup).toMatch(/<label\b[^>]*>Debug<\/label><button\b[^>]*data-info-tip/);
-    // No second copy of the text: the InfoTip points at the row's hidden description.
-    expect(markup.split('Verbose logs')).toHaveLength(2);
+    expect(markup).toContain('Debug');
+    expect(markup).not.toContain('Verbose logs');
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
   test('keepDescriptionVisible renders the description as a visible line without an InfoTip', () => {
@@ -200,16 +182,15 @@ describe('setting row accessibility', () => {
     const input = markup.match(/<input\b[^>]*>/)?.[0] ?? '';
     const id = attr(input, 'id');
     expect(markup).toContain(`for="${id}"`);
-    expect(attr(input, 'aria-describedby')).toBe(`${id}-error ${id}-hint`);
+    expect(attr(input, 'aria-describedby')).toBe(`${id}-error`);
     expect(input).toContain('aria-invalid="true"');
     expect(input).toContain('type="number"');
     expect(input).toContain('disabled=""');
     expect(input).not.toContain('min=');
-    // Errors stay visible: a plain line, never hidden, never in a tooltip.
     const error = elementById(markup, `${id}-error`);
     expect(error).toContain('Invalid port');
     expect(error).not.toContain('visually-hidden');
-    expect(elementById(markup, `${id}-hint`)).toContain('visually-hidden-focusable');
+    expect(markup).not.toContain('Listen port');
   });
 
   test('adornments render inside the control without replacing the value', () => {
@@ -270,37 +251,37 @@ describe('setting row accessibility', () => {
     expect(group).toContain('aria-invalid="true"');
     expect(received?.invalid).toBe(true);
     const ids = received?.describedBy?.split(' ') ?? [];
-    expect(ids).toHaveLength(2);
+    expect(ids).toHaveLength(1);
     for (const id of ids) expect(markup).toContain(`id="${id}"`);
     expect(attr(group, 'aria-describedby')).toBe(received?.describedBy);
-    // Block rows have no <label>: the InfoTip follows the title span.
-    expect(markup).toMatch(/>Trusted proxies<\/span><button\b[^>]*data-info-tip/);
+    expect(markup).toContain('Trusted proxies');
+    expect(markup).not.toContain('CIDR list');
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 });
 
 describe('field shell hint', () => {
-  test('moves the hint into an InfoTip and keeps a hidden copy when the caller wires hintId', () => {
+  test('drops an explanatory hint instead of showing an InfoTip', () => {
     const markup = render(
       createElement(FieldShell, {
         label: 'Protocol',
         htmlFor: 'proto',
         hint: 'Leave empty to match all',
         hintId: 'proto-hint',
-        children: createElement('input', { id: 'proto', 'aria-describedby': 'proto-hint' }),
+        children: createElement('input', { id: 'proto' }),
       })
     );
-    const [tip] = infoTipsOf(markup);
-    expect(attr(tip, 'aria-describedby')).toBe('proto-hint');
-    expect(elementById(markup, 'proto-hint')).toContain('visually-hidden-focusable');
+    expect(markup).toContain('Protocol');
+    expect(markup).not.toContain('Leave empty to match all');
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
-  test('without hintId the InfoTip carries the only copy', () => {
+  test('without keepHintVisible the hint is omitted', () => {
     const markup = render(
       createElement(FieldShell, { label: 'Protocol', hint: 'Leave empty', children: null })
     );
-    expect(infoTipsOf(markup)).toHaveLength(1);
-    expect(markup.split('Leave empty')).toHaveLength(2);
-    expect(markup).not.toContain('visually-hidden');
+    expect(infoTipsOf(markup)).toHaveLength(0);
+    expect(markup).not.toContain('Leave empty');
   });
 
   test('keepHintVisible keeps the visible hint line', () => {
@@ -319,7 +300,7 @@ describe('field shell hint', () => {
 });
 
 describe('section card description', () => {
-  test('moves the description into an InfoTip after the title', () => {
+  test('omits the explanatory description under the title', () => {
     const markup = render(
       createElement(SectionCard, {
         title: 'Network',
@@ -327,9 +308,9 @@ describe('section card description', () => {
         children: null,
       })
     );
-    expect(markup).not.toMatch(/<p\b/);
-    expect(markup).toMatch(/<h2\b[^>]*>Network<\/h2><button\b[^>]*data-info-tip/);
-    expect(attr(infoTipsOf(markup)[0], 'aria-label')).toBe('More information about Network');
+    expect(markup).toContain('Network');
+    expect(markup).not.toContain('Proxy and retries');
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
   test('keepDescriptionVisible keeps the paragraph', () => {
@@ -365,7 +346,7 @@ describe('row aside', () => {
     expect(input).not.toContain('aria-describedby');
   });
 
-  test('sits alongside an InfoTip description without merging into it', () => {
+  test('keeps the aside and drops the explanatory description', () => {
     const markup = render(
       createElement(TextSetting, {
         fieldId: 'proxyUrl',
@@ -376,10 +357,10 @@ describe('row aside', () => {
         onChange: noop,
       })
     );
+    expect(markup).toContain('<a href="https://example.test">Sponsor</a>');
+    expect(markup).not.toContain('Explanation');
+    expect(infoTipsOf(markup)).toHaveLength(0);
     const input = markup.match(/<input\b[^>]*>/)?.[0] ?? '';
-    const hint = elementById(markup, attr(input, 'aria-describedby')!);
-    expect(hint).toContain('Explanation');
-    expect(hint).not.toContain('Sponsor');
-    expect(infoTipsOf(markup)).toHaveLength(1);
+    expect(input).not.toContain('aria-describedby');
   });
 });

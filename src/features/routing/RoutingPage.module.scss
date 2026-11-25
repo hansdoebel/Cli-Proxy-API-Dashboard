@@ -174,7 +174,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
 
 .modelProgress {
   font-family: $font-mono;
-  font-size: 11px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
   color: var(--text-tertiary);
 }
@@ -212,7 +212,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   height: 40px;
   border: 1px dashed var(--border-primary);
   border-radius: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-tertiary);
   transition:
     border-color var(--dur-hover) var(--ease-out-strong),
@@ -301,7 +301,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   align-items: center;
   gap: 7px;
   margin-left: auto;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--text-tertiary);
 
@@ -434,7 +434,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
 
 .policyLabel {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--text-tertiary);

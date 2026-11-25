@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { InfoTip } from './Tooltip';
 
 export interface FieldLabelProps {
   /** Visible label text; also names the InfoTip ("More information about <label>"). */
@@ -38,8 +37,6 @@ export function FieldLabel({
   htmlFor,
   id,
   as,
-  hint,
-  hintId,
   className = 'form-label-row',
   labelClassName,
 }: FieldLabelProps) {
@@ -55,12 +52,6 @@ export function FieldLabel({
           {label}
         </span>
       )}
-      {hint ? <InfoTip content={hint} label={label} descriptionId={hintId} /> : null}
-      {hint && hintId ? (
-        <span id={hintId} hidden>
-          {hint}
-        </span>
-      ) : null}
     </div>
   );
 }

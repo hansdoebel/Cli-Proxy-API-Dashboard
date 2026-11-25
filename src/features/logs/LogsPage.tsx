@@ -7,7 +7,6 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { lockScroll, unlockScroll } from '@/components/ui/scrollLock';
 import {
   IconCopy,
@@ -39,6 +38,16 @@ import {
   filterLogEntries,
 } from '@/features/logs/model/logSelectors';
 import { Select } from '@/components/ui/Select';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { ScrollArea } from '@/components/ui/shadcn/scroll-area';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/shadcn/table';
 import { formatUnixTimestamp } from '@/utils/format';
 import { MANAGEMENT_API_PREFIX } from '@/utils/constants';
 import { HTTP_METHODS, STATUS_GROUPS, type LogState } from './model/logTypes';
@@ -73,6 +82,10 @@ export function LogsPage() {
   const [wrapLogs, setWrapLogs] = useLocalStorage('logsPage.wrapLogs', false);
   const [structuredFiltersExpanded, setStructuredFiltersExpanded] = useState(false);
   const [errorLogs, setErrorLogs] = useState<ErrorLogFile[]>([]);
+  const [errorSort, setErrorSort] = useState<{
+    key: 'name' | 'size' | 'modified';
+    dir: 'asc' | 'desc';
+  }>({ key: 'modified', dir: 'desc' });
   const [loadingErrors, setLoadingErrors] = useState(false);
   const [errorLogsError, setErrorLogsError] = useState('');
   const [errorLogViewer, dispatchErrorLogViewer] = useReducer(errorLogViewerReducer, {
@@ -679,12 +692,6 @@ export function LogsPage() {
                         </span>
                       }
                     />
-                    <InfoTip
-                      content={t('logs.show_raw_logs_hint', {
-                        defaultValue: 'Show original log text for easier multi-line copy',
-                      })}
-                      label={t('logs.show_raw_logs', { defaultValue: 'Show raw logs' })}
-                    />
                   </div>
                 </div>
               </Modal>
@@ -759,7 +766,7 @@ export function LogsPage() {
               {loading && logBuffer.buffer.length === 0 ? (
                 <div className="hint">{t('logs.loading')}</div>
               ) : logBuffer.buffer.length > 0 && filteredLines.length > 0 ? (
-                <div
+                <ScrollArea
                   ref={logViewerRef}
                   className={[
                     styles.logPanel,
@@ -821,29 +828,23 @@ export function LogsPage() {
                             onDoubleClick={() => {
                               void copyLogLine(line.raw);
                             }}
-                            title={t('logs.double_click_copy_hint', {
-                              defaultValue: 'Double-click to copy',
-                            })}
                           >
                             <div className={styles.timestamp}>{line.timestamp || ''}</div>
                             <div className={styles.rowMain}>
                               {line.level && (
-                                <span
-                                  className={[
-                                    styles.badge,
-                                    line.level === 'info' ? styles.levelInfo : '',
-                                    line.level === 'warn' ? styles.levelWarn : '',
-                                    line.level === 'error' || line.level === 'fatal'
-                                      ? styles.levelError
-                                      : '',
-                                    line.level === 'debug' ? styles.levelDebug : '',
-                                    line.level === 'trace' ? styles.levelTrace : '',
-                                  ]
-                                    .filter(Boolean)
-                                    .join(' ')}
+                                <Badge
+                                  variant={
+                                    line.level === 'warn'
+                                      ? 'warning'
+                                      : line.level === 'error' || line.level === 'fatal'
+                                        ? 'danger'
+                                        : line.level === 'info'
+                                          ? 'info'
+                                          : 'outline'
+                                  }
                                 >
                                   {line.level.toUpperCase()}
-                                </span>
+                                </Badge>
                               )}
 
                               {line.source && (
@@ -921,12 +922,9 @@ export function LogsPage() {
                       })}
                     </div>
                   )}
-                </div>
+                </ScrollArea>
               ) : logBuffer.buffer.length > 0 ? (
-                <EmptyState
-                  title={t('logs.search_empty_title')}
-                  description={t('logs.search_empty_desc')}
-                />
+                <EmptyState title={t('logs.search_empty_title')} />
               ) : showFileLoggingRequired ? (
                 <EmptyState
                   title={t(
@@ -941,7 +939,7 @@ export function LogsPage() {
                   )}
                 />
               ) : (
-                <EmptyState title={t('logs.empty_title')} description={t('logs.empty_desc')} />
+                <EmptyState title={t('logs.empty_title')} />
               )}
             </div>
           </Card>
@@ -950,15 +948,7 @@ export function LogsPage() {
         {activeTab === 'errors' && (
           <Card
             className={styles.errorCard}
-            title={
-              <>
-                {t('logs.error_logs_modal_title')}
-                <InfoTip
-                  content={t('logs.error_logs_description')}
-                  label={t('logs.error_logs_modal_title')}
-                />
-              </>
-            }
+            title={t('logs.error_logs_modal_title')}
             extra={
               <Button
                 variant="secondary"
@@ -988,42 +978,82 @@ export function LogsPage() {
                 ) : errorLogs.length === 0 ? (
                   <div className="hint">{t('logs.error_logs_empty')}</div>
                 ) : (
-                  <div className="item-list">
-                    {errorLogs.map((item) => (
-                      <div key={item.name} className="item-row">
-                        <div className="item-meta">
-                          <div className="item-title">{item.name}</div>
-                          <div className="item-subtitle">
-                            {item.size ? `${(item.size / 1024).toFixed(1)} KB` : ''}{' '}
-                            {item.modified ? formatUnixTimestamp(item.modified) : ''}
-                          </div>
-                        </div>
-                        <div className="item-actions">
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => {
-                              void openErrorLog(item);
-                            }}
-                            disabled={disableControls}
-                          >
-                            <span className={styles.buttonContent}>
-                              <IconEye size={16} />
-                              {t('logs.error_logs_open')}
-                            </span>
-                          </Button>
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => downloadErrorLog(item.name)}
-                            disabled={disableControls}
-                          >
-                            {t('logs.error_logs_download')}
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        {(
+                          [
+                            ['name', t('logs.error_logs_modal_title')],
+                            ['size', t('logs.error_log_size', { defaultValue: 'Size' })],
+                            ['modified', t('logs.error_log_modified', { defaultValue: 'Modified' })],
+                          ] as const
+                        ).map(([key, label]) => (
+                          <TableHead key={key}>
+                            <button
+                              type="button"
+                              className={styles.sortButton}
+                              onClick={() =>
+                                setErrorSort((current) =>
+                                  current.key === key
+                                    ? { key, dir: current.dir === 'asc' ? 'desc' : 'asc' }
+                                    : { key, dir: 'asc' }
+                                )
+                              }
+                            >
+                              {label}
+                              {errorSort.key === key ? (errorSort.dir === 'asc' ? ' ↑' : ' ↓') : ''}
+                            </button>
+                          </TableHead>
+                        ))}
+                        <TableHead />
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {[...errorLogs]
+                        .sort((a, b) => {
+                          const dir = errorSort.dir === 'asc' ? 1 : -1;
+                          if (errorSort.key === 'name') return a.name.localeCompare(b.name) * dir;
+                          if (errorSort.key === 'size') return ((a.size ?? 0) - (b.size ?? 0)) * dir;
+                          return ((a.modified ?? 0) - (b.modified ?? 0)) * dir;
+                        })
+                        .map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell>{item.name}</TableCell>
+                            <TableCell>
+                              {item.size ? `${(item.size / 1024).toFixed(1)} KB` : ''}
+                            </TableCell>
+                            <TableCell>
+                              {item.modified ? formatUnixTimestamp(item.modified) : ''}
+                            </TableCell>
+                            <TableCell>
+                              <div className="item-actions">
+                                <Button
+                                  variant="secondary"
+                                  size="sm"
+                                  onClick={() => {
+                                    void openErrorLog(item);
+                                  }}
+                                  disabled={disableControls}
+                                >
+                                  <span className={styles.buttonContent}>
+                                    <IconEye size={16} />
+                                    {t('logs.error_logs_open')}
+                                  </span>
+                                </Button>
+                                <Button
+                                  variant="secondary"
+                                  size="sm"
+                                  onClick={() => downloadErrorLog(item.name)}
+                                  disabled={disableControls}
+                                >
+                                  {t('logs.error_logs_download')}
+                                </Button>
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                    </TableBody>
+                  </Table>
                 )}
               </div>
             </div>

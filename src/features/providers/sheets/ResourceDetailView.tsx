@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconCheck, IconX } from '@/components/ui/icons';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { ProviderStatusBar } from '@/components/providers/ProviderStatusBar';
 import { getProviderTotalStats, type ProviderRecentUsageMap } from '@/components/providers/utils';
 import type { OpenAIProviderConfig } from '@/types';
@@ -92,10 +91,6 @@ export function ResourceDetailView({ resource, usageByProvider }: ResourceDetail
         <header className={styles.hero}>
           <div className={styles.heroLine}>
             <h3 className={styles.heroTitle}>{name}</h3>
-            <InfoTip
-              content={t('providersPage.sponsor.detailHint', { provider: definition.displayName })}
-              label={name}
-            />
             <StatePill disabled={resource.disabled} />
           </div>
         </header>

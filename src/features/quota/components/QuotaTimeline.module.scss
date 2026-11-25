@@ -33,7 +33,7 @@ $lane-width: 210px;
 
 .range {
   margin: 2px 0 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-quaternary);
   font-variant-numeric: tabular-nums;
 }
@@ -96,7 +96,7 @@ $lane-width: 210px;
   place-items: center;
   padding: $spacing-lg;
   color: var(--text-quaternary);
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -146,7 +146,7 @@ $lane-width: 210px;
 }
 
 .axisWeekday {
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-quaternary);
   min-height: 12px;
 }
@@ -211,7 +211,7 @@ $lane-width: 210px;
   flex: none;
   padding: 0 6px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--count-badge-text, var(--text-secondary));
   background: var(--count-badge-bg, var(--bg-tertiary));
@@ -345,7 +345,7 @@ $lane-width: 210px;
   position: relative;
   z-index: 2;
   padding-left: 10px;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-quaternary);
 }
 
@@ -354,7 +354,7 @@ $lane-width: 210px;
   align-items: center;
   flex-wrap: wrap;
   gap: $spacing-md;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-quaternary);
 }
 
