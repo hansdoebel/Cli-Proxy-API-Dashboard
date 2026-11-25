@@ -21,8 +21,9 @@ function bucketRangeLabel(time: string | undefined, index: number, count: number
 
 function bucketStartLabel(time: string | undefined, index: number, count: number): string {
   if (!time) return bucketRangeLabel(time, index, count);
-  const [start] = time.split('-');
-  return start?.trim() || time;
+  const parsed = Date.parse(time);
+  if (Number.isNaN(parsed)) return time;
+  return new Date(parsed).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
 interface ThroughputChartProps {

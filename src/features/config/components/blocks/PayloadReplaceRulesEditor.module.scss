@@ -360,7 +360,7 @@ $pair-columns: $index-width minmax(0, 1fr) $arrow-width minmax(0, 1fr) $tools-wi
 
 .pairsHead {
   color: var(--text-tertiary);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -423,7 +423,7 @@ $pair-columns: $index-width minmax(0, 1fr) $arrow-width minmax(0, 1fr) $tools-wi
     min-width: 0;
   }
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
   line-height: 36px;
   text-align: right;
@@ -444,7 +444,7 @@ $pair-columns: $index-width minmax(0, 1fr) $arrow-width minmax(0, 1fr) $tools-wi
   display: none;
   margin-bottom: 4px;
   color: var(--text-tertiary);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
 }

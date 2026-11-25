@@ -188,7 +188,7 @@
   align-items: baseline;
   gap: 8px;
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -247,7 +247,7 @@
 
 .statusRate {
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
   color: var(--text-quaternary);
@@ -331,7 +331,7 @@
   flex-wrap: wrap;
   gap: 4px 7px;
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
   color: var(--text-tertiary);
 }

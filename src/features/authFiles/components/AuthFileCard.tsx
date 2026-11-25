@@ -223,10 +223,14 @@ export function AuthFileCard(props: AuthFileCardProps) {
       </div>
 
       <div className={styles.metaRow}>
-        <span title={t('auth_files.file_size')}>{file.size ? formatFileSize(file.size) : '-'}</span>
-        <span className={styles.metaDivider} aria-hidden="true">
-          ·
-        </span>
+        {file.size ? (
+          <>
+            <span title={t('auth_files.file_size')}>{formatFileSize(file.size)}</span>
+            <span className={styles.metaDivider} aria-hidden="true">
+              ·
+            </span>
+          </>
+        ) : null}
         <span title={t('auth_files.file_modified')}>{formatModified(file)}</span>
         {priorityValue !== undefined && (
           <>

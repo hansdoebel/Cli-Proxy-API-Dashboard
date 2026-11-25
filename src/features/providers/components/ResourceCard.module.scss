@@ -131,7 +131,7 @@
 .sub {
   margin-top: -6px;
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.45;
   color: var(--text-tertiary);
   @include text-ellipsis;
@@ -169,7 +169,7 @@
   padding: 2px 8px;
   border-radius: $radius-full;
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
   line-height: 1.6;
@@ -234,7 +234,7 @@
   align-items: baseline;
   gap: 10px;
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--text-quaternary);

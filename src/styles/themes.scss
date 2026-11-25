@@ -74,11 +74,11 @@
   --primary-active: #4450b8;
   --primary-contrast: var(--primary-foreground);
   --danger-hover: #d94848;
-  /* Filled actions are neutral. Indigo stays on focus, links, and small controls. */
-  --button-bg: #e6e6e8;
-  --button-fg: #08090a;
-  --button-hover: #d2d2d4;
-  --button-active: #c4c4c6;
+  /* One primary: indigo fill, white label. Secondary stays a quiet outline. */
+  --button-bg: #4450b8;
+  --button-fg: #ffffff;
+  --button-hover: #3c48a8;
+  --button-active: #343f96;
   --button-secondary-bg: #1c1c1f;
   --button-secondary-fg: #f7f8f8;
   --button-secondary-border: #3e3e44;
@@ -111,7 +111,7 @@
   --count-badge-bg: #232326;
   --count-badge-text: #f7f8f8;
 
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow: none;
   --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.45);
   --tooltip-bg: #232326;
   --tooltip-fg: #f7f8f8;
@@ -322,10 +322,10 @@
   --primary-hover: #918bff;
   --primary-active: #aaa6ff;
   --danger-hover: #ff6b84;
-  --button-bg: #e6e6e8;
-  --button-fg: #0a1628;
-  --button-hover: #d2d2d4;
-  --button-active: #c4c4c6;
+  --button-bg: #4b45d6;
+  --button-fg: #ffffff;
+  --button-hover: #433dd0;
+  --button-active: #3b36c0;
   --button-secondary-bg: #1a2f4d;
   --button-secondary-fg: #f6f9fc;
   --button-secondary-border: #3a5680;
@@ -348,7 +348,7 @@
   --failure-badge-border: rgb(255 77 106 / 0.45);
   --count-badge-bg: #1f3657;
   --count-badge-text: #f6f9fc;
-  --shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  --shadow: none;
   --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.4);
   --tooltip-bg: #142847;
   --tooltip-fg: #f6f9fc;

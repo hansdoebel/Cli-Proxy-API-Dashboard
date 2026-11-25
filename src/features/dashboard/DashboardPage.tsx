@@ -105,7 +105,13 @@ export function DashboardPage() {
   /* 句号状态灯只在「有活着的流量」时呼吸；离线/静默时保持安静 */
   const heroAlive = connected && traffic.total > 0;
 
-  const statTiles = [
+  const statTiles: Array<{
+    key: string;
+    label: string;
+    value: string;
+    meter: number | null;
+    tone?: MeterTone;
+  }> = [
     {
       key: 'success',
       label: t('dashboard.success_rate'),
@@ -121,7 +127,7 @@ export function DashboardPage() {
         credentials && credentials.total > 0
           ? (credentials.active / credentials.total) * 100
           : null,
-      tone: undefined,
+      tone: (credentials && credentials.active > 0 ? 'good' : 'idle') satisfies MeterTone,
     },
     {
       key: 'providerKeys',

@@ -20,6 +20,7 @@ import {
   EMPTY_PROVIDER_LOGOS,
   PluginProviderLogos,
 } from '@/features/plugins/providerLogos';
+import { PageContainer } from '@/components/layout/PageContainer';
 import { ManagementKeyDialog } from '@/components/session/ManagementKeyDialog';
 import { MockPreviewBanner } from '@/components/session/MockPreviewBanner';
 import { Badge } from '@/components/ui/shadcn/badge';
@@ -1203,6 +1204,7 @@ export function MainLayout() {
             }`}
           >
             <PluginProviderLogos.Provider value={currentPluginData?.logos ?? EMPTY_PROVIDER_LOGOS}>
+              <PageContainer>
               <MockPreviewBanner />
               <PageTransition
                 render={(location) => <MainRoutes location={location} />}
@@ -1210,6 +1212,7 @@ export function MainLayout() {
                 getTransitionVariant={getTransitionVariant}
                 scrollContainerRef={contentRef}
               />
+              </PageContainer>
             </PluginProviderLogos.Provider>
           </main>
         </div>

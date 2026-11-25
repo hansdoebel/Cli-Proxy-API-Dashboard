@@ -267,7 +267,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   border-radius: 50%;
   background: var(--bg-tertiary);
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--text-secondary);
@@ -286,7 +286,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
 .tierPriority,
 .tierPriorityChanged {
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
   color: var(--text-tertiary);
 }

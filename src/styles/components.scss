@@ -169,6 +169,7 @@ textarea {
   border-radius: var(--card-radius);
   color: var(--card-foreground);
   padding: var(--card-padding);
+  box-shadow: none;
 }
 
 [data-slot='card'] [data-slot='card'] {
@@ -272,7 +273,7 @@ textarea {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgb(10 37 64 / 0.48);
+  background: rgb(8 9 10 / 0.32);
   display: flex;
   align-items: center;
   justify-content: center;

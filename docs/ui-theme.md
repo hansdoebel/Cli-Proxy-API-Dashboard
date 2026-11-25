@@ -108,6 +108,25 @@ Stripe uses the same structure. Its accent (`#635BFF` / `#7A73FF`) is only the f
 
 Disabled controls drop to 45% opacity and do not take a hover fill. Focus is a 2px `--ring` outside a 2px background gap.
 
+## Layout rules
+
+Every authenticated page sits in the same frame: a 24px page gutter (16px below 768px), content capped at 1200px and centered, and 24px between sections. `PageContainer` and `PageHeader` in `src/components/layout/PageContainer.tsx` are that frame.
+
+| Token | Desktop | Narrow | Use |
+| --- | --- | --- | --- |
+| `--space-page` | 24px | 16px | Page gutter |
+| `--space-section` | 24px | 16px | Space between sections |
+| `--card-gap` | 16px | 12px | Gap between cards in a grid |
+| `--card-padding` | 20px | 16px | Card padding |
+| `--card-padding-nested` | 16px | 16px | A card inside a card, sheet, or dialog |
+| `--card-radius` | 12px | 12px | Cards. Controls stay near 6–8px. Pills are only for status. |
+
+Type: nothing under 13px. Page titles are 24px, card titles 16px, body and dense UI 14–16px, meta labels 13px. Secondary text stays at or above 4.5:1 on the canvas and on cards.
+
+Buttons use the shadcn `Button` variants only. Primary is an indigo fill with white text. Secondary and outline share one bordered style. Ghost is for icon buttons at 36px. Destructive is a red border and red text, not a filled red pill. Do not add a one-off button color beside these.
+
+Dark mode cards are border only. `--shadow` is `none` on Linear dark and Stripe dark. Shadows stay on popovers, menus, and dialogs (`--shadow-lg`, `--floating-shadow`). No glows on logos, partner cards, or selected pills.
+
 ## Where the tokens live
 
 - `src/styles/themes.scss` — `:root` is Linear dark. `[data-palette='linear'][data-theme='light']` is Linear light. `[data-palette='stripe']` selects the Stripe light or dark block.
