@@ -5,7 +5,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-section);
   width: 100%;
   min-width: 0;
   /* 悬浮保存栏出现时由 --config-action-bar-height 撑出底部留白 */

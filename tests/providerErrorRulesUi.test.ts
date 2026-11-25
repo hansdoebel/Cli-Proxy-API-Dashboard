@@ -33,7 +33,6 @@ describe('error-rule editor UI', () => {
     expect(html).toContain('Continue and cool down');
     expect(html).toContain('Contains text');
     expect(html).toContain('Regular expression');
-    expect(html).toContain('Go regular expression');
     expect(html).toContain('Add rule');
     expect(html).toContain('Add condition');
     expect(html).not.toContain('JSON');
@@ -60,22 +59,16 @@ describe('error-rule editor UI', () => {
     ].map((match) => match[0]);
     // InfoTips explain, they do not edit: they stay reachable while the form is disabled.
     const infoTips = controls.filter((control) => control.includes('data-info-tip'));
-    expect(infoTips.length).toBeGreaterThan(0);
-    for (const tip of infoTips) expect(tip).not.toContain('disabled=""');
+    expect(infoTips).toHaveLength(0);
     const editing = controls.filter((control) => !control.includes('data-info-tip'));
     expect(editing.length).toBeGreaterThan(10);
     for (const control of editing) expect(control).toContain('disabled=""');
   });
   test('the Go regex note is an InfoTip on regex conditions that still describes the field', () => {
     const html = renderRows();
-    const tips = [...html.matchAll(/<button\b[^>]*data-info-tip[^>]*>/g)].map((m) => m[0]);
-    // Only the one regex condition (rule 1) gets the note; text conditions stay bare.
-    expect(tips).toHaveLength(1);
-    expect(tips[0]).toContain('aria-label="More information about Condition"');
-    const hintId = /aria-describedby="([^"]+)"/.exec(tips[0])![1];
-    expect(html).toContain(`<span id="${hintId}" hidden="">Go regular expression</span>`);
-    const regexField = [...html.matchAll(/<textarea\b[^>]*>/g)].map((m) => m[0])[1];
-    expect(regexField).toContain(`aria-describedby="${hintId}"`);
+    expect(html).not.toContain('data-info-tip');
+    expect(html).not.toContain('Go regular expression');
+    expect(html).toContain('<textarea');
   });
   test('the rule-order note is visible by default and moves into the runtime policy InfoTip', () => {
     const orderHint = en.providersPage.errorRules.hint;
@@ -97,12 +90,8 @@ describe('error-rule editor UI', () => {
         disabled: false,
       })
     );
-    // Present once, as the hidden description behind the error-rules InfoTip.
-    expect(policy.split(orderHint)).toHaveLength(2);
-    expect(policy).toContain(
-      `${en.providersPage.runtimePolicy.errorsHint} <br/>${orderHint}</span>`
-    );
-    expect(policy).toContain('aria-label="More information about Request error rules"');
+    expect(policy).not.toContain(orderHint);
+    expect(policy).not.toContain('data-info-tip');
   });
   test('an empty override retains its add action and inherited mode hides rows', () => {
     expect(renderRows([])).toContain('No rules.');

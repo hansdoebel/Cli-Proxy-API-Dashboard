@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Pano",
-    "quick_start": "Hızlı Başlangıç",
     "ai_providers": "AI Sağlayıcıları",
     "auth_files": "Kimlik Dosyaları",
     "oauth": "OAuth Girişi",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "İşletim Özeti",
-    "quick_start": "APIKEY.FUN Kurulumu",
     "ai_providers": "Yukarı Akış Model Yönlendirmesi",
     "auth_files": "Kimlik Dosyaları ve Kimlik Bilgileri",
     "oauth": "OAuth Yetkilendirmesi",
@@ -2005,10 +2003,11 @@
   },
   "theme": {
     "switch": "Tema",
-    "light": "Yün Kağıt",
-    "white": "Saf Beyaz",
-    "dark": "Koyu",
-    "auto": "Sistemi İzle"
+    "auto": "Sistemi İzle",
+    "linear_dark": "Linear koyu",
+    "linear_light": "Linear açık",
+    "stripe_light": "Stripe açık",
+    "stripe_dark": "Stripe koyu"
   },
   "sidebar": {
     "toggle_expand": "Kenar Çubuğunu Genişlet",
@@ -2464,7 +2463,8 @@
       "connect": "Bağla",
       "connected": "{{count}} bağlı",
       "onboardingTitle": "İlk yapay zekâ sağlayıcınızı bağlayın",
-      "moreQuickConnect": "Diğer hızlı bağlantı ortakları"
+      "moreQuickConnect": "Diğer hızlı bağlantı ortakları",
+      "onboardingHint": "Resmi bir API seçin veya OpenAI uyumlu bir uç nokta ekleyin."
     }
   },
   "claude_reset": {
@@ -2572,5 +2572,24 @@
     "remove_pattern": "{{row}}. regex satırını sil",
     "move_up": "{{row}}. regex satırını yukarı taşı",
     "move_down": "{{row}}. regex satırını aşağı taşı"
+  },
+  "session": {
+    "title": "Yönetim anahtarı",
+    "description": "Bu panel, sayfayı sunan CLIProxyAPI sunucusuna bağlanır. Localhost dahil her yönetim isteği anahtar ister ve anahtar bu tarayıcıda saklanır.",
+    "connecting": "Bu sunucuya bağlanılıyor…",
+    "submit": "Devam",
+    "submitting": "Anahtar kontrol ediliyor…",
+    "remember": "Bu tarayıcıda hatırla",
+    "server": "Sunucu",
+    "server_hint": "Varsayılan, bu sayfanın kaynağıdır. Yalnızca API başka bir ana makinedeyse değiştirin.",
+    "change_key": "Yönetim anahtarı",
+    "change_title": "Yönetim anahtarını güncelle",
+    "change_description": "Anahtar varsayılan olarak gizlidir. Yalnızca kayıtlı değeri kontrol ederken gösterin.",
+    "saved": "Yönetim anahtarı güncellendi",
+    "forget": "Anahtarı unut",
+    "missing": "Devam etmek için yönetim anahtarını girin."
+  },
+  "mock": {
+    "banner": "Örnek veriler gösteriliyor. Bu canlı bir CLIProxyAPI sunucusu değil."
   }
 }

@@ -176,13 +176,20 @@ export function AuthFilesToolbar(props: AuthFilesToolbarProps) {
 
       <button
         type="button"
-        className={styles.deleteAction}
+        className={`${styles.deleteAction} ${styles.deleteActionDesktop}`}
         onClick={onDelete}
         disabled={deleteDisabled}
       >
         {deleteLoading ? <LoadingSpinner size={13} /> : <IconTrash2 size={14} />}
         {deleteLabel}
       </button>
+      <details className={styles.moreMenu}>
+        <summary aria-label={t('common.more', { defaultValue: 'More actions' })}>⋯</summary>
+        <button type="button" className={styles.deleteAction} onClick={onDelete} disabled={deleteDisabled}>
+          {deleteLoading ? <LoadingSpinner size={13} /> : <IconTrash2 size={14} />}
+          {deleteLabel}
+        </button>
+      </details>
     </div>
   );
 }

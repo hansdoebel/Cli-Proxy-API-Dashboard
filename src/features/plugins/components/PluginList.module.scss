@@ -12,9 +12,9 @@
 .list {
   min-width: 0;
   overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: $radius-lg;
-  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card);
 }
 
 // Store cards: wide enough that a card still shows name, description, metadata and action.
@@ -22,7 +22,7 @@
   display: grid;
   min-width: 0;
   grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
-  gap: 12px;
+  gap: var(--card-gap);
 }
 
 // ─── Error ──────────────────────────────────────────────
@@ -124,7 +124,7 @@
 
   small {
     color: var(--text-tertiary);
-    font-size: 12px;
+    font-size: 14px;
     overflow-wrap: anywhere;
   }
 }

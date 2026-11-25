@@ -1,6 +1,7 @@
 import { useId, type CSSProperties, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconEye, IconPencil, IconTrash2 } from '@/components/ui/icons';
+import { Card } from '@/components/ui/shadcn/card';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
 import { ProviderStatusBar } from '@/components/providers/ProviderStatusBar';
 import { getSponsorBaseUrl, isSponsorResource, type ResourceUsage } from '../resourceView';
@@ -136,7 +137,7 @@ export function ResourceCard({
   const hasTraffic = usage ? usage.success + usage.failure > 0 : false;
 
   return (
-    <article className={cardClass} style={cardStyle} aria-labelledby={titleId}>
+    <Card as="article" className={cardClass} style={cardStyle} aria-labelledby={titleId}>
       <div className={styles.body}>
         <div className={styles.head}>
           <h3 className={styles.titleWrap}>
@@ -227,6 +228,6 @@ export function ResourceCard({
           />
         </div>
       </footer>
-    </article>
+    </Card>
   );
 }

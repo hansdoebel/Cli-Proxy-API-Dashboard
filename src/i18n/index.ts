@@ -1,32 +1,20 @@
 /**
- * i18next 国际化配置
+ * English-only UI. Other locale files stay on disk for parity tests and are
+ * registered by the test preload, not by this module, so they stay out of the bundle.
  */
 
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import zhCN from './locales/zh-CN.json';
-import zhTW from './locales/zh-TW.json';
 import en from './locales/en.json';
-import ru from './locales/ru.json';
-import vi from './locales/vi.json';
-import ko from './locales/ko.json';
-import tr from './locales/tr.json';
-import { getInitialLanguage } from '@/utils/language';
 
 i18n.use(initReactI18next).init({
   resources: {
-    'zh-CN': { translation: zhCN },
-    'zh-TW': { translation: zhTW },
     en: { translation: en },
-    ru: { translation: ru },
-    vi: { translation: vi },
-    ko: { translation: ko },
-    tr: { translation: tr },
   },
-  lng: getInitialLanguage(),
-  fallbackLng: 'zh-CN',
+  lng: 'en',
+  fallbackLng: 'en',
   interpolation: {
-    escapeValue: false, // React 已经转义
+    escapeValue: false,
   },
   react: {
     useSuspense: false,

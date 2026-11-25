@@ -74,8 +74,6 @@ const tipAfterLabel = (markup: string, label: string) =>
   markup
     .slice(markup.indexOf(`>${esc(label)}</label>`))
     .match(/^[^<]*<\/label><button\b[^>]*data-info-tip=""[^>]*>/)?.[0];
-const reEscape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const describedBy = (tag: string) => tag.match(/aria-describedby="([^"]+)"/)?.[1];
 
 describe('FieldLabel as used by the details sheet', () => {
   test('keeps a real <label> (styled by .form-group label) with a hidden description copy', () => {
@@ -88,12 +86,7 @@ describe('FieldLabel as used by the details sheet', () => {
         hintId: 'h',
       })
     );
-    expect(markup).toMatch(/^<div class="form-label-row"><label id="m">Mode<\/label>/);
-    const tip = tipAfterLabel(markup, 'Mode');
-    expect(tip).toContain('aria-label="More information about Mode"');
-    expect(describedBy(tip!)).toBe('h');
-    expect(markup).toContain('<span id="h" hidden="">Zero means off</span>');
-    expect(markup.split('Zero means off')).toHaveLength(2);
+    expect(markup).toBe('<div class="form-label-row"><label id="m">Mode</label></div>');
   });
 });
 
@@ -108,45 +101,27 @@ describe('auth file details sheet hints', () => {
       [xai, copy.using_api_label, copy.using_api_hint],
     ] as const;
     for (const [markup, label, hint] of cases) {
-      const tip = tipAfterLabel(markup, label);
-      expect(tip).toBeDefined();
-      const hintId = describedBy(tip!)!;
-      expect(markup).toContain(`<span id="${hintId}" hidden="">${esc(hint)}</span>`);
-      const toggle = markup.match(
-        new RegExp(`<input[^>]*aria-label="${reEscape(esc(label))}"[^>]*>`)
-      )?.[0];
-      expect(toggle).toContain(`aria-describedby="${hintId}"`);
-      // Only the hidden copy carries the text; no visible hint line remains.
-      expect(markup.split(esc(hint))).toHaveLength(2);
+      expect(markup).toContain(esc(label));
+      expect(markup).not.toContain(esc(hint));
+      expect(tipAfterLabel(markup, label)).toBeUndefined();
     }
   });
 
-  test('priority uses the Input InfoTip', () => {
+  test('priority is a labelled input without an explanation tip', () => {
     const markup = renderSheet('codex');
-    expect(tipAfterLabel(markup, copy.priority_label)).toBeDefined();
+    expect(markup).toContain(esc(copy.priority_label));
+    expect(tipAfterLabel(markup, copy.priority_label)).toBeUndefined();
   });
 
-  test('weight: semantics in an InfoTip, the strategy link stays a visible, reachable note', () => {
+  test('weight keeps the strategy link and drops the semantics tip', () => {
     const markup = renderSheet('codex');
-
-    // The value semantics are tooltip content, kept as a visually hidden description.
-    const tip = tipAfterLabel(markup, copy.weight_label);
-    expect(tip).toBeDefined();
-    const hintId = describedBy(tip!)!;
-    expect(markup).toContain(
-      `<div id="${hintId}" class="hint visually-hidden-focusable">${esc(copy.weight_hint)}</div>`
-    );
-
-    // The link sentence is its own visible line, not hidden and not inside the tooltip.
+    expect(markup).not.toContain(esc(copy.weight_hint));
     const linkText = copy.weight_strategy_note.match(/<settingsLink>(.*)<\/settingsLink>/)![1];
     const note = markup.match(/<div id="([^"]+-note)" class="hint">([\s\S]*?)<\/div>/);
     expect(note).not.toBeNull();
     expect(note![2]).toContain(esc(linkText));
     expect(note![2]).toMatch(/<a [^>]*href="#?\/config\?field=routingStrategy"/);
-
-    // The input is described by both the hint and the note.
     const input = markup.match(new RegExp(`<input[^>]*aria-describedby="[^"]*${note![1]}"[^>]*>`));
-    expect(input?.[0]).toContain(hintId);
     expect(input?.[0]).toContain('type="number"');
   });
 
@@ -178,13 +153,9 @@ describe('excluded models picker rule hint', () => {
     );
     const rulesLabel = en.excluded_models.rules_label;
     const rulesHint = esc(en.excluded_models.rules_hint);
-    const tip = tipAfterLabel(markup, rulesLabel);
-    expect(tip).toContain(`aria-label="More information about ${esc(rulesLabel)}"`);
-    const hintId = describedBy(tip!)!;
-    expect(markup).toContain(`<span id="${hintId}" hidden="">${rulesHint}</span>`);
-    expect(markup.match(/<textarea\b[^>]*>/)?.[0]).toContain(`aria-describedby="${hintId}"`);
-    expect(markup).not.toContain('class="hint"');
-    expect(markup.split(rulesHint)).toHaveLength(2);
+    expect(markup).toContain(esc(rulesLabel));
+    expect(markup).not.toContain(rulesHint);
+    expect(markup).not.toContain('data-info-tip');
   });
 
   test('no rule editor, no hint', () => {

@@ -3,12 +3,10 @@
 /* 可视化配色与动效 tokens（--viz-*、--ease-out-strong、--dur-*）已提升到 themes.scss :root。 */
 .page {
   position: relative;
-  max-width: 1120px;
   width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(44px, 6.5vh, 76px);
+  gap: var(--space-section);
 }
 
 /* ---------- 环境层（ambient）---------- */
@@ -73,25 +71,17 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
   gap: clamp($spacing-lg, 4vw, 56px);
   align-items: center;
-  padding-top: clamp($spacing-md, 3vh, 40px);
-  /* 底部留出脉搏线的呼吸空间 */
-  padding-bottom: clamp(64px, 11vh, 120px);
+  padding-top: 8px;
+  padding-bottom: 0;
 
   @media (max-width: 900px) {
     grid-template-columns: minmax(0, 1fr);
-    padding-bottom: clamp(48px, 8vh, 72px);
   }
 }
 
 /* 签名元素：横贯 hero 底部的实时流量脉搏线 */
 .heroWire {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -10px;
-  height: clamp(88px, 15vh, 160px);
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .heroCopy {
@@ -107,7 +97,7 @@
 /* 判词标题：文案来自实时状态，短，所以敢放大 */
 .heroTitle {
   margin: 0;
-  font-size: clamp(44px, 6.2vw, 80px);
+  font-size: clamp(28px, 3vw, 40px);
   line-height: 1.05;
   font-weight: 700;
   letter-spacing: -0.035em;
@@ -133,9 +123,9 @@
 
 .heroMeta {
   margin: 0;
-  font-family: $font-mono;
-  font-size: 13px;
-  letter-spacing: 0.02em;
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: -0.011em;
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
@@ -178,17 +168,16 @@
   }
 }
 
-/* 墨色药丸：浅色主题下是深墨，深色主题自动反相为浅纸 */
 .primaryAction {
-  background: var(--text-primary);
-  color: var(--bg-secondary);
+  background: var(--button-bg);
+  color: var(--button-fg);
   border: 1px solid transparent;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       transform: translateY(-1px);
-      background: color-mix(in srgb, var(--text-primary) 86%, var(--bg-secondary));
-      box-shadow: 0 12px 26px color-mix(in srgb, var(--text-primary) 22%, transparent);
+      background: var(--button-hover);
+      box-shadow: none;
     }
   }
 
@@ -246,17 +235,10 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
-  padding: clamp($spacing-lg, 2.5vw, 28px);
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--bg-primary) 90%, transparent),
-    color-mix(in srgb, var(--bg-secondary) 74%, transparent)
-  );
-  backdrop-filter: var(--glass-backdrop-filter);
-  -webkit-backdrop-filter: var(--glass-backdrop-filter);
-  box-shadow: var(--shadow-lg);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
 }
 
 .heroPanelTop {
@@ -267,12 +249,10 @@
 }
 
 .heroPanelLabel {
-  font-family: $font-mono;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-size: 14px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 .liveBadge {
@@ -283,11 +263,9 @@
   border-radius: $radius-full;
   border: 1px solid color-mix(in srgb, var(--viz-success) 35%, transparent);
   background: color-mix(in srgb, var(--viz-success) 8%, transparent);
-  font-family: $font-mono;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
   color: var(--success-badge-text);
 }
 
@@ -305,7 +283,6 @@
 
 /* 遥测数字统一等宽：这是 CLI 代理，mono 是它的母语 */
 .heroFigure {
-  font-family: $font-mono;
   font-size: clamp(42px, 5.6vw, 62px);
   line-height: 1.05;
   font-weight: 600;
@@ -315,9 +292,9 @@
 }
 
 .heroPanelMeta {
-  font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
 /* 成功/失败构成比例条 */
@@ -340,7 +317,7 @@
   gap: $spacing-md;
   padding-top: $spacing-sm;
   border-top: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 }
 
@@ -350,7 +327,6 @@
   gap: 6px;
 
   b {
-    font-family: $font-mono;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
   }
@@ -378,14 +354,14 @@
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: $spacing-md;
+  gap: var(--card-gap);
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: 460px) {
-    grid-template-columns: minmax(0, 1fr);
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -393,20 +369,14 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: $spacing-lg;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   transition: border-color $transition-fast;
 
-  /* 左上角色签：语义色调由 --tile-accent 注入 */
-  &::before {
-    content: '';
-    width: 28px;
-    height: 3px;
-    margin-bottom: 2px;
-    border-radius: $radius-full;
-    background: var(--tile-accent, var(--border-hover));
+  @media (max-width: 640px) {
+    padding: 12px;
   }
 
   /* 卡片不可点击，因此不抬升不投影——悬停只轻描边框辅助聚焦 */
@@ -428,13 +398,12 @@
 }
 
 .statLabel {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
 .statValue {
-  font-family: $font-mono;
   font-size: 28px;
   line-height: 1.1;
   font-weight: 600;
@@ -469,20 +438,10 @@
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-family: $font-mono;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
-
-  &::before {
-    content: '▍';
-    color: var(--viz-success);
-    font-size: 12px;
-    line-height: 1;
-  }
+  font-size: 14px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 .sectionTitle {
@@ -499,10 +458,10 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-  padding: clamp($spacing-lg, 2.4vw, 28px);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
 }
 
 .panelHead {
@@ -524,7 +483,7 @@
   margin-top: auto;
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary-active);
+  color: var(--ring);
   text-decoration: none;
 
   @media (hover: hover) and (pointer: fine) {
@@ -576,8 +535,7 @@
 
 /* 列表按流量排序，位次是真实信息 */
 .fleetRank {
-  font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-quaternary);
   font-variant-numeric: tabular-nums;
@@ -602,7 +560,7 @@
 }
 
 .fleetMeta {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-tertiary);
 }
 
@@ -623,7 +581,6 @@
 }
 
 .fleetTotal {
-  font-family: $font-mono;
   font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
@@ -631,7 +588,7 @@
 }
 
 .fleetTotalLabel {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-tertiary);
 }
 
@@ -642,8 +599,7 @@
 }
 
 .fleetRateValue {
-  font-family: $font-mono;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
@@ -700,7 +656,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-md;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   li {
@@ -710,7 +666,6 @@
   }
 
   b {
-    font-family: $font-mono;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
   }
@@ -732,11 +687,10 @@
 }
 
 .typeBreakdownLabel {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-size: 14px;
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 .typeList {
@@ -756,11 +710,10 @@
   border-radius: $radius-full;
   border: 1px solid var(--border-color);
   background: color-mix(in srgb, var(--bg-secondary) 60%, transparent);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   b {
-    font-family: $font-mono;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
   }
@@ -806,7 +759,7 @@
 .specMono {
   font-family: $font-mono;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .toggleList {
@@ -825,7 +778,7 @@
   padding: 5px 10px;
   border-radius: $radius-full;
   border: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
 
   b {
@@ -855,7 +808,7 @@
 .ctaGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: $spacing-md;
+  gap: var(--card-gap);
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));

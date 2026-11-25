@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@/styles/global.scss';
+import '@/styles/tailwind.css';
 import { INLINE_LOGO_JPEG } from '@/assets/logoInline';
 import App from './App.tsx';
 
@@ -20,8 +21,18 @@ if (faviconEl) {
   document.head.appendChild(newFavicon);
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+async function start() {
+  // Dead in the release build: Vite removes this branch when VITE_MOCK is unset.
+  if (import.meta.env.VITE_MOCK === '1') {
+    const { bootMockPreview } = await import('@/services/api/mock/boot');
+    bootMockPreview();
+  }
+
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+}
+
+void start();

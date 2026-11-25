@@ -25,9 +25,10 @@
   border: 0;
   background: none;
   cursor: pointer;
-  padding: 8px 12px 11px;
+  min-height: 44px;
+  padding: 10px 14px 12px;
   border-radius: 8px 8px 0 0;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 550;
   color: var(--text-secondary);
   white-space: nowrap;
@@ -99,7 +100,7 @@
 /* 校验错误徽章：mono 数字，失败色（数据墨水走 --viz-*） */
 .tabBadge {
   font-family: $font-mono;
-  font-size: 10.5px;
+  font-size: 13px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;
   line-height: 1.6;

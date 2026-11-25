@@ -67,9 +67,6 @@ const infoTips = (html: string) =>
 const tipFor = (html: string, label: string) =>
   infoTips(html).find((tip) => tip.includes(`aria-label="More information about ${label}"`));
 
-/** Id of the hidden copy that describes the InfoTip (and the control). */
-const describedBy = (element: string) => /aria-describedby="([^"]+)"/.exec(element)?.[1];
-
 /** The element (opening tag) whose id is `id` or, for useId-prefixed ids, ends in `-${id}`. */
 const elementWithId = (html: string, id: string) =>
   new RegExp(`<[a-z]+\\b[^>]*\\bid="(?:[^"]*-)?${id}"[^>]*>`).exec(html)?.[0];
@@ -82,11 +79,10 @@ const escapeHtml = (text: string) =>
  * is a hidden copy of the note, and (when given) a control that points at the same copy.
  */
 const expectNote = (html: string, label: string, note: string, controlId?: string) => {
-  const tip = tipFor(html, label);
-  expect(tip).toBeDefined();
-  const hintId = describedBy(tip!)!;
-  expect(html).toContain(`<span id="${hintId}" hidden="">${escapeHtml(note)}</span>`);
-  if (controlId) expect(describedBy(elementWithId(html, controlId)!)).toBe(hintId);
+  expect(html).toContain(label);
+  expect(html).not.toContain(escapeHtml(note));
+  expect(tipFor(html, label)).toBeUndefined();
+  if (controlId) expect(elementWithId(html, controlId)).toBeTruthy();
 };
 
 /** No InfoTip may sit inside a <label>: it would leak into the control's accessible name. */
@@ -125,11 +121,6 @@ describe('provider form notes', () => {
       en.providersPage.behavior.rebuildMidSystemMessage,
       en.providersPage.behavior.rebuildMidSystemMessageHint
     );
-    // The behavior checkbox keeps pointing at the same hidden copy as its InfoTip.
-    const tip = tipFor(html, en.providersPage.behavior.rebuildMidSystemMessage)!;
-    expect(html).toMatch(
-      new RegExp(`<input type="checkbox"[^>]*aria-describedby="${describedBy(tip)}"`)
-    );
     expectNoTipInsideLabel(html);
   });
 
@@ -153,13 +144,7 @@ describe('provider form notes', () => {
     );
     expectNoTipInsideLabel(html);
     expectNote(html, form.modelImage, form.modelImageHint);
-    const tip = tipFor(html, form.modelImage)!;
-    expect(tip).not.toContain('disabled=""');
-    expect(html).toMatch(
-      new RegExp(
-        `<input type="checkbox"[^>]*disabled=""[^>]*aria-describedby="${describedBy(tip)}"`
-      )
-    );
+    expect(html).toMatch(/<input type="checkbox"[^>]*disabled=""/);
     // Without a note it is just the plain row.
     const plain = render(
       createElement(CheckboxField, { label: 'Plain', checked: true, onChange: () => {} })
@@ -183,7 +168,7 @@ describe('provider form notes', () => {
         expectNote(html, urlLabel, sponsor.urlHint);
         const group = /<div\b[^>]*role="radiogroup"[^>]*>/.exec(html)![0];
         expect(group).toContain('aria-labelledby="s-group-0-base-url-label"');
-        expect(group).toContain('aria-describedby="s-group-0-base-url-hint"');
+        expect(group).not.toContain('aria-describedby');
         expect(html).toContain(`id="s-group-0-base-url-label"`);
       } else {
         expect(html).not.toContain(sponsor.urlHint);

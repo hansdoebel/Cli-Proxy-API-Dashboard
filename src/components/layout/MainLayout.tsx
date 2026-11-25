@@ -11,7 +11,7 @@ import {
   type MouseEvent as ReactMouseEvent,
   type SyntheticEvent,
 } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/common/PageTransition';
@@ -20,6 +20,17 @@ import {
   EMPTY_PROVIDER_LOGOS,
   PluginProviderLogos,
 } from '@/features/plugins/providerLogos';
+import { PageContainer } from '@/components/layout/PageContainer';
+import { ManagementKeyDialog } from '@/components/session/ManagementKeyDialog';
+import { MockPreviewBanner } from '@/components/session/MockPreviewBanner';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/shadcn/breadcrumb';
 import { MainRoutes } from '@/router/MainRoutes';
 import { authFilesApi, pluginsApi } from '@/services/api';
 import {
@@ -30,7 +41,6 @@ import {
   IconSidebarOauth,
   IconSidebarPlugins,
   IconSidebarProviders,
-  IconSidebarQuickStart,
   IconSidebarQuota,
   IconSidebarRouting,
   IconSidebarSystem,
@@ -41,7 +51,6 @@ import {
   useAuthStore,
   useLoginTransitionStore,
   useConfigStore,
-  useLanguageStore,
   useNotificationStore,
   useThemeStore,
 } from '@/stores';
@@ -52,17 +61,12 @@ import {
   resolvePluginAssetURL,
   type PluginResourceEntry,
 } from '@/features/plugins/pluginResources';
-import { APIKEY_FUN_DISPLAY_NAME } from '@/features/providers/sponsor';
-import { hasApiKeyFunConfig } from '@/features/providers/sponsorBundle';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
-import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
-import { isSupportedLanguage } from '@/utils/language';
 import { getSidebarShortcutLabel, isSidebarToggleShortcut } from '@/utils/sidebarShortcut';
 import type { Theme } from '@/types';
 
 const sidebarIcons: Record<string, ReactNode> = {
   dashboard: <IconSidebarDashboard size={18} />,
-  quickStart: <IconSidebarQuickStart size={18} />,
   aiProviders: <IconSidebarProviders size={18} />,
   authFiles: <IconSidebarAuthFiles size={18} />,
   oauth: <IconSidebarOauth size={18} />,
@@ -197,13 +201,6 @@ const headerIcons = {
       <path d="m10 6 6 6-6 6" />
     </svg>
   ),
-  language: (
-    <svg {...headerIconProps}>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  ),
   sun: (
     <svg {...headerIconProps}>
       <circle cx="12" cy="12" r="4" />
@@ -260,6 +257,12 @@ const headerIcons = {
       <path d="M21 12H9" />
     </svg>
   ),
+  key: (
+    <svg {...headerIconProps}>
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  ),
 };
 
 const THEME_CARDS: Array<{
@@ -268,47 +271,58 @@ const THEME_CARDS: Array<{
   colors: { bg: string; card: string; border: string; text: string; textMuted: string };
 }> = [
   {
+    key: 'linear-dark',
+    labelKey: 'theme.linear_dark',
+    colors: {
+      bg: '#08090a',
+      card: '#0f1011',
+      border: '#23252a',
+      text: '#f7f8f8',
+      textMuted: '#8a8f98',
+    },
+  },
+  {
+    key: 'linear-light',
+    labelKey: 'theme.linear_light',
+    colors: {
+      bg: '#f4f5f8',
+      card: '#ffffff',
+      border: '#e9e8ea',
+      text: '#282a30',
+      textMuted: '#6f6e77',
+    },
+  },
+  {
+    key: 'stripe-light',
+    labelKey: 'theme.stripe_light',
+    colors: {
+      bg: '#f6f9fc',
+      card: '#ffffff',
+      border: '#e3e8ee',
+      text: '#0a2540',
+      textMuted: '#425466',
+    },
+  },
+  {
+    key: 'stripe-dark',
+    labelKey: 'theme.stripe_dark',
+    colors: {
+      bg: '#0a1628',
+      card: '#10213a',
+      border: '#24395a',
+      text: '#f6f9fc',
+      textMuted: '#adbdcc',
+    },
+  },
+  {
     key: 'auto',
     labelKey: 'theme.auto',
     colors: {
-      bg: 'linear-gradient(135deg, #ffffff 0 50%, #111111 50% 100%)',
-      card: 'linear-gradient(135deg, #ffffff 0 50%, #1a1a1a 50% 100%)',
-      border: '#bdbdbd',
-      text: '#2d2a26',
-      textMuted: 'linear-gradient(135deg, #c9c9c9 0 50%, #5a5a5a 50% 100%)',
-    },
-  },
-  {
-    key: 'white',
-    labelKey: 'theme.white',
-    colors: {
-      bg: '#ffffff',
-      card: '#ffffff',
-      border: '#e5e5e5',
-      text: '#2d2a26',
-      textMuted: '#a29c95',
-    },
-  },
-  {
-    key: 'light',
-    labelKey: 'theme.light',
-    colors: {
-      bg: '#faf9f5',
-      card: '#f0eee8',
-      border: '#e3e1db',
-      text: '#2d2a26',
-      textMuted: '#a29c95',
-    },
-  },
-  {
-    key: 'dark',
-    labelKey: 'theme.dark',
-    colors: {
-      bg: '#151412',
-      card: '#1d1b18',
-      border: '#3a3530',
-      text: '#f6f4f1',
-      textMuted: '#9c958d',
+      bg: 'linear-gradient(135deg, #f4f5f8 0 50%, #08090a 50% 100%)',
+      card: 'linear-gradient(135deg, #ffffff 0 50%, #0f1011 50% 100%)',
+      border: '#23252a',
+      text: '#282a30',
+      textMuted: 'linear-gradient(135deg, #6f6e77 0 50%, #8a8f98 50% 100%)',
     },
   },
 ];
@@ -325,12 +339,8 @@ export function MainLayout() {
 
   const fetchConfig = useConfigStore((state) => state.fetchConfig);
   const clearCache = useConfigStore((state) => state.clearCache);
-  const config = useConfigStore((state) => state.config);
-
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
-  const language = useLanguageStore((state) => state.language);
-  const setLanguage = useLanguageStore((state) => state.setLanguage);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -342,8 +352,8 @@ export function MainLayout() {
     anchorTop: number;
     top: number;
   } | null>(null);
-  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
+  const [keyDialogOpen, setKeyDialogOpen] = useState(false);
   const [pluginData, setPluginData] = useState<{
     apiBase: string;
     resources: PluginResourceEntry[];
@@ -362,12 +372,10 @@ export function MainLayout() {
   const authFilesCountRequestRef = useRef(0);
   const railTooltipRef = useRef<HTMLDivElement | null>(null);
   const focusedRailItemRef = useRef<HTMLElement | null>(null);
-  const languageMenuRef = useRef<HTMLDivElement | null>(null);
   const themeMenuRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
   const fullBrandName = 'CLI Proxy API Management Center';
-  const abbrBrandName = t('title.abbr');
   const arrivingFromLogin = useLoginTransitionStore((state) => state.phase === 'revealing');
   const isLogsPage = location.pathname.startsWith('/logs');
   const isPluginResourcePage = location.pathname.startsWith('/plugin-pages');
@@ -462,19 +470,11 @@ export function MainLayout() {
     };
   }, []);
 
-  const closeLanguageMenu = useCallback(() => setLanguageMenuOpen(false), []);
   const closeThemeMenu = useCallback(() => setThemeMenuOpen(false), []);
-  useMenuDismiss(languageMenuOpen, languageMenuRef, closeLanguageMenu);
   useMenuDismiss(themeMenuOpen, themeMenuRef, closeThemeMenu);
-
-  const toggleLanguageMenu = useCallback(() => {
-    setLanguageMenuOpen((prev) => !prev);
-    setThemeMenuOpen(false);
-  }, []);
 
   const toggleThemeMenu = useCallback(() => {
     setThemeMenuOpen((prev) => !prev);
-    setLanguageMenuOpen(false);
   }, []);
 
   const handleThemeSelect = useCallback(
@@ -483,17 +483,6 @@ export function MainLayout() {
       setThemeMenuOpen(false);
     },
     [setTheme]
-  );
-
-  const handleLanguageSelect = useCallback(
-    (nextLanguage: string) => {
-      if (!isSupportedLanguage(nextLanguage)) {
-        return;
-      }
-      setLanguage(nextLanguage);
-      setLanguageMenuOpen(false);
-    },
-    [setLanguage]
   );
 
   useEffect(() => {
@@ -608,15 +597,6 @@ export function MainLayout() {
       })
     : [];
 
-  const isApiKeyFunConfigured = hasApiKeyFunConfig(config);
-  const quickStartNavItem: SidebarNavLinkItem = {
-    path: '/quick-start',
-    label: isApiKeyFunConfigured ? APIKEY_FUN_DISPLAY_NAME : undefined,
-    labelKey: isApiKeyFunConfigured ? undefined : 'nav.quick_start',
-    metaKey: 'nav_meta.quick_start',
-    icon: sidebarIcons.quickStart,
-  };
-
   const navGroups: SidebarNavGroup[] = [
     {
       id: 'operate',
@@ -628,7 +608,6 @@ export function MainLayout() {
           metaKey: 'nav_meta.dashboard',
           icon: sidebarIcons.dashboard,
         },
-        ...(!isApiKeyFunConfigured ? [quickStartNavItem] : []),
       ],
     },
     {
@@ -664,7 +643,6 @@ export function MainLayout() {
           metaKey: 'nav_meta.routing',
           icon: sidebarIcons.routing,
         },
-        ...(isApiKeyFunConfigured ? [quickStartNavItem] : []),
       ],
     },
     {
@@ -989,6 +967,28 @@ export function MainLayout() {
     );
   };
 
+  const normalizedPath =
+    location.pathname === '/dashboard'
+      ? '/'
+      : location.pathname.length > 1 && location.pathname.endsWith('/')
+        ? location.pathname.slice(0, -1)
+        : location.pathname;
+  const currentItem =
+    navItems.find((item) => item.path === normalizedPath) ??
+    navItems.find((item) => item.path !== '/' && normalizedPath.startsWith(`${item.path}/`));
+  const pageTitle = currentItem
+    ? (currentItem.label ?? (currentItem.labelKey ? t(currentItem.labelKey) : t('nav.dashboard')))
+    : t('nav.dashboard');
+  const connectionLabel = t(
+    connectionStatus === 'connected'
+      ? 'common.connected'
+      : connectionStatus === 'connecting'
+        ? 'common.connecting'
+        : connectionStatus === 'error'
+          ? 'common.error'
+          : 'common.disconnected'
+  );
+
   const mobileSidebarToggleLabel = sidebarOpen
     ? t('sidebar.toggle_collapse', { defaultValue: 'Close navigation' })
     : t('sidebar.toggle_expand', { defaultValue: 'Open navigation' });
@@ -1001,167 +1001,6 @@ export function MainLayout() {
         isPluginResourcePage ? 'plugin-resource-shell' : ''
       } ${arrivingFromLogin ? 'app-shell--arriving' : ''}`}
     >
-      <div className="top-gradient-blur" aria-hidden="true" />
-
-      <header className="main-header" ref={headerRef}>
-        <button
-          type="button"
-          className="sidebar-toggle-floating"
-          onClick={() => {
-            hideRailTooltip();
-            setSidebarCollapsed((prev) => !prev);
-          }}
-          onMouseEnter={(event) =>
-            handleRailTooltipMouseEnter(event, 'sidebar-toggle', sidebarToggleLabel, shortcutText)
-          }
-          onMouseLeave={handleRailTooltipMouseLeave}
-          onFocus={(event) =>
-            handleRailTooltipFocus(event, 'sidebar-toggle', sidebarToggleLabel, shortcutText)
-          }
-          onBlur={(event) =>
-            handleRailTooltipBlur(event, 'sidebar-toggle', sidebarToggleLabel, shortcutText)
-          }
-          aria-label={`${sidebarToggleLabel} (${shortcutText})`}
-          aria-describedby={railTooltip?.targetID === 'sidebar-toggle' ? NAV_TOOLTIP_ID : undefined}
-        >
-          {sidebarCollapsed ? headerIcons.chevronRight : headerIcons.chevronLeft}
-        </button>
-
-        <div className="mobile-sidebar-actions">
-          <Button
-            className="mobile-menu-btn"
-            variant="ghost"
-            size="sm"
-            onClick={() => setSidebarOpen((prev) => !prev)}
-            title={mobileSidebarToggleLabel}
-            aria-label={mobileSidebarToggleLabel}
-          >
-            {sidebarOpen ? headerIcons.close : headerIcons.menu}
-          </Button>
-        </div>
-
-        <div className="header-actions floating-actions">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleRefreshAll}
-            title={t('header.refresh_all')}
-          >
-            {headerIcons.refresh}
-          </Button>
-          <div className={`language-menu ${languageMenuOpen ? 'open' : ''}`} ref={languageMenuRef}>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleLanguageMenu}
-              title={t('language.switch')}
-              aria-label={t('language.switch')}
-              aria-haspopup="menu"
-              aria-expanded={languageMenuOpen}
-            >
-              {headerIcons.language}
-            </Button>
-            {languageMenuOpen && (
-              <div
-                className="notification entering language-menu-popover"
-                role="menu"
-                aria-label={t('language.switch')}
-              >
-                {LANGUAGE_ORDER.map((lang) => (
-                  <button
-                    key={lang}
-                    type="button"
-                    className={`language-menu-option ${language === lang ? 'active' : ''}`}
-                    onClick={() => handleLanguageSelect(lang)}
-                    role="menuitemradio"
-                    aria-checked={language === lang}
-                  >
-                    <span>{t(LANGUAGE_LABEL_KEYS[lang])}</span>
-                    {language === lang ? <span className="language-menu-check">✓</span> : null}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className={`theme-menu ${themeMenuOpen ? 'open' : ''}`} ref={themeMenuRef}>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleThemeMenu}
-              title={t('theme.switch')}
-              aria-label={t('theme.switch')}
-              aria-haspopup="menu"
-              aria-expanded={themeMenuOpen}
-            >
-              {theme === 'auto'
-                ? headerIcons.autoTheme
-                : theme === 'dark'
-                  ? headerIcons.moon
-                  : theme === 'white'
-                    ? headerIcons.whiteTheme
-                    : headerIcons.sun}
-            </Button>
-            {themeMenuOpen && (
-              <div
-                className="notification entering theme-menu-popover"
-                role="menu"
-                aria-label={t('theme.switch')}
-              >
-                {THEME_CARDS.map((tc) => (
-                  <button
-                    key={tc.key}
-                    type="button"
-                    className={`theme-card ${theme === tc.key ? 'active' : ''}`}
-                    onClick={() => handleThemeSelect(tc.key)}
-                    role="menuitemradio"
-                    aria-checked={theme === tc.key}
-                  >
-                    <div
-                      className="theme-card-preview"
-                      style={{
-                        background: tc.colors.bg,
-                        border: `1px solid ${tc.colors.border}`,
-                      }}
-                    >
-                      <div
-                        className="theme-card-header"
-                        style={{
-                          background: tc.colors.card,
-                          borderBottom: `1px solid ${tc.colors.border}`,
-                        }}
-                      />
-                      <div className="theme-card-body">
-                        <div
-                          className="theme-card-sidebar"
-                          style={{
-                            background: tc.colors.card,
-                            borderRight: `1px solid ${tc.colors.border}`,
-                          }}
-                        />
-                        <div className="theme-card-content" style={{ background: tc.colors.bg }}>
-                          <div
-                            className="theme-card-line"
-                            style={{ background: tc.colors.textMuted }}
-                          />
-                          <div
-                            className="theme-card-line short"
-                            style={{ background: tc.colors.textMuted }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <span className="theme-card-label">{t(tc.labelKey)}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <Button variant="ghost" size="sm" onClick={logout} title={t('header.logout')}>
-            {headerIcons.logout}
-          </Button>
-        </div>
-      </header>
-
       <div className="main-body">
         <button
           type="button"
@@ -1173,6 +1012,7 @@ export function MainLayout() {
         />
 
         <aside
+          data-slot="sheet"
           className={`sidebar ${sidebarOpen ? 'open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`}
         >
           <div className="sidebar-header">
@@ -1180,7 +1020,8 @@ export function MainLayout() {
               <img src={INLINE_LOGO_JPEG} alt="CPAMC logo" className="sidebar-brand-logo" />
               {showSidebarLabels && (
                 <span className="sidebar-brand-text">
-                  <span className="sidebar-brand-title">{abbrBrandName}</span>
+                  <span className="sidebar-brand-title">{t('splash.title')}</span>
+                  <span className="sidebar-brand-sub">{t('splash.subtitle')}</span>
                 </span>
               )}
             </div>
@@ -1221,22 +1062,168 @@ export function MainLayout() {
           }`}
           ref={contentRef}
         >
+          <header className="main-header" ref={headerRef}>
+            <div className="header-leading">
+              <button
+                type="button"
+                className="header-icon-btn mobile-menu-btn"
+                onClick={() => setSidebarOpen((prev) => !prev)}
+                title={mobileSidebarToggleLabel}
+                aria-label={mobileSidebarToggleLabel}
+              >
+                {sidebarOpen ? headerIcons.close : headerIcons.menu}
+              </button>
+              <button
+                type="button"
+                className="header-icon-btn desktop-collapse-btn"
+                onClick={() => {
+                  hideRailTooltip();
+                  setSidebarCollapsed((prev) => !prev);
+                }}
+                aria-label={`${sidebarToggleLabel} (${shortcutText})`}
+                title={`${sidebarToggleLabel} (${shortcutText})`}
+              >
+                {sidebarCollapsed ? headerIcons.chevronRight : headerIcons.chevronLeft}
+              </button>
+              <div className="header-heading">
+                <Breadcrumb>
+                  <BreadcrumbList>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to="/">{t('title.abbr')}</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+                <span
+                  className={`header-connection is-${connectionStatus}`}
+                  title={connectionLabel}
+                  aria-label={connectionLabel}
+                  role="status"
+                >
+                  <span className="header-connection-dot" aria-hidden="true" />
+                  <span className="header-connection-label">{connectionLabel}</span>
+                </span>
+              </div>
+            </div>
+            <div className="header-actions floating-actions">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleRefreshAll}
+                title={t('header.refresh_all')}
+              >
+                {headerIcons.refresh}
+              </Button>
+              <div className={`theme-menu ${themeMenuOpen ? 'open' : ''}`} ref={themeMenuRef}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={toggleThemeMenu}
+                  title={t('theme.switch')}
+                  aria-label={t('theme.switch')}
+                  aria-haspopup="menu"
+                  aria-expanded={themeMenuOpen}
+                >
+              {theme === 'auto'
+                ? headerIcons.autoTheme
+                : theme === 'linear-dark' || theme === 'stripe-dark'
+                  ? headerIcons.moon
+                  : headerIcons.sun}
+                </Button>
+                {themeMenuOpen && (
+                  <div
+                    className="notification entering theme-menu-popover"
+                    role="menu"
+                    aria-label={t('theme.switch')}
+                  >
+                    {THEME_CARDS.map((tc) => (
+                      <button
+                        key={tc.key}
+                        type="button"
+                        className={`theme-card ${theme === tc.key ? 'active' : ''}`}
+                        onClick={() => handleThemeSelect(tc.key)}
+                        role="menuitemradio"
+                        aria-checked={theme === tc.key}
+                      >
+                        <div
+                          className="theme-card-preview"
+                          style={{
+                            background: tc.colors.bg,
+                            border: `1px solid ${tc.colors.border}`,
+                          }}
+                        >
+                          <div
+                            className="theme-card-header"
+                            style={{
+                              background: tc.colors.card,
+                              borderBottom: `1px solid ${tc.colors.border}`,
+                            }}
+                          />
+                          <div className="theme-card-body">
+                            <div
+                              className="theme-card-sidebar"
+                              style={{
+                                background: tc.colors.card,
+                                borderRight: `1px solid ${tc.colors.border}`,
+                              }}
+                            />
+                            <div className="theme-card-content" style={{ background: tc.colors.bg }}>
+                              <div
+                                className="theme-card-line"
+                                style={{ background: tc.colors.textMuted }}
+                              />
+                              <div
+                                className="theme-card-line short"
+                                style={{ background: tc.colors.textMuted }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <span className="theme-card-label">{t(tc.labelKey)}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setKeyDialogOpen(true)}
+                title={t('session.change_key')}
+                aria-label={t('session.change_key')}
+              >
+                {headerIcons.key}
+              </Button>
+              <Button variant="ghost" size="sm" onClick={logout} title={t('header.logout')}>
+                {headerIcons.logout}
+              </Button>
+            </div>
+          </header>
           <main
             className={`main-content${isLogsPage ? ' main-content-logs' : ''}${
               isPluginResourcePage ? ' main-content-plugin-resource' : ''
             }`}
           >
             <PluginProviderLogos.Provider value={currentPluginData?.logos ?? EMPTY_PROVIDER_LOGOS}>
+              <PageContainer>
+              <MockPreviewBanner />
               <PageTransition
                 render={(location) => <MainRoutes location={location} />}
                 getRouteOrder={getRouteOrder}
                 getTransitionVariant={getTransitionVariant}
                 scrollContainerRef={contentRef}
               />
+              </PageContainer>
             </PluginProviderLogos.Provider>
           </main>
         </div>
       </div>
+      <ManagementKeyDialog open={keyDialogOpen} onOpenChange={setKeyDialogOpen} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useId, useRef, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
+import { Card } from '@/components/ui/shadcn/card';
 import { FieldLabel } from '@/components/ui/FieldLabel';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { ROUTING_STRATEGIES, type RoutingSettings, type RoutingStrategy } from '@/types/routing';
 import styles from '../RoutingPage.module.scss';
 
@@ -72,7 +72,8 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
   };
 
   return (
-    <aside
+    <Card
+      as="aside"
       className={styles.policy}
       aria-labelledby={`${id}-title`}
       // The floating save bar lines up with this column (see RoutingSaveBar).
@@ -82,7 +83,6 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
         <h2 id={`${id}-title`} className={styles.policyTitle}>
           {t('routing.policy_title')}
         </h2>
-        <InfoTip content={t('routing.policy_subtitle')} label={t('routing.policy_title')} />
       </div>
 
       <section className={styles.policySection}>
@@ -90,20 +90,6 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
           <h3 id={`${id}-strategy`} className={styles.policyLabel}>
             {t('routing.strategy_label')}
           </h3>
-          {/* Every strategy explained at once, so they can be compared before choosing. */}
-          <InfoTip
-            label={t('routing.strategy_label')}
-            content={
-              <span className={styles.strategyTips}>
-                {ROUTING_STRATEGIES.map((strategy) => (
-                  <span key={strategy} className={styles.strategyTip}>
-                    <strong>{t(`routing.strategy_${strategyKey(strategy)}`)}</strong>{' '}
-                    {t(`routing.strategy_${strategyKey(strategy)}_desc`)}
-                  </span>
-                ))}
-              </span>
-            }
-          />
         </div>
         <div
           role="radiogroup"
@@ -203,6 +189,6 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
           />
         </div>
       </section>
-    </aside>
+    </Card>
   );
 }

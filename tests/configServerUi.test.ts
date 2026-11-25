@@ -40,7 +40,6 @@ describe('server configuration UI', () => {
       expect(FIELD_VALUE_KEYS[entry.fieldId]).toEqual([entry.fieldId]);
       expect(markup.split(`id="cfg-field-${entry.fieldId}"`)).toHaveLength(2);
       expect(markup).toContain(escapeText(translations.t(entry.labelKey)));
-      if (entry.hintKey) expect(markup).toContain(escapeText(translations.t(entry.hintKey)));
       const path = entry.yamlKeys!.join('.');
       expect(path).toMatch(/^server\.(server-id|trusted-proxies|discovery\.)/);
       expect(
@@ -93,11 +92,11 @@ describe('server configuration UI', () => {
         tag.includes(`${field}-label`)
       );
       expect(group).toBeTruthy();
-      for (const attribute of ['aria-labelledby', 'aria-describedby']) {
-        const id = group!.match(new RegExp(`${attribute}="([^"]+)"`))?.[1];
-        expect(id).toBeTruthy();
-        expect(markup).toContain(`id="${id}"`);
-      }
+      const labelledBy = group!.match(/aria-labelledby="([^"]+)"/)?.[1];
+      expect(labelledBy).toBeTruthy();
+      expect(markup).toContain(`id="${labelledBy}"`);
+      const describedBy = group!.match(/aria-describedby="([^"]+)"/)?.[1];
+      if (describedBy) expect(markup).toContain(`id="${describedBy}"`);
     }
     const discovery = render(createElement(SectionDiscovery, props));
     const inputs = discovery.match(/<input\b[^>]*type="text"[^>]*>/g) ?? [];
@@ -111,7 +110,7 @@ describe('server configuration UI', () => {
         continue;
       }
       const hint = input.match(/aria-describedby="([^"]+)"/)?.[1];
-      expect(discovery).toContain(`id="${hint}"`);
+      if (hint) expect(discovery).toContain(`id="${hint}"`);
     }
   });
 
@@ -141,10 +140,9 @@ describe('server configuration UI', () => {
     expect(summaries.length).toBe(3);
     for (const summary of summaries) expect(summary).not.toContain('<button');
     const discovery = rowOf('discoveryEnabled');
-    expect(discovery).toContain('data-info-tip');
-    expect(discovery).toContain(t('serverExtras.discoveryEnabled.hint'));
-    expect(discovery).toContain(t('serverExtras.discoveryHint'));
-    expect(visibleDescription(discovery)).toContain('visually-hidden-focusable');
+    expect(discovery).not.toContain('data-info-tip');
+    expect(discovery).not.toContain(t('serverExtras.discoveryEnabled.hint'));
+    expect(discovery).not.toContain(t('serverExtras.discoveryHint'));
   });
 
   test('disables every input and list action in read-only mode', () => {
@@ -156,9 +154,8 @@ describe('server configuration UI', () => {
     const infoTips = tags.filter((tag) => tag.includes('data-info-tip'));
     const controls = tags.filter((tag) => !tag.includes('data-info-tip'));
     expect(controls.length).toBeGreaterThan(10);
-    expect(infoTips.length).toBeGreaterThan(0);
+    expect(infoTips).toHaveLength(0);
     for (const control of controls) expect(control).toContain('disabled=""');
-    for (const infoTip of infoTips) expect(infoTip).not.toContain('disabled');
   });
 
   test('renders and associates both validation errors', () => {

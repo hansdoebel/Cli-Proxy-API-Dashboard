@@ -88,24 +88,18 @@ describe('Tooltip', () => {
 });
 
 describe('Input hint', () => {
-  test('a labelled hint moves into an InfoTip and stays as the input description', () => {
+  test('a labelled hint is not rendered', () => {
     const markup = render(
       createElement(Input, { id: 'priority', label: 'Priority', hint: 'Larger runs first' })
     );
     const input = markup.match(/<input\b[^>]*>/)![0];
-    expect(attr(input, 'aria-describedby')).toBe('priority-hint');
-    expect(markup).toContain(
-      '<div id="priority-hint" class="hint visually-hidden-focusable">Larger runs first</div>'
-    );
-    expect(markup).toMatch(
-      /<div class="form-label-row"><label for="priority">Priority<\/label><button\b[^>]*data-info-tip/
-    );
-    const [tip] = infoTipsOf(markup);
-    expect(attr(tip, 'aria-describedby')).toBe('priority-hint');
-    expect(attr(tip, 'aria-label')).toBe('More information about Priority');
+    expect(input).not.toContain('aria-describedby');
+    expect(markup).toContain('<label for="priority">Priority</label>');
+    expect(markup).not.toContain('Larger runs first');
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
-  test('a note stays visible next to a tooltip hint, and both describe the input', () => {
+  test('a note stays visible and describes the input; the hint does not', () => {
     const markup = render(
       createElement(Input, {
         id: 'weight',
@@ -115,14 +109,12 @@ describe('Input hint', () => {
       })
     );
     const input = markup.match(/<input\b[^>]*>/)![0];
-    expect(attr(input, 'aria-describedby')).toBe('weight-hint weight-note');
-    expect(markup).toContain(
-      '<div id="weight-hint" class="hint visually-hidden-focusable">Defaults to 1</div>'
-    );
+    expect(attr(input, 'aria-describedby')).toBe('weight-note');
+    expect(markup).not.toContain('Defaults to 1');
     expect(markup).toContain(
       '<div id="weight-note" class="hint"><a href="#/config">Enable weighting</a></div>'
     );
-    expect(infoTipsOf(markup)).toHaveLength(1);
+    expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
   test('a note without a hint keeps the plain label', () => {
@@ -135,20 +127,21 @@ describe('Input hint', () => {
     expect(markup).not.toContain('form-label-row');
   });
 
-  test('without a label there is nothing to attach an InfoTip to, so the hint stays visible', () => {
+  test('a hint without a label is still omitted', () => {
     const markup = render(createElement(Input, { id: 'q', hint: 'Press Enter to search' }));
-    expect(markup).toContain('<div id="q-hint" class="hint">Press Enter to search</div>');
+    expect(markup).not.toContain('Press Enter to search');
     expect(infoTipsOf(markup)).toHaveLength(0);
   });
 
-  test('errors stay visible and come first in the description', () => {
+  test('errors stay visible and describe the input', () => {
     const markup = render(
       createElement(Input, { id: 'w', label: 'Weight', hint: 'Defaults to 1', error: 'Too large' })
     );
     const input = markup.match(/<input\b[^>]*>/)![0];
-    expect(attr(input, 'aria-describedby')).toBe('w-error w-hint');
+    expect(attr(input, 'aria-describedby')).toBe('w-error');
     expect(input).toContain('aria-invalid="true"');
     expect(markup).toContain('<div id="w-error" class="error-box">Too large</div>');
+    expect(markup).not.toContain('Defaults to 1');
   });
 });
 
@@ -176,23 +169,15 @@ describe('FieldLabel', () => {
     ).toBe('<div class="row"><label id="l" class="text">Mode</label></div>');
   });
 
-  test('a hint adds a named InfoTip beside (not inside) the label and one hidden copy', () => {
+  test('a hint is not rendered beside the label', () => {
     const markup = render(
       createElement(FieldLabel, { label: 'Mode', htmlFor: 'm', hint: 'Zero means off', hintId: 'h' })
     );
-    expect(markup).toMatch(/^<div class="form-label-row"><label for="m">Mode<\/label><button\b/);
-    const [tip] = infoTipsOf(markup);
-    expect(attr(tip, 'aria-label')).toBe('More information about Mode');
-    expect(attr(tip, 'aria-describedby')).toBe('h');
-    expect(markup).toContain('<span id="h" hidden="">Zero means off</span>');
-    expect(markup.split('Zero means off')).toHaveLength(2);
+    expect(markup).toBe('<div class="form-label-row"><label for="m">Mode</label></div>');
   });
 
-  test('without hintId the InfoTip carries its own description', () => {
+  test('a hint without hintId is still omitted', () => {
     const markup = render(createElement(FieldLabel, { label: 'Mode', hint: 'Zero means off' }));
-    const [tip] = infoTipsOf(markup);
-    const id = attr(tip, 'aria-describedby')!;
-    expect(markup).toContain(`<span id="${id}" hidden="">Zero means off</span>`);
-    expect(markup.split('Zero means off')).toHaveLength(2);
+    expect(markup).toBe('<div class="form-label-row"><span>Mode</span></div>');
   });
 });

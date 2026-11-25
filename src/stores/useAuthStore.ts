@@ -15,6 +15,12 @@ import { useConfigStore } from './useConfigStore';
 import { useModelsStore } from './useModelsStore';
 import { useQuotaStore } from './useQuotaStore';
 import { detectApiBaseFromLocation, normalizeApiBase } from '@/utils/connection';
+import { isMockSession } from '@/services/api/mock/flag';
+import {
+  consumeManagementKeyFromLocation,
+  readManagementKeyFromLocation,
+  shouldBootstrapSession,
+} from '@/utils/managementEntry';
 
 interface AuthStoreState extends AuthState {
   connectionStatus: ConnectionStatus;
@@ -28,6 +34,8 @@ interface AuthStoreState extends AuthState {
   hasRestorableSession: () => boolean;
   updateServerVersion: (version: string | null, buildDate?: string | null) => void;
   updateServerPluginSupport: (supportsPlugin: boolean) => void;
+  /** Set when an automatic connect fails, so the key prompt can explain why. */
+  lastEntryError: unknown;
 }
 
 let restoreSessionPromise: Promise<boolean> | null = null;
@@ -54,13 +62,37 @@ export const useAuthStore = create<AuthStoreState>()(
       serverBuildDate: null,
       supportsPlugin: false,
       connectionStatus: 'disconnected',
+      lastEntryError: null,
 
       // 恢复会话并自动登录
       restoreSession: () => {
         if (restoreSessionPromise) return restoreSessionPromise;
 
         restoreSessionPromise = (async () => {
+          await useAuthStore.persist.rehydrate();
+          if (isMockSession()) {
+            const resolvedBase = normalizeApiBase(detectApiBaseFromLocation());
+            set({
+              apiBase: resolvedBase,
+              managementKey: 'preview',
+              rememberPassword: false,
+              lastEntryError: null,
+            });
+            try {
+              await get().login({
+                apiBase: resolvedBase,
+                managementKey: 'preview',
+                rememberPassword: false,
+              });
+              return true;
+            } catch (error) {
+              console.warn('Mock preview login failed:', error);
+              set({ lastEntryError: error });
+              return false;
+            }
+          }
           const wasLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+          const urlKey = consumeManagementKeyFromLocation();
           const legacyBase =
             obfuscatedStorage.getItem<string>('apiBase') ||
             obfuscatedStorage.getItem<string>('apiUrl', { encrypt: true });
@@ -68,17 +100,25 @@ export const useAuthStore = create<AuthStoreState>()(
           const resolvedBase = normalizeApiBase(
             apiBase || legacyBase || detectApiBaseFromLocation()
           );
-          const resolvedKey = managementKey || '';
-          const resolvedRememberPassword = rememberPassword;
+          const resolvedKey = urlKey || managementKey || '';
+          const resolvedRememberPassword = urlKey ? true : rememberPassword;
 
           set({
             apiBase: resolvedBase,
             managementKey: resolvedKey,
             rememberPassword: resolvedRememberPassword,
+            lastEntryError: null,
           });
           apiClient.setConfig({ apiBase: resolvedBase, managementKey: resolvedKey });
 
-          if (shouldAttemptAutoLogin(wasLoggedIn, resolvedBase, resolvedKey)) {
+          if (
+            shouldBootstrapSession({
+              wasLoggedIn,
+              apiBase: resolvedBase,
+              managementKey: resolvedKey,
+              urlKey,
+            })
+          ) {
             try {
               await get().login({
                 apiBase: resolvedBase,
@@ -88,6 +128,7 @@ export const useAuthStore = create<AuthStoreState>()(
               return true;
             } catch (error) {
               console.warn('Auto login failed:', error);
+              set({ lastEntryError: error });
               return false;
             }
           }
@@ -102,9 +143,13 @@ export const useAuthStore = create<AuthStoreState>()(
         if (typeof localStorage === 'undefined') return false;
         const wasLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const { apiBase, managementKey } = get();
-        // 与 restoreSession 相同：地址总能回退到当前访问地址，因此只需地址非空的占位判断
         const base = apiBase || detectApiBaseFromLocation();
-        return shouldAttemptAutoLogin(wasLoggedIn, base, managementKey);
+        return shouldBootstrapSession({
+          wasLoggedIn,
+          apiBase: base,
+          managementKey,
+          urlKey: readManagementKeyFromLocation(),
+        });
       },
 
       // 登录
@@ -116,9 +161,13 @@ export const useAuthStore = create<AuthStoreState>()(
         try {
           set({
             connectionStatus: 'connecting',
+            apiBase,
+            managementKey,
+            rememberPassword,
             serverVersion: null,
             serverBuildDate: null,
             supportsPlugin: false,
+            lastEntryError: null,
           });
           useConfigStore.getState().clearCache();
           useModelsStore.getState().clearCache();
@@ -182,6 +231,7 @@ export const useAuthStore = create<AuthStoreState>()(
           serverBuildDate: null,
           supportsPlugin: false,
           connectionStatus: 'disconnected',
+          lastEntryError: null,
         });
         localStorage.removeItem('isLoggedIn');
       },
@@ -263,10 +313,29 @@ export const useAuthStore = create<AuthStoreState>()(
   )
 );
 
+/**
+ * A rejected login (still connecting) keeps the key on screen.
+ * A 401 after a live session clears it.
+ */
+export function handleSessionUnauthorized(): void {
+  const state = useAuthStore.getState();
+  if (state.connectionStatus === 'connecting') {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('isLoggedIn');
+    }
+    useAuthStore.setState({
+      isAuthenticated: false,
+      connectionStatus: 'error',
+    });
+    return;
+  }
+  state.logout();
+}
+
 // 监听全局未授权事件
 if (typeof window !== 'undefined') {
   window.addEventListener('unauthorized', () => {
-    useAuthStore.getState().logout();
+    handleSessionUnauthorized();
   });
 
   window.addEventListener('server-version-update', ((e: CustomEvent) => {

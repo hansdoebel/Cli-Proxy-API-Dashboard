@@ -89,7 +89,7 @@
 
 .source {
   margin: 0;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-tertiary);
   overflow-wrap: anywhere;
 }
@@ -167,7 +167,7 @@
   margin: 10px 0 0;
 
   dt {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-secondary);
   }
@@ -175,7 +175,7 @@
   dd {
     margin: 0;
     font-family: $font-mono;
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text-primary);
     overflow-wrap: anywhere;
   }

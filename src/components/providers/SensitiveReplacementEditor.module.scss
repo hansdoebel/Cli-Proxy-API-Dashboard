@@ -40,7 +40,7 @@ $cell-height: 36px;
 
 .header {
   color: var(--text-tertiary);
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -123,7 +123,7 @@ $cell-height: 36px;
   min-width: 18px;
   color: var(--text-tertiary);
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -167,7 +167,7 @@ $cell-height: 36px;
 .error {
   margin: 0;
   color: var(--error-color);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
 }
 

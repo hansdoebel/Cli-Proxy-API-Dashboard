@@ -10,7 +10,6 @@ import {
 } from 'react';
 import { Select, type SelectOption } from '@/components/ui/Select';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { configFieldDomId } from '../../searchIndex';
 import { resolveRowSpans } from './rowSpans';
 import styles from './Field.module.scss';
@@ -37,25 +36,6 @@ const cx = (...classes: Array<string | false | undefined>) => classes.filter(Boo
    不是「说明」的可见附加内容（链接等可交互内容）走 aside，不进 InfoTip、不挂 aria-describedby。
    错误始终可见。
    ====================================================================== */
-
-/** 说明文字：默认进 InfoTip + 视觉隐藏副本；keepVisible 时照旧作为可见的一行。 */
-function DescriptionText({
-  id,
-  className,
-  keepVisible,
-  children,
-}: {
-  id?: string;
-  className?: string;
-  keepVisible: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <div id={id} className={cx(className, !keepVisible && 'visually-hidden-focusable')}>
-      {children}
-    </div>
-  );
-}
 
 type SettingCopy = {
   /** 搜索锚点：行本身即锚点（DOM id 见 configFieldDomId）。 */
@@ -96,9 +76,10 @@ function useSettingIds(fieldId: string): SettingIds {
   };
 }
 
-function describedBy(ids: SettingIds, description: ReactNode, error?: string) {
+function describedBy(ids: SettingIds, visibleDescription: ReactNode, error?: string) {
   return (
-    [error ? ids.errorId : '', description ? ids.hintId : ''].filter(Boolean).join(' ') || undefined
+    [error ? ids.errorId : '', visibleDescription ? ids.hintId : ''].filter(Boolean).join(' ') ||
+    undefined
   );
 }
 
@@ -148,18 +129,11 @@ function SettingRow({
               {label}
             </span>
           )}
-          {description && !keepDescriptionVisible ? (
-            <InfoTip content={description} label={label} descriptionId={ids.hintId} />
-          ) : null}
         </div>
-        {description ? (
-          <DescriptionText
-            id={ids.hintId}
-            className={styles.rowDescription}
-            keepVisible={keepDescriptionVisible}
-          >
+        {description && keepDescriptionVisible ? (
+          <p id={ids.hintId} className={styles.rowDescription}>
             {description}
-          </DescriptionText>
+          </p>
         ) : null}
         {aside ? <div className={styles.rowAside}>{aside}</div> : null}
         {error ? (
@@ -196,7 +170,7 @@ export function ToggleSetting({
           checked={checked}
           disabled={disabled}
           onChange={onChange}
-          ariaDescribedBy={describedBy(ids, copy.description)}
+          ariaDescribedBy={describedBy(ids, copy.keepDescriptionVisible ? copy.description : undefined)}
         />
       }
     />
@@ -252,7 +226,11 @@ export function TextSetting({
             spellCheck={false}
             disabled={disabled}
             aria-invalid={Boolean(copy.error)}
-            aria-describedby={describedBy(ids, copy.description, copy.error)}
+            aria-describedby={describedBy(
+              ids,
+              copy.keepDescriptionVisible ? copy.description : undefined,
+              copy.error
+            )}
             onChange={(event) => onChange(event.target.value)}
           />
           {adornment ? <span className={styles.adornment}>{adornment}</span> : null}
@@ -293,7 +271,11 @@ export function SelectSetting<T extends string>({
           options={options}
           disabled={disabled}
           ariaLabelledBy={ids.labelId}
-          ariaDescribedBy={describedBy(ids, copy.description, copy.error)}
+          ariaDescribedBy={describedBy(
+            ids,
+            copy.keepDescriptionVisible ? copy.description : undefined,
+            copy.error
+          )}
           ariaInvalid={copy.error ? true : undefined}
           onChange={(next) => onChange(next as T)}
         />
@@ -317,7 +299,11 @@ export function BlockSetting({
 }) {
   const ids = useSettingIds(copy.fieldId);
   const a11y = {
-    describedBy: describedBy(ids, copy.description, copy.error),
+    describedBy: describedBy(
+      ids,
+      copy.keepDescriptionVisible ? copy.description : undefined,
+      copy.error
+    ),
     invalid: Boolean(copy.error),
   };
   return (
@@ -393,9 +379,6 @@ export function SettingList({
         <header className={styles.groupHeader}>
           <div className={styles.groupTitleLine}>
             <h3 className={styles.groupTitle}>{title}</h3>
-            {description && !keepDescriptionVisible ? (
-              <InfoTip content={description} label={title} />
-            ) : null}
           </div>
           {description && keepDescriptionVisible ? (
             <p className={styles.groupDescription}>{description}</p>
@@ -473,9 +456,6 @@ export function FieldShell({
         <label id={labelId} htmlFor={htmlFor} className={styles.fieldLabel}>
           {label}
         </label>
-        {hint && !keepHintVisible ? (
-          <InfoTip content={hint} label={label} descriptionId={hintId} />
-        ) : null}
       </div>
       {children}
       {error ? (
@@ -483,10 +463,10 @@ export function FieldShell({
           {error}
         </div>
       ) : null}
-      {hint && (keepHintVisible || hintId) ? (
-        <DescriptionText id={hintId} className={styles.fieldHint} keepVisible={keepHintVisible}>
+      {hint && keepHintVisible ? (
+        <div id={hintId} className={styles.fieldHint}>
           {hint}
-        </DescriptionText>
+        </div>
       ) : null}
     </div>
   );

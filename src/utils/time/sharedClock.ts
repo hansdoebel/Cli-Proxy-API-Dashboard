@@ -55,6 +55,7 @@ export function createSharedClock(options: SharedClockOptions = {}): TestableSha
   let timerId: unknown = null;
 
   const tick = () => {
+    if (typeof document !== 'undefined' && document.hidden) return;
     current = now();
     listeners.forEach((listener) => listener());
   };

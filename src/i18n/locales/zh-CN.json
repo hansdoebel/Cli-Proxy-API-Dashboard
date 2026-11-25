@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "仪表盘",
-    "quick_start": "快速开始",
     "ai_providers": "AI 提供商",
     "auth_files": "认证文件",
     "oauth": "OAuth 登录",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "运行总览",
-    "quick_start": "快速配置",
     "ai_providers": "上游模型路由",
     "auth_files": "Auth 文件与凭证",
     "oauth": "OAuth 授权登录",
@@ -1998,10 +1996,11 @@
   },
   "theme": {
     "switch": "主题",
-    "light": "羊毛纸",
-    "white": "纯白",
-    "dark": "暗色",
-    "auto": "跟随系统"
+    "auto": "跟随系统",
+    "linear_dark": "线性深色",
+    "linear_light": "线性浅色",
+    "stripe_light": "Stripe 浅色",
+    "stripe_dark": "Stripe 深色"
   },
   "sidebar": {
     "toggle_expand": "展开侧边栏",
@@ -2455,7 +2454,8 @@
       "connect": "接入",
       "connected": "已接入 {{count}}",
       "onboardingTitle": "接入第一个 AI 提供商",
-      "moreQuickConnect": "更多快速接入"
+      "moreQuickConnect": "更多快速接入",
+      "onboardingHint": "选择官方 API，或添加 OpenAI 兼容接口。"
     }
   },
   "claude_reset": {
@@ -2563,5 +2563,24 @@
     "remove_pattern": "删除第 {{row}} 行正则规则",
     "move_up": "上移第 {{row}} 行正则规则",
     "move_down": "下移第 {{row}} 行正则规则"
+  },
+  "session": {
+    "title": "管理密钥",
+    "description": "此面板会连接提供本页面的 CLIProxyAPI。包括本机在内的每次管理请求都需要密钥，并会保存在此浏览器中。",
+    "connecting": "正在连接此服务器…",
+    "submit": "继续",
+    "submitting": "正在校验密钥…",
+    "remember": "在此浏览器记住",
+    "server": "服务器",
+    "server_hint": "默认使用本页面的源地址。仅当 API 在其他主机时再修改。",
+    "change_key": "管理密钥",
+    "change_title": "更新管理密钥",
+    "change_description": "密钥默认隐藏。只有需要核对已保存的值时再显示。",
+    "saved": "管理密钥已更新",
+    "forget": "忘记密钥",
+    "missing": "请输入管理密钥以继续。"
+  },
+  "mock": {
+    "banner": "正在显示示例数据，并非连接真实的 CLIProxyAPI。"
   }
 }

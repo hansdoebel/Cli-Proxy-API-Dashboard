@@ -9,17 +9,16 @@ import {
   IconSidebarQuota,
   IconSidebarSystem,
 } from '@/components/ui/icons';
-import { InfoTip } from '@/components/ui/Tooltip';
 import { useAuthStore } from '@/stores';
 import { useHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { formatCompactNumber, formatDateValue, formatPercent } from '@/utils/format';
 import { useDashboardOverview } from './hooks/useDashboardOverview';
-import { LiveWire } from './components/LiveWire';
 import { Meter } from './components/Meter';
 import { Sparkline } from './components/Sparkline';
 import { ThroughputChart } from './components/ThroughputChart';
+import { Card } from '@/components/ui/shadcn/card';
 import { useCountUp, useRevealGroup, useRevealOnScroll } from '@/hooks/motion';
-import { providerLabel, splitWindowMinutes, toneForSuccessRate, type MeterTone } from './utils';
+import { providerLabel, toneForSuccessRate, type MeterTone } from './utils';
 import styles from './dashboard.module.scss';
 
 const DASH = '—';
@@ -55,19 +54,6 @@ export function DashboardPage() {
   const ctaRef = useRevealGroup<HTMLElement>();
 
   const animatedTotal = useCountUp(traffic.total, connected);
-
-  const windowLabel = useMemo(() => {
-    if (traffic.windowMinutes <= 0) return DASH;
-    const { hours, minutes } = splitWindowMinutes(traffic.windowMinutes);
-    if (hours === 0) return t('dashboard.window_m', { minutes });
-    if (minutes === 0) return t('dashboard.window_h', { hours });
-    return t('dashboard.window_hm', { hours, minutes });
-  }, [traffic.windowMinutes, t]);
-
-  const heroSparkPoints = useMemo(
-    () => traffic.buckets.map((bucket) => bucket.success + bucket.failed),
-    [traffic.buckets]
-  );
 
   const routingStrategy = useMemo(() => {
     const raw = config?.routingStrategy?.trim() ?? '';
@@ -105,22 +91,17 @@ export function DashboardPage() {
   /* 句号状态灯只在「有活着的流量」时呼吸；离线/静默时保持安静 */
   const heroAlive = connected && traffic.total > 0;
 
-  const connectionLabel = t(
-    connectionStatus === 'connected'
-      ? 'common.connected'
-      : connectionStatus === 'connecting'
-        ? 'common.connecting'
-        : 'common.disconnected'
-  );
-  const versionLabel = serverVersion ? `v${serverVersion.trim().replace(/^[vV]+/, '')}` : null;
-  const heroMetaLine = [versionLabel, connectionLabel].filter(Boolean).join(' · ');
-
-  const statTiles = [
+  const statTiles: Array<{
+    key: string;
+    label: string;
+    value: string;
+    meter: number | null;
+    tone?: MeterTone;
+  }> = [
     {
       key: 'success',
       label: t('dashboard.success_rate'),
       value: traffic.successRate === null ? DASH : formatPercent(traffic.successRate),
-      info: null,
       meter: traffic.successRate,
       tone: successRateTone,
     },
@@ -128,18 +109,16 @@ export function DashboardPage() {
       key: 'credentials',
       label: t('dashboard.stat_credentials'),
       value: credentials ? credentials.total.toLocaleString() : DASH,
-      info: null,
       meter:
         credentials && credentials.total > 0
           ? (credentials.active / credentials.total) * 100
           : null,
-      tone: undefined,
+      tone: (credentials && credentials.active > 0 ? 'good' : 'idle') satisfies MeterTone,
     },
     {
       key: 'providerKeys',
       label: t('dashboard.stat_provider_keys'),
       value: counts.providerKeys === null ? DASH : counts.providerKeys.toLocaleString(),
-      info: t('dashboard.stat_provider_keys_hint'),
       meter: null,
       tone: undefined,
     },
@@ -147,7 +126,6 @@ export function DashboardPage() {
       key: 'models',
       label: t('dashboard.stat_models'),
       value: counts.models === null ? DASH : counts.models.toLocaleString(),
-      info: t('dashboard.stat_models_hint'),
       meter: null,
       tone: undefined,
     },
@@ -213,11 +191,6 @@ export function DashboardPage() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.ambient} aria-hidden="true">
-        <span className={styles.washTop} />
-        <span className={styles.gridWash} />
-      </div>
-
       {/* ---------- Hero ---------- */}
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroCopy}>
@@ -230,9 +203,6 @@ export function DashboardPage() {
               {t('dashboard.hero_period')}
             </span>
           </h1>
-          <p className={styles.heroMeta} data-reveal>
-            {heroMetaLine}
-          </p>
           <div className={styles.heroActions} data-reveal>
             <Link to="/ai-providers" className={styles.primaryAction}>
               {t('dashboard.cta_manage_providers')}
@@ -246,7 +216,7 @@ export function DashboardPage() {
           </div>
         </div>
 
-        <div className={styles.heroPanel} data-reveal="scale">
+        <Card className={styles.heroPanel} data-reveal="scale">
           <div className={styles.heroPanelTop}>
             <span className={styles.heroPanelLabel}>{t('dashboard.hero_requests_label')}</span>
             {connected && (
@@ -259,9 +229,6 @@ export function DashboardPage() {
           <strong className={styles.heroFigure}>
             {connected ? formatHeadline(animatedTotal) : DASH}
           </strong>
-          <span className={styles.heroPanelMeta}>
-            {t('dashboard.hero_window_meta', { window: windowLabel })}
-          </span>
           {traffic.total > 0 && (
             <div className={styles.ratioBar} aria-hidden="true">
               {traffic.totalSuccess > 0 && (
@@ -290,32 +257,21 @@ export function DashboardPage() {
               <b>{traffic.totalFailure.toLocaleString()}</b>
             </span>
           </div>
-        </div>
+        </Card>
 
-        <div className={styles.heroWire}>
-          <LiveWire
-            points={heroSparkPoints}
-            ariaLabel={t('dashboard.hero_spark_label', { window: windowLabel })}
-          />
-        </div>
       </section>
 
       {/* ---------- KPI ---------- */}
       <section className={styles.statsRow} ref={statsRef} aria-label={t('dashboard.stats_aria')}>
         {statTiles.map((tile) => (
-          <article
+          <Card
+            as="article"
             key={tile.key}
             className={styles.statTile}
             data-reveal
-            style={
-              {
-                '--tile-accent': tile.tone ? TILE_ACCENTS[tile.tone] : 'var(--border-hover)',
-              } as React.CSSProperties
-            }
           >
             <div className={styles.statLabelRow}>
               <span className={styles.statLabel}>{tile.label}</span>
-              {tile.info && <InfoTip content={tile.info} label={tile.label} />}
             </div>
             <strong className={styles.statValue}>{tile.value}</strong>
             {tile.meter !== null && tile.meter !== undefined && (
@@ -326,7 +282,7 @@ export function DashboardPage() {
                 className={styles.statMeter}
               />
             )}
-          </article>
+          </Card>
         ))}
       </section>
 
@@ -336,9 +292,9 @@ export function DashboardPage() {
           <span className={styles.eyebrow}>{t('dashboard.traffic_eyebrow')}</span>
           <h2 className={styles.sectionTitle}>{t('dashboard.traffic_title')}</h2>
         </header>
-        <div className={styles.panel}>
+        <Card className={styles.panel}>
           <ThroughputChart traffic={traffic} />
-        </div>
+        </Card>
       </section>
 
       {/* ---------- Provider fleet ---------- */}
@@ -347,7 +303,7 @@ export function DashboardPage() {
           <span className={styles.eyebrow}>{t('dashboard.fleet_eyebrow')}</span>
           <h2 className={styles.sectionTitle}>{t('dashboard.fleet_title')}</h2>
         </header>
-        <div className={styles.panel}>
+        <Card className={styles.panel}>
           {providers.length === 0 ? (
             <p className={styles.emptyNote}>{t('dashboard.fleet_empty')}</p>
           ) : (
@@ -390,12 +346,12 @@ export function DashboardPage() {
               ))}
             </ul>
           )}
-        </div>
+        </Card>
       </section>
 
       {/* ---------- Credential health + runtime ---------- */}
       <section className={styles.detailGrid} ref={detailRef}>
-        <div className={styles.panel} data-reveal>
+        <Card className={styles.panel} data-reveal>
           <header className={styles.panelHead}>
             <span className={styles.eyebrow}>{t('dashboard.health_eyebrow')}</span>
             <h2 className={styles.panelTitle}>{t('dashboard.health_title')}</h2>
@@ -466,9 +422,9 @@ export function DashboardPage() {
               </Link>
             </>
           )}
-        </div>
+        </Card>
 
-        <div className={styles.panel} data-reveal>
+        <Card className={styles.panel} data-reveal>
           <header className={styles.panelHead}>
             <span className={styles.eyebrow}>{t('dashboard.runtime_eyebrow')}</span>
             <h2 className={styles.panelTitle}>{t('dashboard.runtime_title')}</h2>
@@ -502,7 +458,7 @@ export function DashboardPage() {
               →
             </span>
           </Link>
-        </div>
+        </Card>
       </section>
 
       {/* ---------- CTA ---------- */}

@@ -3,7 +3,12 @@
  * Replaces the original src/core/api-client.js
  */
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosAdapter,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 import type { ApiClientConfig, ApiError } from '@/types';
 import {
   BUILD_DATE_HEADER_KEYS,
@@ -21,6 +26,7 @@ class ApiClient {
   private apiBase: string = '';
   private managementKey: string = '';
   private connectionRevision = 0;
+  private requestAdapter?: AxiosAdapter;
 
   constructor(private readonly emitEvents: () => boolean = () => true) {
     this.instance = axios.create({
@@ -51,6 +57,11 @@ class ApiClient {
     }
   }
 
+  /** Preview builds install a fixture adapter. The release bundle never calls this. */
+  setRequestAdapter(adapter: AxiosAdapter | undefined): void {
+    this.requestAdapter = adapter;
+  }
+
   /** Guards read/modify/write operations across connection changes, including ABA switches. */
   getConnectionRevision(): number {
     return this.connectionRevision;
@@ -62,6 +73,7 @@ class ApiClient {
     const client = new ApiClient(() => this.connectionRevision === revision && isCurrent());
     client.apiBase = this.apiBase;
     client.managementKey = this.managementKey;
+    client.requestAdapter = this.requestAdapter;
     client.instance.defaults.timeout = this.instance.defaults.timeout;
     return client;
   }
@@ -130,6 +142,9 @@ class ApiClient {
         // Add authorization header
         if (this.managementKey) {
           config.headers.Authorization = `Bearer ${this.managementKey}`;
+        }
+        if (this.requestAdapter) {
+          config.adapter = this.requestAdapter;
         }
 
         return config;

@@ -220,8 +220,7 @@ describe('provider model options', () => {
     const all =
       render('openaiCompatibility', true).match(/<(?:input|select|button)\b[^>]*>/g) ?? [];
     // InfoTips explain, they do not edit: they stay reachable while the form is disabled.
-    expect(all.filter(isInfoTip).length).toBeGreaterThan(0);
-    for (const tip of all.filter(isInfoTip)) expect(tip).not.toContain('disabled=""');
+    expect(all.filter(isInfoTip)).toHaveLength(0);
     const controls = all.filter((control) => !isInfoTip(control));
     expect(controls.length).toBeGreaterThan(10);
     for (const control of controls) expect(control).toContain('disabled=""');
@@ -246,17 +245,10 @@ describe('provider model options', () => {
     for (const label of html.matchAll(/<label\b[^>]*\bfor="([^"]+)"/g)) {
       expect(html).toContain(`id="${label[1]}"`);
     }
-    const tips = [...html.matchAll(/<button\b[^>]*data-info-tip[^>]*>/g)].map((m) => m[0]);
-    // Context length, input + output modalities, thinking override.
-    expect(tips).toHaveLength(4);
+    expect(html).not.toContain('data-info-tip');
     for (const key of ['contextHint', 'modalitiesHint', 'thinkingHint'] as const) {
-      expect(html).toContain(`hidden="">providersPage.modelOptions.${key}</span>`);
+      expect(html).not.toContain(`providersPage.modelOptions.${key}`);
     }
-    const context = /<input\b[^>]*inputMode="numeric"[^>]*>/.exec(html)![0];
-    const contextHintId = /aria-describedby="([^"]+)"/.exec(context)![1];
-    expect(html).toContain(
-      `<span id="${contextHintId}" hidden="">providersPage.modelOptions.contextHint</span>`
-    );
     expect(html).not.toContain('providersPage.form.thinkingExistingHint');
   });
 
@@ -274,8 +266,7 @@ describe('provider model options', () => {
         })
       )
     );
-    expect(html).toContain(
-      'providersPage.modelOptions.thinkingHint <br/>providersPage.form.thinkingExistingHint'
-    );
+    expect(html).not.toContain('providersPage.modelOptions.thinkingHint');
+    expect(html).not.toContain('providersPage.form.thinkingExistingHint');
   });
 });

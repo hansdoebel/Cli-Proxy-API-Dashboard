@@ -34,9 +34,10 @@ interface MockAccount {
 }
 
 const THEMES: { value: Theme; label: string }[] = [
-  { value: 'light', label: '羊毛纸' },
-  { value: 'white', label: '纯白' },
-  { value: 'dark', label: '暗色' },
+  { value: 'linear-dark', label: 'Linear Dark' },
+  { value: 'linear-light', label: 'Linear Light' },
+  { value: 'stripe-dark', label: 'Stripe Dark' },
+  { value: 'stripe-light', label: 'Stripe Light' },
 ];
 
 const CARD_STAGGER_MS = 50;

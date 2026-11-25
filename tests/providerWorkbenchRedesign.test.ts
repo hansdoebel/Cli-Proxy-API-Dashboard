@@ -203,23 +203,15 @@ describe('brand tabs', () => {
     expect(html).toContain('role="tablist"');
     const tabs = [...html.matchAll(/<button[^>]*role="tab"[^>]*>/g)].map((m) => m[0]);
     expect(tabs).toHaveLength(3);
-    // Partners stay in the strip, after a labelled divider, without a zero badge.
-    expect(html.indexOf(en.providersPage.categories.quickFill)).toBeLessThan(
-      html.indexOf('id="tab-fennoAI"')
-    );
+    expect(html).not.toContain(en.providersPage.categories.quickFill);
+    expect(html).not.toContain(en.providersPage.picker.moreQuickConnect);
     expect(html).not.toContain('>0</span>');
     const active = tabs.find((tab) => tab.includes('id="tab-gemini"'))!;
     expect(active).toContain('aria-selected="true"');
     expect(active).toContain('tabindex="0"');
     expect(active).toContain('aria-controls="panel"');
     expect(tabs.find((tab) => tab.includes('id="tab-codex"'))).toContain('tabindex="-1"');
-    const invite = new RegExp(
-      `<button[^>]*aria-label="${en.providersPage.picker.moreQuickConnect}"[^>]*>`
-    ).exec(html);
-    expect(invite).not.toBeNull();
-    expect(invite![0]).toContain('FennoAI');
-    // The invitation sits outside the tablist so it is not announced as a tab.
-    expect(html.indexOf('</div>')).toBeLessThan(html.indexOf(invite![0]));
+    expect(html).toContain('id="tab-fennoAI"');
   });
 
   test('omit the invitation once every partner is connected', () => {
@@ -248,20 +240,26 @@ describe('provider picker', () => {
     group('aiCodeMirror'),
   ];
 
-  test('features quick-connect partners first with connect and register actions', () => {
+  test('lists providers as plain tiles without a recommended quick-connect block', () => {
     const html = render(createElement(ProviderPicker, { groups: catalogue, onPick: () => {} }));
-    const featured = html.indexOf(en.providersPage.picker.featured);
-    const official = html.indexOf(en.providersPage.picker.official);
-    expect(featured).toBeGreaterThanOrEqual(0);
-    expect(featured).toBeLessThan(official);
-    for (const name of ['FennoAI', en.providersPage.providerNames.qiniuCloud]) {
-      expect(html).toContain(`aria-label="${en.providersPage.picker.connect} ${name}"`);
-      expect(html.indexOf(name)).toBeLessThan(official);
+    expect(html).not.toContain(en.providersPage.picker.featured);
+    expect(html).not.toContain(en.providersPage.picker.featuredBadge);
+    expect(html).toContain(en.providersPage.picker.official);
+    for (const name of ['FennoAI', 'Gemini', en.providersPage.providerNames.qiniuCloud]) {
+      expect(html).toContain(name);
     }
-    const links = [...html.matchAll(/<a[^>]*target="_blank"[^>]*>/g)];
-    // Three partners plus the Kimi registration link.
-    expect(links).toHaveLength(4);
-    expect(html).toContain(en.providersPage.picker.oneKey.replace('{{count}}', '2'));
+    expect(html).not.toContain('target="_blank"');
+  });
+
+  test('the first-run page keeps official APIs and hides the recommended quick-connect block', () => {
+    const html = render(
+      createElement(ProviderPicker, { groups: catalogue, variant: 'page', onPick: () => {} })
+    );
+    expect(html).not.toContain(en.providersPage.picker.featured);
+    expect(html).not.toContain(en.providersPage.picker.featuredBadge);
+    expect(html).toContain(en.providersPage.picker.official);
+    expect(html).toContain('Gemini');
+    expect(html).toContain(en.providersPage.picker.custom);
   });
 
   test('edits the full connected partner bundle but allows another ordinary connection', () => {

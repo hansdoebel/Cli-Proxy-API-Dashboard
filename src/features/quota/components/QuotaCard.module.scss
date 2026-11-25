@@ -10,11 +10,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 11px;
-  padding: 15px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  gap: 12px;
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   transition:
     transform var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),
     border-color var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),
@@ -70,7 +70,7 @@
 }
 
 .iconFallback {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-secondary);
 }
@@ -196,7 +196,7 @@
 
 .idleHint {
   font-family: $font-mono;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.5;
   text-align: center;
 }
@@ -267,7 +267,7 @@
 /* ---------- error ---------- */
 
 .errorStrip {
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--viz-failure);
   background: color-mix(in srgb, var(--viz-failure) 8%, transparent);
@@ -296,7 +296,7 @@
   border-radius: $radius-full;
   background: none;
   padding: 5px 11px;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 1.4;
   color: var(--text-secondary);

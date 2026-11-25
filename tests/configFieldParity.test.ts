@@ -110,13 +110,19 @@ describe('search hints are explanations the page still renders', () => {
     );
   const rendered = Object.fromEntries(Object.keys(sections).map((id) => [id, markupOf(id)]));
 
-  test('every hintKey is rendered by its section', () => {
+  test('explanatory hint keys are not rendered; warnings that stay on the page still are', () => {
+    const kept = new Set([
+      'trustedProxies',
+      'rmAllowRemote',
+      'pluginStoreAuth',
+      'codexLiveMediaRelayICEServers',
+    ]);
     for (const entry of CONFIG_FIELD_SEARCH_INDEX) {
       if (!entry.hintKey) continue;
       expect({
         fieldId: entry.fieldId,
         rendered: rendered[entry.sectionId].includes(escapeText(translations.t(entry.hintKey))),
-      }).toEqual({ fieldId: entry.fieldId, rendered: true });
+      }).toEqual({ fieldId: entry.fieldId, rendered: kept.has(entry.fieldId) });
     }
   });
 

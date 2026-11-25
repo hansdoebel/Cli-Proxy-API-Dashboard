@@ -21,9 +21,18 @@ body {
 body {
   margin: 0;
   font-family: $font-family;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
+  letter-spacing: -0.011em;
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.022em;
+  line-height: 1.15;
 }
 
 #root {

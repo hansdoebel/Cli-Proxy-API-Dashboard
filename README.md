@@ -29,7 +29,7 @@ From everyday configuration to troubleshooting, keep the essentials close at han
 | --- | --- | --- |
 | Edit settings visually or in YAML, with a diff before saving. | Manage provider keys, auth files, and OAuth flows. | Check instance status, provider quotas, and request logs. |
 
-**Single-file deployment** · **Responsive layout** · **Four UI languages**
+**Single-file deployment** · **Responsive layout** · **English UI**
 
 > [!IMPORTANT]
 > Requires **CLI Proxy API ≥ 8.0.0**; the latest v8 release is recommended. This repository is the management UI, not the proxy — it does not forward traffic. It uses the **v8 Management API** (`/v8/management`) and v8 configuration layout, with no v0 fallback. Plugin resources and custom extensions retain their backend-declared paths.
@@ -79,7 +79,7 @@ Upgrade the backend first and back up `config.yaml`. The backend returns the v8 
 | **Plugins** | Access plugin management when the connected backend advertises support. |
 | **System** | Check for updates, inspect available models, and clear local login data. |
 
-Supports **English, 简体中文, 繁體中文, and Русский**, with browser-language detection and a manual language switch. Responsive layouts support desktop, tablet, and mobile use in modern Chrome, Firefox, Safari, and Edge.
+The interface is **English**. Responsive layouts support desktop, tablet, and mobile use in modern Chrome, Firefox, Safari, and Edge.
 
 ## Deployment
 
@@ -111,6 +111,25 @@ bun run dev
 ```
 
 Open `http://localhost:5173` and connect to your backend instance.
+
+### Sample data
+
+Mock responses are **not** in the release `management.html`. They are compiled only when `VITE_MOCK=1`.
+
+| Command | What you get |
+| --- | --- |
+| `bun run dev:mock` | Dev server that serves sample data immediately |
+| `bun run build:mock` | Single-file build that *can* serve sample data |
+
+To preview a built file, run `bun run build:mock`, rename `dist/index.html` to `management.html` if you want the release name, and open it with the query `mock=1`:
+
+```text
+management.html?mock=1
+```
+
+`http://127.0.0.1:4173/management.html?mock=1#/` works the same after `bun run preview`. The hash form `management.html#/?mock=1` also turns sample data on. A release build (`bun run build`, the file CLIProxyAPI downloads) ignores `mock=1` because the fixture code is not in that file.
+
+Sample keys look like `sk-sample-…` and are masked in the UI. Nothing is saved to a real proxy.
 
 **Built with** React 19 · TypeScript 6 · Vite 8 · Zustand · Axios · React Router 7 · Motion · CodeMirror 6 · SCSS Modules · i18next.
 

@@ -4,7 +4,15 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
-import { InfoTip, Tooltip } from '@/components/ui/Tooltip';
+import { Tooltip } from '@/components/ui/Tooltip';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/shadcn/table';
 import {
   IconGithub,
   IconBookOpen,
@@ -18,51 +26,13 @@ import {
   useConfigStore,
   useNotificationStore,
   useModelsStore,
-  useThemeStore,
 } from '@/stores';
 import { apiClient, configApi, modelsApi, versionApi } from '@/services/api';
 import { useApiKeysForModels } from '@/hooks/useApiKeysForModels';
 import { formatDateTimeValue } from '@/utils/format';
 import { classifyModels } from '@/utils/models';
 import { STORAGE_KEY_AUTH } from '@/utils/constants';
-import { INLINE_LOGO_JPEG } from '@/assets/logoInline';
-import iconGemini from '@/assets/icons/gemini.svg';
-import iconClaude from '@/assets/icons/claude.svg';
-import iconMeta from '@/assets/icons/meta.svg';
-import iconCopilot from '@/assets/icons/copilot.svg';
-import iconDevinLight from '@/assets/icons/devin.svg';
-import iconDevinDark from '@/assets/icons/devin-dark.svg';
-import iconOpenaiLight from '@/assets/icons/openai-light.svg';
-import iconOpenaiDark from '@/assets/icons/openai-dark.svg';
-import iconQwen from '@/assets/icons/qwen.svg';
-import iconKimiLight from '@/assets/icons/kimi-light.svg';
-import iconKimiDark from '@/assets/icons/kimi-dark.svg';
-import iconGlm from '@/assets/icons/glm.svg';
-import iconGrok from '@/assets/icons/grok.svg';
-import iconGrokDark from '@/assets/icons/grok-dark.svg';
-import iconDeepseek from '@/assets/icons/deepseek.svg';
-import iconMinimax from '@/assets/icons/minimax.svg';
-import iconXiaomi from '@/assets/icons/xiaomi.svg';
-import iconStepfun from '@/assets/icons/stepfun.svg';
-import iconStepfunDark from '@/assets/icons/stepfun-dark.svg';
 import styles from './SystemPage.module.scss';
-
-const MODEL_CATEGORY_ICONS: Record<string, string | { light: string; dark: string }> = {
-  devin: { light: iconDevinLight, dark: iconDevinDark },
-  gpt: { light: iconOpenaiLight, dark: iconOpenaiDark },
-  claude: iconClaude,
-  meta: iconMeta,
-  copilot: iconCopilot,
-  gemini: iconGemini,
-  qwen: iconQwen,
-  kimi: { light: iconKimiDark, dark: iconKimiLight },
-  glm: iconGlm,
-  grok: { light: iconGrok, dark: iconGrokDark },
-  deepseek: iconDeepseek,
-  minimax: iconMinimax,
-  xiaomi: iconXiaomi,
-  stepfun: { light: iconStepfun, dark: iconStepfunDark },
-};
 
 const parseVersionSegments = (version?: string | null) => {
   if (!version) return null;
@@ -93,7 +63,6 @@ const compareVersions = (latest?: string | null, current?: string | null) => {
 export function SystemPage() {
   const { t, i18n } = useTranslation();
   const { showNotification, showConfirmation } = useNotificationStore();
-  const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
   const auth = useAuthStore();
   const config = useConfigStore((state) => state.config);
   const fetchConfig = useConfigStore((state) => state.fetchConfig);
@@ -135,13 +104,6 @@ export function SystemPage() {
   const apiVersion = auth.serverVersion || t('system_info.version_unknown');
   const buildTime =
     formatDateTimeValue(auth.serverBuildDate, i18n.language) || t('system_info.version_unknown');
-
-  const getIconForCategory = (categoryId: string): string | null => {
-    const iconEntry = MODEL_CATEGORY_ICONS[categoryId];
-    if (!iconEntry) return null;
-    if (typeof iconEntry === 'string') return iconEntry;
-    return resolvedTheme === 'dark' ? iconEntry.dark : iconEntry.light;
-  };
 
   const resolveApiKeysForModels = useApiKeysForModels();
 
@@ -362,7 +324,6 @@ export function SystemPage() {
       <div className={styles.content}>
         <Card className={styles.aboutCard}>
           <div className={styles.aboutHeader}>
-            <img src={INLINE_LOGO_JPEG} alt="CPAMC" className={styles.aboutLogo} />
             <div className={styles.aboutTitle}>{t('system_info.about_title')}</div>
           </div>
 
@@ -383,7 +344,7 @@ export function SystemPage() {
                 <div className={styles.tileLabel}>{t('footer.api_version')}</div>
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="secondary"
                   size="sm"
                   className={styles.tileAction}
                   onClick={() => void handleVersionCheck()}
@@ -472,16 +433,7 @@ export function SystemPage() {
         </Card>
 
         <Card
-          title={
-            <>
-              {t('system_info.models_title')}
-              {/* When to use which of the two buttons on the right. */}
-              <InfoTip
-                content={t('system_info.models_desc')}
-                label={t('system_info.models_title')}
-              />
-            </>
-          }
+          title={t('system_info.models_title')}
           extra={
             <div className={styles.modelsActions}>
               <Button
@@ -526,40 +478,26 @@ export function SystemPage() {
               <div className="hint">{t('system_info.models_empty')}</div>
             )
           ) : (
-            <div className="item-list">
-              {groupedModels.map((group) => {
-                const iconSrc = getIconForCategory(group.id);
-                return (
-                  <div key={group.id} className="item-row">
-                    <div className="item-meta">
-                      <div className={styles.groupTitle}>
-                        {iconSrc && <img src={iconSrc} alt="" className={styles.groupIcon} />}
-                        <span className="item-title">{group.label}</span>
-                      </div>
-                      <div className="item-subtitle">
-                        {t('system_info.models_count', { count: group.items.length })}
-                      </div>
-                    </div>
-                    <div className={styles.modelTags}>
-                      {group.items.map((model) => (
-                        <span
-                          key={`${model.name}-${model.alias ?? 'default'}`}
-                          className={styles.modelTag}
-                          title={model.description || ''}
-                        >
-                          <span className={styles.modelName}>{model.name}</span>
-                          {(model.alias || model.displayName) && (
-                            <span className={styles.modelAlias}>
-                              {model.alias || model.displayName}
-                            </span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t('nav.ai_providers')}</TableHead>
+                  <TableHead>{t('system_info.models_title')}</TableHead>
+                  <TableHead>{t('oauth_model_alias.diagram_add_alias_label')}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {groupedModels.flatMap((group) =>
+                  group.items.map((model) => (
+                    <TableRow key={`${group.id}-${model.name}-${model.alias ?? 'default'}`}>
+                      <TableCell>{group.label}</TableCell>
+                      <TableCell>{model.name}</TableCell>
+                      <TableCell>{model.alias || model.displayName || ''}</TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
           )}
         </Card>
 

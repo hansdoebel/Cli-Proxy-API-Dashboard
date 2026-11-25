@@ -36,15 +36,12 @@ const sectionFrom = (html: string, marker: string) => {
 };
 
 describe('dashboard', () => {
-  test('stat tiles are a label and a number; definitions sit in InfoTips', async () => {
+  test('stat tiles are a label and a number, without definition tips', async () => {
     await i18n.changeLanguage('en');
     const html = renderPage(DashboardPage);
-    expect(infoTipNames(html)).toEqual([
-      `More information about ${i18n.t('dashboard.stat_provider_keys')}`,
-      `More information about ${i18n.t('dashboard.stat_models')}`,
-    ]);
-    expect(html).toContain(`hidden="">${i18n.t('dashboard.stat_provider_keys_hint')}</span>`);
-    expect(html).toContain(`hidden="">${i18n.t('dashboard.stat_models_hint')}</span>`);
+    expect(infoTipNames(html)).toEqual([]);
+    expect(html).not.toContain(i18n.t('dashboard.stat_provider_keys_hint'));
+    expect(html).not.toContain(i18n.t('dashboard.stat_models_hint'));
 
     // Disconnected (no meters): every tile ends at its number, with no caption line under it.
     const stats = stripSvg(sectionFrom(html, `aria-label="${i18n.t('dashboard.stats_aria')}"`));
@@ -76,13 +73,11 @@ describe('dashboard', () => {
 });
 
 describe('system page', () => {
-  test('the models card explains its two buttons in an InfoTip and a tooltip', async () => {
+  test('the models card keeps the shared-catalog warning on the second button', async () => {
     await i18n.changeLanguage('en');
     const html = renderPage(SystemPage);
-    expect(infoTipNames(html)).toEqual([
-      `More information about ${i18n.t('system_info.models_title')}`,
-    ]);
-    expect(html).toContain(`hidden="">${i18n.t('system_info.models_desc')}</span>`);
+    expect(infoTipNames(html)).toEqual([]);
+    expect(html).not.toContain(i18n.t('system_info.models_desc'));
     // No native titles on the two model buttons: the catalog hint moved into a Tooltip.
     const actions = html.slice(
       html.indexOf(i18n.t('system_info.models_title')),

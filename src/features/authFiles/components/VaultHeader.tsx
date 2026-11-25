@@ -31,8 +31,6 @@ export function VaultHeader(props: VaultHeaderProps) {
     syncingModelCatalog = false,
     onSyncModelCatalog,
     modelCatalogSyncDisabled = false,
-    totalCount,
-    activeCount,
     problemCount,
     loading,
     refreshing,
@@ -53,27 +51,13 @@ export function VaultHeader(props: VaultHeaderProps) {
         <h1 className={styles.title} data-reveal>
           {t('auth_files.title')}
         </h1>
-        <p className={styles.meta} data-reveal>
-          <span className={styles.metaTotal}>
-            {t('auth_files.meta_total', { count: totalCount })}
-          </span>
-          <span className={styles.metaDot} aria-hidden="true">
-            ·
-          </span>
-          <span className={activeCount > 0 ? styles.metaActive : styles.metaMuted}>
-            {t('auth_files.meta_active', { count: activeCount })}
-          </span>
-          {problemCount > 0 && (
-            <>
-              <span className={styles.metaDot} aria-hidden="true">
-                ·
-              </span>
-              <span className={styles.metaProblem}>
-                {t('auth_files.meta_problem', { count: problemCount })}
-              </span>
-            </>
-          )}
-        </p>
+        {problemCount > 0 ? (
+          <p className={styles.meta} data-reveal>
+            <span className={styles.metaProblem}>
+              {t('auth_files.meta_problem', { count: problemCount })}
+            </span>
+          </p>
+        ) : null}
       </div>
       <div className={styles.actions} data-reveal>
         {onSyncModelCatalog && (

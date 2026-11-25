@@ -96,7 +96,7 @@
   border-radius: 7px;
   background: var(--bg-primary);
   overflow: hidden;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-secondary);
 
@@ -124,7 +124,7 @@
 
 .kind {
   @include text-ellipsis;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.2;
   color: var(--text-tertiary);
 }
@@ -136,7 +136,7 @@
 .share {
   flex-shrink: 0;
   font-family: $font-mono;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--viz-success);
@@ -147,7 +147,7 @@
   padding: 2px 7px;
   border-radius: $radius-full;
   background: var(--bg-tertiary);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.4;
   color: var(--text-secondary);
   white-space: nowrap;
@@ -238,7 +238,7 @@
 .menuNote {
   margin: 0;
   padding: 6px 10px 8px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--text-tertiary);
 }

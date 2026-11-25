@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { scrollProviderTabs } from '@/features/authFiles/components/providerTabsWheel';
-import { connectionCounts, isQuickFillBrand } from '../resourceView';
+import { connectionCounts } from '../resourceView';
 import type { ProviderBrand, ProviderGroup } from '../types';
 import { BrandLogo } from './BrandLogo';
 import styles from './BrandTabs.module.scss';
@@ -31,9 +31,6 @@ export function BrandTabs({
   onSelect,
   tabId,
   panelId,
-  onAdd,
-  partnerBrands = [],
-  addDisabled = false,
 }: BrandTabsProps) {
   const { t } = useTranslation();
   const stripRef = useRef<HTMLDivElement>(null);
@@ -96,18 +93,11 @@ export function BrandTabs({
         role="tablist"
         aria-label={t('providersPage.categories.title')}
       >
-        {groups.map((group, index) => {
+        {groups.map((group) => {
           const active = group.id === activeBrand;
-          const startsPartners =
-            isQuickFillBrand(group.id) && (index === 0 || !isQuickFillBrand(groups[index - 1].id));
           const counts = connectionCounts(group);
           const total = counts.total;
           return [
-            startsPartners ? (
-              <span key="partners-divider" className={styles.divider} aria-hidden="true">
-                {t('providersPage.categories.quickFill')}
-              </span>
-            ) : null,
             <button
               key={group.id}
               id={tabId(group.id)}
@@ -138,25 +128,6 @@ export function BrandTabs({
         })}
       </div>
 
-      {partnerBrands.length > 0 ? (
-        <button
-          type="button"
-          className={styles.partners}
-          onClick={onAdd}
-          disabled={addDisabled}
-          aria-label={t('providersPage.picker.moreQuickConnect')}
-          title={partnerBrands
-            .map((brand) => t(`providersPage.providerNames.${brand}`))
-            .join(' · ')}
-        >
-          <span className={styles.partnersLabel}>{t('providersPage.picker.featured')}</span>
-          <span className={styles.partnersStack} aria-hidden="true">
-            {partnerBrands.map((brand) => (
-              <BrandLogo key={brand} brand={brand} size={24} className={styles.partnerLogo} />
-            ))}
-          </span>
-        </button>
-      ) : null}
     </div>
   );
 }

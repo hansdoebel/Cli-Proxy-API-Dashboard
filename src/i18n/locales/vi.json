@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Bảng điều khiển",
-    "quick_start": "Bắt đầu nhanh",
     "ai_providers": "AI Provider",
     "auth_files": "File xác thực",
     "oauth": "Đăng nhập OAuth",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "Tổng quan vận hành",
-    "quick_start": "Thiết lập APIKEY.FUN",
     "ai_providers": "Định tuyến model upstream",
     "auth_files": "File xác thực & credential",
     "oauth": "Ủy quyền OAuth",
@@ -1950,10 +1948,11 @@
   },
   "theme": {
     "switch": "Giao diện",
-    "light": "Giấy len",
-    "white": "Trắng tinh",
-    "dark": "Tối",
-    "auto": "Theo hệ thống"
+    "auto": "Theo hệ thống",
+    "linear_dark": "Linear tối",
+    "linear_light": "Linear sáng",
+    "stripe_light": "Stripe sáng",
+    "stripe_dark": "Stripe tối"
   },
   "sidebar": {
     "toggle_expand": "Mở rộng thanh bên",
@@ -2409,7 +2408,8 @@
       "connect": "Kết nối",
       "connected": "Đã kết nối {{count}}",
       "onboardingTitle": "Kết nối nhà cung cấp AI đầu tiên",
-      "moreQuickConnect": "Thêm đối tác kết nối nhanh"
+      "moreQuickConnect": "Thêm đối tác kết nối nhanh",
+      "onboardingHint": "Chọn API chính thức hoặc thêm endpoint tương thích OpenAI."
     }
   },
   "devin_quota": {
@@ -2572,5 +2572,24 @@
     "remove_pattern": "Xóa quy tắc regex dòng {{row}}",
     "move_up": "Chuyển quy tắc regex dòng {{row}} lên",
     "move_down": "Chuyển quy tắc regex dòng {{row}} xuống"
+  },
+  "session": {
+    "title": "Khóa quản trị",
+    "description": "Bảng điều khiển kết nối tới máy chủ CLIProxyAPI đang phục vụ trang này. Mọi yêu cầu quản trị đều cần khóa, kể cả từ localhost, và khóa được ghi nhớ trên trình duyệt này.",
+    "connecting": "Đang kết nối tới máy chủ này…",
+    "submit": "Tiếp tục",
+    "submitting": "Đang kiểm tra khóa…",
+    "remember": "Ghi nhớ trên trình duyệt này",
+    "server": "Máy chủ",
+    "server_hint": "Mặc định dùng origin của trang này. Chỉ đổi khi API nằm trên máy chủ khác.",
+    "change_key": "Khóa quản trị",
+    "change_title": "Cập nhật khóa quản trị",
+    "change_description": "Khóa được che mặc định. Chỉ hiện khi bạn cần kiểm tra giá trị đã lưu.",
+    "saved": "Đã cập nhật khóa quản trị",
+    "forget": "Quên khóa",
+    "missing": "Nhập khóa quản trị để tiếp tục."
+  },
+  "mock": {
+    "banner": "Đang hiển thị dữ liệu mẫu. Đây không phải máy chủ CLIProxyAPI thật."
   }
 }

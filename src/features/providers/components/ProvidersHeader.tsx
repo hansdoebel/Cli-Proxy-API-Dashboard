@@ -12,7 +12,6 @@ export interface ProvidersHeaderSummary {
 
 interface ProvidersHeaderProps {
   title: string;
-  /** Omitted on the quick-start route, which manages a single bundle. */
   summary?: ProvidersHeaderSummary;
   isFetching: boolean;
   onRefresh: () => void;
@@ -28,7 +27,6 @@ interface ProvidersHeaderProps {
  */
 export function ProvidersHeader({
   title,
-  summary,
   isFetching,
   onRefresh,
   newLabel,
@@ -47,28 +45,6 @@ export function ProvidersHeader({
         <h1 className={styles.title} data-reveal>
           {title}
         </h1>
-        {summary ? (
-          <p className={styles.meta} data-reveal>
-            <span className={summary.totalActive > 0 ? styles.metaActive : styles.metaMuted}>
-              {t('providersPage.header.activeResources', {
-                active: summary.totalActive,
-                total: summary.totalResources,
-              })}
-            </span>
-            <span className={styles.metaDot} aria-hidden="true">
-              ·
-            </span>
-            <span>
-              {t('providersPage.header.providerFamilies', { count: summary.providerFamilies })}
-            </span>
-            <span className={styles.metaDot} aria-hidden="true">
-              ·
-            </span>
-            <span className={styles.metaMuted}>
-              {t('providersPage.header.updatedAt', { time: summary.updatedAtLabel })}
-            </span>
-          </p>
-        ) : null}
       </div>
       <div className={styles.actions} data-reveal>
         <button

@@ -1,6 +1,6 @@
 @use '../../../styles/mixins' as *;
 
-$quota-font-size: 11.5px;
+$quota-font-size: 13px;
 
 /* ============================================================
  * 认证文件卡片的配额区外衣。
@@ -230,9 +230,9 @@ button.quotaMessageAction {
 }
 
 .premiumPlanValue {
-  font-family: $font-mono;
   font-size: $quota-font-size;
   font-weight: 650;
+  font-variant-numeric: tabular-nums;
   color: var(--amber-text);
 }
 
@@ -243,9 +243,9 @@ button.quotaMessageAction {
  * 浅色取青玉墨 #4f5a3c（对白底约 7:1）；深色取羊脂白 #e6dec4，
  * 两者都是玉的颜色，与 amber 的金色明确区分。 */
 .elitePlanValue {
-  font-family: $font-mono;
   font-size: $quota-font-size;
   font-weight: 650;
+  font-variant-numeric: tabular-nums;
   color: #4f5a3c;
 }
 
@@ -275,12 +275,10 @@ button.quotaMessageAction {
 }
 
 .antigravityQuotaGroupTitle {
-  font-family: $font-mono;
   font-size: $quota-font-size;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 /* ---------- Codex 重置积分 ---------- */
@@ -295,12 +293,10 @@ button.quotaMessageAction {
 }
 
 .codexResetCreditsTitle {
-  font-family: $font-mono;
   font-size: $quota-font-size;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
+  font-weight: 590;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
 }
 
 .codexResetCreditRow {

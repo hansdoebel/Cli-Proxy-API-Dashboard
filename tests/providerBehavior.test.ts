@@ -151,7 +151,7 @@ test('UI and form projection gate behavior by actual provider or sponsor protoco
       })
     );
     expect(html).toContain('disabled=""');
-    expect(html).toContain('aria-describedby');
+    expect(html).toContain('type="checkbox"');
   }
 });
 test('unsupported behavior does not leak through a non-Codex API serializer', async () => {
