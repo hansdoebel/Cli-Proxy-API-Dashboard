@@ -12,8 +12,7 @@ import { detectApiBaseFromLocation, normalizeApiBase } from '@/utils/connection'
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import { isSupportedLanguage } from '@/utils/language';
 import { INLINE_LOGO_JPEG } from '@/assets/logoInline';
-import type { ApiError } from '@/types';
-import { LegacyBackendError } from '@/services/api/legacyBackendProbe';
+import { formatManagementError } from '@/utils/managementError';
 import { DotMatrixHero } from './login/DotMatrixHero';
 import { LoginForm } from './login/LoginForm';
 import { resolveLoginRedirect } from '@/router/loginRedirect';
@@ -26,72 +25,6 @@ export const LOGIN_BRAND_NAME = 'CLI Proxy API Management Center';
 
 /** 语言下拉层最小宽度：最长的语言名（繁體中文（台灣））单行显示 */
 const LANGUAGE_DROPDOWN_MIN_WIDTH = 180;
-
-/**
- * 将 API 错误转换为本地化的用户友好消息
- */
-function getLocalizedErrorMessage(error: unknown, t: (key: string) => string): string {
-  if (error instanceof LegacyBackendError) return t('login.error_legacy_backend');
-  const apiError = error as Partial<ApiError>;
-  const status = typeof apiError.status === 'number' ? apiError.status : undefined;
-  const code = typeof apiError.code === 'string' ? apiError.code : undefined;
-  const message =
-    error instanceof Error
-      ? error.message
-      : typeof apiError.message === 'string'
-        ? apiError.message
-        : typeof error === 'string'
-          ? error
-          : '';
-
-  const withHttpStatus = (summary: string) => {
-    if (!status) {
-      return summary;
-    }
-
-    const genericAxiosMessage = `Request failed with status code ${status}`;
-    const detail = message.trim();
-    const backendDetail =
-      detail && detail !== genericAxiosMessage
-        ? ` (${t('login.error_backend_detail')}: ${detail})`
-        : '';
-
-    return `HTTP ${status}: ${summary}${backendDetail}`;
-  };
-
-  // 根据 HTTP 状态码判断
-  if (status === 401) {
-    return withHttpStatus(t('login.error_unauthorized'));
-  }
-  if (status === 403) {
-    return withHttpStatus(t('login.error_forbidden'));
-  }
-  if (status === 404) {
-    return withHttpStatus(t('login.error_not_found'));
-  }
-  if (status && status >= 500) {
-    return withHttpStatus(t('login.error_server'));
-  }
-
-  // 根据 axios 错误码判断
-  if (code === 'ECONNABORTED' || message.toLowerCase().includes('timeout')) {
-    return t('login.error_timeout');
-  }
-  if (code === 'ERR_NETWORK' || message.toLowerCase().includes('network error')) {
-    return t('login.error_network');
-  }
-  if (code === 'ERR_CERT_AUTHORITY_INVALID' || message.toLowerCase().includes('certificate')) {
-    return t('login.error_ssl');
-  }
-
-  // 检查 CORS 错误
-  if (message.toLowerCase().includes('cors') || message.toLowerCase().includes('cross-origin')) {
-    return t('login.error_cors');
-  }
-
-  // 默认错误消息
-  return withHttpStatus(t('login.error_invalid'));
-}
 
 export function LoginPage() {
   const { t } = useTranslation();
@@ -217,7 +150,7 @@ export function LoginPage() {
         rememberPassword,
       });
     } catch (err: unknown) {
-      const message = getLocalizedErrorMessage(err, t);
+      const message = formatManagementError(err, t);
       setPhase('idle');
       setError(message);
       showNotification(`${t('notification.login_failed')}: ${message}`, 'error');

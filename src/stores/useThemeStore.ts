@@ -26,7 +26,7 @@ const getSystemTheme = (): ResolvedTheme => {
 };
 
 const resolveAutoTheme = (): AppliedTheme => {
-  return getSystemTheme() === 'dark' ? 'dark' : 'white';
+  return getSystemTheme() === 'dark' ? 'dark' : 'light';
 };
 
 const normalizeResolvedTheme = (theme: AppliedTheme): ResolvedTheme => {
@@ -44,6 +44,8 @@ const resolveTheme = (theme: Theme): AppliedTheme => {
 };
 
 const applyTheme = (resolved: AppliedTheme) => {
+  document.documentElement.classList.toggle('dark', resolved === 'dark');
+
   if (resolved === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
     return;

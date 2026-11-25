@@ -1,243 +1,183 @@
 /**
- * 主题样式
+ * Stripe dashboard palette. Token sources and the dark-mode adaptation live in docs/ui-theme.md.
+ * Legacy names (--bg-*, --text-*, --primary-color) alias the shadcn variables so existing SCSS follows the same theme.
  */
 
-// 浅色主题（默认）
 :root {
-  // 极简暖灰：浅色模式
-  --bg-secondary: #faf9f5; // 页面背景（纸感）
-  --bg-primary: #f0eee8; // 容器/卡片背景
-  --bg-tertiary: #e9e6df; // hover/次级背景
-  --bg-hover: var(--bg-tertiary);
-  --bg-quinary: #f6f4ee;
-  --bg-error-light: rgba(198, 87, 70, 0.1);
-  --floating-surface: #fffdf9;
-  --floating-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+  --background: #f6f9fc;
+  --foreground: #0a2540;
+  --card: #ffffff;
+  --card-foreground: #0a2540;
+  --popover: #ffffff;
+  --popover-foreground: #0a2540;
+  --primary: #635bff;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f7;
+  --secondary-foreground: #0a2540;
+  --muted: #eef2f7;
+  --muted-foreground: #425466;
+  --accent: #e6ebf1;
+  --accent-foreground: #0a2540;
+  --destructive: #df1b41;
+  --destructive-foreground: #ffffff;
+  --border: #e3e8ee;
+  --input: #d5dbe4;
+  --ring: #635bff;
+  --radius: 0.5rem;
+  --success: #24b47e;
+  --warning: #b54708;
 
-  --text-primary: #2d2a26;
-  --text-secondary: #6d6760;
-  --text-tertiary: #a29c95;
-  --text-quaternary: #c0bab3;
+  --bg-secondary: var(--background);
+  --bg-primary: var(--card);
+  --bg-tertiary: var(--muted);
+  --bg-hover: #e6ebf1;
+  --bg-quinary: #f8fafc;
+  --bg-error-light: rgb(223 27 65 / 0.08);
+  --floating-surface: var(--card);
+  --floating-shadow: 0 13px 27px -5px rgb(50 50 93 / 0.18), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+
+  --text-primary: var(--foreground);
+  --text-secondary: #425466;
+  --text-tertiary: #6b7c93;
+  --text-quaternary: #8898aa;
   --text-muted: var(--text-tertiary);
 
-  --border-color: #e3e1db; // 边框/分割线
+  --border-color: var(--border);
   --border-secondary: var(--border-color);
-  --border-primary: #d5d2cb;
-  --border-hover: #cecac4;
+  --border-primary: var(--input);
+  --border-hover: #c1ccd6;
 
-  --primary-color: #8b8680; // 行动色（主色）
-  --primary-hover: #7f7a74;
-  --primary-active: #726d67;
-  --primary-contrast: #ffffff;
+  --primary-color: var(--primary);
+  --primary-hover: #533afd;
+  --primary-active: #4434f0;
+  --primary-contrast: var(--primary-foreground);
 
-  --success-color: #10b981;
-  --quota-medium-color: #e0aa14;
-  --warning-color: #c65746; // 错误/警告色
-  --error-color: #c65746;
-  --danger-color: var(--error-color);
-  --info-color: var(--primary-color);
+  --success-color: var(--success);
+  --quota-medium-color: #e3a008;
+  --warning-color: var(--warning);
+  --error-color: var(--destructive);
+  --danger-color: var(--destructive);
+  --info-color: var(--primary);
 
-  --warning-bg: rgba(198, 87, 70, 0.12);
-  --warning-border: rgba(198, 87, 70, 0.35);
-  --warning-text: var(--warning-color);
+  --warning-bg: rgb(181 71 8 / 0.1);
+  --warning-border: rgb(181 71 8 / 0.35);
+  --warning-text: #9a3412;
 
-  --success-badge-bg: #d1fae5;
-  --success-badge-text: #065f46;
-  --success-badge-border: #6ee7b7;
+  --success-badge-bg: #e7f7ef;
+  --success-badge-text: #0e6245;
+  --success-badge-border: #9ed9bf;
 
-  --failure-badge-bg: rgba(198, 87, 70, 0.14);
-  --failure-badge-text: #8a3a30;
-  --failure-badge-border: rgba(198, 87, 70, 0.35);
+  --failure-badge-bg: rgb(223 27 65 / 0.1);
+  --failure-badge-text: #a10f2b;
+  --failure-badge-border: rgb(223 27 65 / 0.35);
 
-  --count-badge-bg: rgba(139, 134, 128, 0.18);
+  --count-badge-bg: rgb(99 91 255 / 0.12);
   --count-badge-text: var(--primary-active);
 
-  --shadow: 0 1px 2px 0 rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 10px 18px -3px rgb(0 0 0 / 0.1);
+  --shadow: 0 2px 5px rgb(50 50 93 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 13px 27px -5px rgb(50 50 93 / 0.16), 0 8px 16px -8px rgb(0 0 0 / 0.08);
 
   --radius-md: 8px;
 
-  // Workbench tokens (Home parity)
   --primary-8: color-mix(in srgb, var(--primary-color) 8%, transparent);
   --primary-10: color-mix(in srgb, var(--primary-color) 10%, transparent);
   --primary-30: color-mix(in srgb, var(--primary-color) 30%, transparent);
-  --amber-color: #d97706;
-  --amber-text: #92400e;
-  --amber-10: color-mix(in srgb, var(--amber-color) 10%, transparent);
-  --amber-30: color-mix(in srgb, var(--amber-color) 30%, transparent);
-  --destructive-color: var(--error-color);
+  --amber-color: #f5a623;
+  --amber-text: #9a3412;
+  --amber-10: color-mix(in srgb, var(--amber-color) 14%, transparent);
+  --amber-30: color-mix(in srgb, var(--amber-color) 32%, transparent);
+  --destructive-color: var(--destructive);
   --destructive-10: color-mix(in srgb, var(--destructive-color) 10%, transparent);
   --destructive-30: color-mix(in srgb, var(--destructive-color) 30%, transparent);
-  --muted-bg: var(--bg-tertiary);
+  --muted-bg: var(--muted);
   --muted-foreground: var(--text-secondary);
-  --accent-bg: var(--bg-tertiary);
+  --accent-bg: var(--accent);
 
-  // Glass effect (blurred surfaces)
   --glass-blur: 12px;
   --glass-backdrop-filter: blur(var(--glass-blur));
   --glass-filter: blur(var(--glass-blur));
-  --glass-bg: color-mix(in srgb, var(--bg-primary) 82%, transparent);
-  --glass-bg-secondary: color-mix(in srgb, var(--bg-secondary) 82%, transparent);
-  --glass-border: color-mix(in srgb, var(--border-color) 60%, transparent);
+  --glass-bg: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  --glass-bg-secondary: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+  --glass-border: color-mix(in srgb, var(--border-color) 80%, transparent);
 
-  // 可视化配色：与语义色同源；深色模式下重新取步阶（见 [data-theme='dark']）。
-  // 规则：翡翠绿只表达「活的流量」。
-  --viz-success: #10b981;
-  --viz-failure: #c65746;
+  --viz-success: #24b47e;
+  --viz-failure: #df1b41;
 
-  // 动效词汇表：内置 ease 太弱，交互反馈统一用强减速曲线。
-  // 按压 160ms / 悬停 200ms，UI 动效不超过 300ms。
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --dur-press: 160ms;
   --dur-hover: 200ms;
 }
 
-// 纯白主题
 [data-theme='white'] {
-  --bg-secondary: #ffffff;
-  --bg-primary: #ffffff;
-  --bg-tertiary: #f6f6f6;
-  --bg-hover: var(--bg-tertiary);
+  --background: #ffffff;
   --bg-quinary: #ffffff;
-  --bg-error-light: rgba(198, 87, 70, 0.08);
-  --floating-surface: #ffffff;
-  --floating-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
-
-  --text-primary: #2d2a26;
-  --text-secondary: #6d6760;
-  --text-tertiary: #a29c95;
-  --text-quaternary: #c0bab3;
-  --text-muted: var(--text-tertiary);
-
-  --border-color: #e5e5e5;
-  --border-secondary: var(--border-color);
-  --border-primary: #d9d9d9;
-  --border-hover: #cccccc;
-
-  --primary-color: #8b8680;
-  --primary-hover: #7f7a74;
-  --primary-active: #726d67;
-  --primary-contrast: #ffffff;
-
-  --success-color: #10b981;
-  --quota-medium-color: #e0aa14;
-  --warning-color: #c65746;
-  --error-color: #c65746;
-  --danger-color: var(--error-color);
-  --info-color: var(--primary-color);
-
-  --warning-bg: rgba(198, 87, 70, 0.12);
-  --warning-border: rgba(198, 87, 70, 0.35);
-  --warning-text: var(--warning-color);
-
-  --success-badge-bg: #d1fae5;
-  --success-badge-text: #065f46;
-  --success-badge-border: #6ee7b7;
-
-  --failure-badge-bg: rgba(198, 87, 70, 0.14);
-  --failure-badge-text: #8a3a30;
-  --failure-badge-border: rgba(198, 87, 70, 0.35);
-
-  --count-badge-bg: rgba(139, 134, 128, 0.18);
-  --count-badge-text: var(--primary-active);
-
-  --shadow: 0 1px 2px 0 rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 10px 18px -3px rgb(0 0 0 / 0.1);
-
-  --radius-md: 8px;
-
-  // Workbench tokens (Home parity)
-  --primary-8: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  --primary-10: color-mix(in srgb, var(--primary-color) 10%, transparent);
-  --primary-30: color-mix(in srgb, var(--primary-color) 30%, transparent);
-  --amber-color: #d97706;
-  --amber-text: #92400e;
-  --amber-10: color-mix(in srgb, var(--amber-color) 10%, transparent);
-  --amber-30: color-mix(in srgb, var(--amber-color) 30%, transparent);
-  --destructive-color: var(--error-color);
-  --destructive-10: color-mix(in srgb, var(--destructive-color) 10%, transparent);
-  --destructive-30: color-mix(in srgb, var(--destructive-color) 30%, transparent);
-  --muted-bg: var(--bg-tertiary);
-  --muted-foreground: var(--text-secondary);
-  --accent-bg: var(--bg-tertiary);
+  --muted: #f6f9fc;
+  --secondary: #f6f9fc;
+  --accent: #eef2f7;
 }
 
-// 深色主题（#191919）
 [data-theme='dark'] {
-  // 极简暖灰：深色模式（提升对比度与层级）
-  --bg-secondary: #151412; // 页面背景
-  --bg-primary: #1d1b18; // 容器/卡片背景
-  --bg-tertiary: #262320; // hover/次级背景
-  --bg-hover: #2e2a26;
-  --bg-quinary: #191714;
-  --bg-error-light: rgba(198, 87, 70, 0.18);
-  --floating-surface: #2a2723;
-  --floating-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+  --background: #0a1628;
+  --foreground: #f6f9fc;
+  --card: #10213a;
+  --card-foreground: #f6f9fc;
+  --popover: #142847;
+  --popover-foreground: #f6f9fc;
+  --primary: #7a73ff;
+  --primary-foreground: #ffffff;
+  --secondary: #1a2f4d;
+  --secondary-foreground: #f6f9fc;
+  --muted: #1a2f4d;
+  --muted-foreground: #adbdcc;
+  --accent: #1f3657;
+  --accent-foreground: #f6f9fc;
+  --destructive: #ff4d6a;
+  --destructive-foreground: #ffffff;
+  --border: #24395a;
+  --input: #2c4468;
+  --ring: #7a73ff;
+  --success: #3ecf8e;
+  --warning: #ffc14d;
 
-  --text-primary: #f6f4f1;
-  --text-secondary: #c9c3bb;
-  --text-tertiary: #9c958d;
-  --text-quaternary: #6f6962;
-  --text-muted: var(--text-tertiary);
+  --bg-hover: #24395a;
+  --bg-quinary: #081221;
+  --bg-error-light: rgb(255 77 106 / 0.16);
+  --floating-surface: #142847;
+  --floating-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
 
-  --border-color: #3a3530;
-  --border-secondary: var(--border-color);
-  --border-primary: #4a453f;
-  --border-hover: #5a544d;
+  --text-secondary: #adbdcc;
+  --text-tertiary: #8ea0b8;
+  --text-quaternary: #6d82a0;
 
-  --primary-color: #8b8680;
-  --primary-hover: #9a948e;
-  --primary-active: #a6a099;
-  --primary-contrast: #ffffff;
+  --border-hover: #3a5680;
 
-  --success-color: #10b981;
-  --quota-medium-color: #ffd862;
-  --warning-color: #c65746;
-  --error-color: #c65746;
-  --danger-color: var(--error-color);
-  --info-color: var(--primary-color);
+  --primary-hover: #8d87ff;
+  --primary-active: #aaa6ff;
 
-  --warning-bg: rgba(198, 87, 70, 0.22);
-  --warning-border: rgba(198, 87, 70, 0.45);
-  --warning-text: #f1b0a6;
+  --quota-medium-color: #ffd36a;
+  --warning-bg: rgb(255 193 77 / 0.16);
+  --warning-border: rgb(255 193 77 / 0.4);
+  --warning-text: #ffd98a;
 
-  --success-badge-bg: rgba(6, 78, 59, 0.3);
-  --success-badge-text: #6ee7b7;
-  --success-badge-border: #059669;
+  --success-badge-bg: rgb(62 207 142 / 0.16);
+  --success-badge-text: #8af0c0;
+  --success-badge-border: rgb(62 207 142 / 0.4);
 
-  --failure-badge-bg: rgba(198, 87, 70, 0.24);
-  --failure-badge-text: #f1b0a6;
-  --failure-badge-border: rgba(198, 87, 70, 0.5);
+  --failure-badge-bg: rgb(255 77 106 / 0.16);
+  --failure-badge-text: #ffb3c0;
+  --failure-badge-border: rgb(255 77 106 / 0.45);
 
-  --count-badge-bg: rgba(139, 134, 128, 0.28);
-  --count-badge-text: var(--primary-active);
+  --count-badge-bg: rgb(122 115 255 / 0.22);
+  --count-badge-text: #d5d2ff;
 
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.4);
 
-  --radius-md: 8px;
-
-  // Workbench tokens (Home parity, deeper amber for dark)
-  --primary-8: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  --primary-10: color-mix(in srgb, var(--primary-color) 10%, transparent);
-  --primary-30: color-mix(in srgb, var(--primary-color) 30%, transparent);
-  --amber-color: #f59e0b;
-  --amber-text: #fcd34d;
-  --amber-10: color-mix(in srgb, var(--amber-color) 14%, transparent);
-  --amber-30: color-mix(in srgb, var(--amber-color) 38%, transparent);
-  --destructive-color: var(--error-color);
-  --destructive-10: color-mix(in srgb, var(--destructive-color) 14%, transparent);
-  --destructive-30: color-mix(in srgb, var(--destructive-color) 38%, transparent);
-  --muted-bg: var(--bg-tertiary);
-  --muted-foreground: var(--text-secondary);
-  --accent-bg: var(--bg-tertiary);
-
-  --glass-border: color-mix(in srgb, var(--border-color) 55%, transparent);
-
-  // 深色卡面上 #10b981 亮度超出 OKLCH 0.48–0.67 区间，且与失败色的色盲分离度不足，
-  // 因此深色单独降一档。三套主题均已通过对比度/色盲/亮度校验。
-  --viz-success: #0fae78;
-  --viz-failure: #cf4b3a;
+  --amber-color: #ffc14d;
+  --amber-text: #ffd98a;
+  --viz-success: #3ecf8e;
+  --viz-failure: #ff6b86;
+  --glass-border: color-mix(in srgb, var(--border-color) 70%, transparent);
 }
 
 @media (max-width: 768px),

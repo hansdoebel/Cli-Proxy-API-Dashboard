@@ -2005,7 +2005,7 @@
   },
   "theme": {
     "switch": "Tema",
-    "light": "Yün Kağıt",
+    "light": "Açık",
     "white": "Saf Beyaz",
     "dark": "Koyu",
     "auto": "Sistemi İzle"
@@ -2572,5 +2572,21 @@
     "remove_pattern": "{{row}}. regex satırını sil",
     "move_up": "{{row}}. regex satırını yukarı taşı",
     "move_down": "{{row}}. regex satırını aşağı taşı"
+  },
+  "session": {
+    "title": "Yönetim anahtarı",
+    "description": "Bu panel, sayfayı sunan CLIProxyAPI sunucusuna bağlanır. Localhost dahil her yönetim isteği anahtar ister ve anahtar bu tarayıcıda saklanır.",
+    "connecting": "Bu sunucuya bağlanılıyor…",
+    "submit": "Devam",
+    "submitting": "Anahtar kontrol ediliyor…",
+    "remember": "Bu tarayıcıda hatırla",
+    "server": "Sunucu",
+    "server_hint": "Varsayılan, bu sayfanın kaynağıdır. Yalnızca API başka bir ana makinedeyse değiştirin.",
+    "change_key": "Yönetim anahtarı",
+    "change_title": "Yönetim anahtarını güncelle",
+    "change_description": "Anahtar varsayılan olarak gizlidir. Yalnızca kayıtlı değeri kontrol ederken gösterin.",
+    "saved": "Yönetim anahtarı güncellendi",
+    "forget": "Anahtarı unut",
+    "missing": "Devam etmek için yönetim anahtarını girin."
   }
 }

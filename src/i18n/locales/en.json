@@ -2005,7 +2005,7 @@
   },
   "theme": {
     "switch": "Theme",
-    "light": "Wool Paper",
+    "light": "Light",
     "white": "Pure White",
     "dark": "Dark",
     "auto": "Follow system"
@@ -2572,5 +2572,21 @@
     "remove_pattern": "Remove regex row {{row}}",
     "move_up": "Move regex row {{row}} up",
     "move_down": "Move regex row {{row}} down"
+  },
+  "session": {
+    "title": "Management key",
+    "description": "This panel connects to the CLIProxyAPI server it was served from. Every management request needs the key, including from localhost. It is remembered in this browser.",
+    "connecting": "Connecting to this server…",
+    "submit": "Continue",
+    "submitting": "Checking key…",
+    "remember": "Remember on this browser",
+    "server": "Server",
+    "server_hint": "Defaults to this page's origin. Change it only if the API is on another host.",
+    "change_key": "Management key",
+    "change_title": "Update management key",
+    "change_description": "The key stays masked. Reveal it only when you need to check what was saved.",
+    "saved": "Management key updated",
+    "forget": "Forget key",
+    "missing": "Enter the management key to continue."
   }
 }

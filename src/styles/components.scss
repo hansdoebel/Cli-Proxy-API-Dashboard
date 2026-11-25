@@ -90,7 +90,7 @@ textarea {
   border: 1px solid var(--border-color);
   border-radius: $radius-md;
   padding: 10px 12px;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
   transition:
     border-color $transition-fast,
@@ -246,7 +246,7 @@ textarea {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgb(10 37 64 / 0.48);
   display: flex;
   align-items: center;
   justify-content: center;

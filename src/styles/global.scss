@@ -8,6 +8,7 @@
 @use './themes.scss';
 @use './components.scss';
 @use './layout.scss';
+@use './shell.scss';
 
 body {
   background-color: var(--bg-secondary);

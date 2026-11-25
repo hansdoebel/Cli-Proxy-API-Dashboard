@@ -1998,7 +1998,7 @@
   },
   "theme": {
     "switch": "主題",
-    "light": "羊毛紙",
+    "light": "淺色",
     "white": "純白",
     "dark": "深色",
     "auto": "跟隨系統"
@@ -2563,5 +2563,21 @@
     "remove_pattern": "刪除第 {{row}} 列正規規則",
     "move_up": "上移第 {{row}} 列正規規則",
     "move_down": "下移第 {{row}} 列正規規則"
+  },
+  "session": {
+    "title": "管理金鑰",
+    "description": "此面板會連線到提供本頁面的 CLIProxyAPI。包含本機在內的每次管理請求都需要金鑰，並會保存在此瀏覽器中。",
+    "connecting": "正在連線至此伺服器…",
+    "submit": "繼續",
+    "submitting": "正在驗證金鑰…",
+    "remember": "在此瀏覽器記住",
+    "server": "伺服器",
+    "server_hint": "預設使用本頁面的來源位址。只有 API 在其他主機時才需要修改。",
+    "change_key": "管理金鑰",
+    "change_title": "更新管理金鑰",
+    "change_description": "金鑰預設隱藏。只有需要核對已儲存的值時再顯示。",
+    "saved": "管理金鑰已更新",
+    "forget": "忘記金鑰",
+    "missing": "請輸入管理金鑰以繼續。"
   }
 }
