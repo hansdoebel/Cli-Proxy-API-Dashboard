@@ -346,7 +346,7 @@ export function SystemPage() {
                 <div className={styles.tileLabel}>{t('footer.api_version')}</div>
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="secondary"
                   size="sm"
                   className={styles.tileAction}
                   onClick={() => void handleVersionCheck()}

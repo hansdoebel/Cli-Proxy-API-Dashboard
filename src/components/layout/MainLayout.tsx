@@ -23,7 +23,6 @@ import {
 import { PageContainer } from '@/components/layout/PageContainer';
 import { ManagementKeyDialog } from '@/components/session/ManagementKeyDialog';
 import { MockPreviewBanner } from '@/components/session/MockPreviewBanner';
-import { Badge } from '@/components/ui/shadcn/badge';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -1100,9 +1099,15 @@ export function MainLayout() {
                     </BreadcrumbItem>
                   </BreadcrumbList>
                 </Breadcrumb>
-                <Badge variant={connectionStatus === 'connected' ? 'secondary' : 'outline'}>
-                  {connectionLabel}
-                </Badge>
+                <span
+                  className={`header-connection is-${connectionStatus}`}
+                  title={connectionLabel}
+                  aria-label={connectionLabel}
+                  role="status"
+                >
+                  <span className="header-connection-dot" aria-hidden="true" />
+                  <span className="header-connection-label">{connectionLabel}</span>
+                </span>
               </div>
             </div>
             <div className="header-actions floating-actions">

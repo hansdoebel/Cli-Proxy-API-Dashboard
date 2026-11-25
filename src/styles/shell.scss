@@ -82,7 +82,66 @@
   .header-heading {
     flex: 1 1 auto;
     gap: 8px;
+    min-width: 0;
     overflow: hidden;
+  }
+
+  .header-heading nav {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .header-heading ol {
+    flex-wrap: nowrap;
+    min-width: 0;
+  }
+
+  .header-heading ol > li:last-child {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .header-heading [aria-current='page'] {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header-connection {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+    max-width: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text-secondary);
+    padding: 2px 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .header-connection-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--text-quaternary);
+  }
+
+  .header-connection.is-connected .header-connection-dot {
+    background: var(--success);
+  }
+
+  .header-connection.is-connecting .header-connection-dot {
+    background: var(--warning);
+  }
+
+  .header-connection.is-error .header-connection-dot,
+  .header-connection.is-disconnected .header-connection-dot {
+    background: var(--text-quaternary);
   }
 
   .header-status {
@@ -274,6 +333,27 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .header-connection {
+    width: 28px;
+    height: 28px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .header-connection-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 @media (max-width: 480px) {
