@@ -8,6 +8,7 @@ import { ProviderArtwork } from '@/components/common/ProviderArtwork';
 import { useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconChevronDown, IconRefreshCw } from '@/components/ui/icons';
+import { Card } from '@/components/ui/shadcn/card';
 import type { ClaudeQuotaState, CodexQuotaState, ResolvedTheme } from '@/types';
 import { getQuotaDisplayName } from '@/utils/quota/identity';
 import {
@@ -136,7 +137,8 @@ export function QuotaCard(props: QuotaCardProps) {
     Boolean(adapter.canResetQuota?.(quota));
 
   return (
-    <article
+    <Card
+      as="article"
       className={`${styles.card} ${mountEntranceDelayMs === null ? '' : styles.cardEnter} ${
         glance ? styles.cardGlance : ''
       }`}
@@ -296,6 +298,6 @@ export function QuotaCard(props: QuotaCardProps) {
           onClose={creditOverage.closeDialog}
         />
       )}
-    </article>
+    </Card>
   );
 }

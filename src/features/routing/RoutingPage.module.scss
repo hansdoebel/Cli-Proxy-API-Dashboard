@@ -17,7 +17,7 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-section);
   width: 100%;
   min-width: 0;
   /* While the floating save bar is up, leave room to scroll the last row above it. */
@@ -386,10 +386,10 @@ $label-x: $tier-pad + 1px + $index-size + 10px; // where tier names begin
   top: 16px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  background: var(--bg-primary);
+  padding: var(--card-padding);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card);
 
   @media (max-width: $layout-stack) {
     position: static;

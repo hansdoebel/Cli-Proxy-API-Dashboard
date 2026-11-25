@@ -10,11 +10,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 11px;
-  padding: 15px 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  gap: 12px;
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   transition:
     transform var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),
     border-color var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),

@@ -1,6 +1,7 @@
 import { useId, useRef, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
+import { Card } from '@/components/ui/shadcn/card';
 import { FieldLabel } from '@/components/ui/FieldLabel';
 import { ROUTING_STRATEGIES, type RoutingSettings, type RoutingStrategy } from '@/types/routing';
 import styles from '../RoutingPage.module.scss';
@@ -71,7 +72,8 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
   };
 
   return (
-    <aside
+    <Card
+      as="aside"
       className={styles.policy}
       aria-labelledby={`${id}-title`}
       // The floating save bar lines up with this column (see RoutingSaveBar).
@@ -187,6 +189,6 @@ export function PolicyPanel({ settings, disabled = false, onChange }: PolicyPane
           />
         </div>
       </section>
-    </aside>
+    </Card>
   );
 }

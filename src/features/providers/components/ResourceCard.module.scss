@@ -9,12 +9,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   min-width: 0;
-  padding: 16px;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   transition:
     border-color var(--dur-press) var(--ease-out-strong),
     box-shadow var(--dur-hover) var(--ease-out-strong);

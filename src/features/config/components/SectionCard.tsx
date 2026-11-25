@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Card } from '@/components/ui/shadcn/card';
 import { FIELDS_ROOT_CLASS } from './fields/FieldPrimitives';
 import styles from './SectionCard.module.scss';
 
@@ -30,7 +31,7 @@ export function SectionCard({
   children,
 }: SectionCardProps) {
   return (
-    <section className={`${styles.card} ${animateIn ? styles.cardEnter : ''}`}>
+    <Card as="section" className={`${styles.card} ${animateIn ? styles.cardEnter : ''}`}>
       <header className={styles.header}>
         <div className={styles.badges}>
           {indexLabel ? <span className={styles.indexBadge}>{indexLabel}</span> : null}
@@ -46,6 +47,6 @@ export function SectionCard({
         </div>
       </header>
       <div className={`${styles.content} ${FIELDS_ROOT_CLASS}`}>{children}</div>
-    </section>
+    </Card>
   );
 }

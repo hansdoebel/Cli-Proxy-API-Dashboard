@@ -2,6 +2,7 @@ import { useState, type CSSProperties } from 'react';
 import { getAuthFileRefreshKey } from '@/features/authFiles/manualRefresh';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/shadcn/card';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { SelectionCheckbox } from '@/components/ui/SelectionCheckbox';
 import { ToggleSwitch } from '@/components/ui/ToggleSwitch';
@@ -136,7 +137,7 @@ export function AuthFileCard(props: AuthFileCardProps) {
       : undefined;
 
   return (
-    <article className={cardClasses} style={cardStyle}>
+    <Card as="article" className={cardClasses} style={cardStyle}>
       <header className={styles.head}>
         {!isRuntimeOnly && (
           <SelectionCheckbox
@@ -348,6 +349,6 @@ export function AuthFileCard(props: AuthFileCardProps) {
           </div>
         )}
       </footer>
-    </article>
+    </Card>
   );
 }

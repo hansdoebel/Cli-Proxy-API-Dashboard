@@ -10,7 +10,7 @@
   width: 100%;
   min-width: 0;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-section);
 
   @include mobile {
     gap: $spacing-md;

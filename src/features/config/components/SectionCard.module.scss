@@ -5,18 +5,13 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2vw, 22px);
+  gap: var(--card-gap);
   min-width: 0;
   box-sizing: border-box;
-  padding: clamp(20px, 2.4vw, 28px);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
-
-  @include mobile {
-    gap: 14px;
-    padding: 16px;
-  }
+  padding: var(--card-padding);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card);
 }
 
 /* 首载入场：0.45s 强减速上浮（与全站卡片入场同拍），排在头部级联

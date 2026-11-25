@@ -161,12 +161,18 @@ textarea {
   border: 0 !important;
 }
 
-.card {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: $radius-lg;
-  box-shadow: var(--shadow);
-  padding: $spacing-lg;
+.card,
+[data-slot='card'] {
+  box-sizing: border-box;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  color: var(--card-foreground);
+  padding: var(--card-padding);
+}
+
+[data-slot='card'] [data-slot='card'] {
+  padding: var(--card-padding-nested);
 }
 
 .card-header {
@@ -396,7 +402,7 @@ textarea {
 .modal-header {
   display: flex;
   align-items: center;
-  padding: $spacing-md $spacing-lg;
+  padding: var(--card-padding-nested) var(--card-padding);
   border-bottom: 1px solid var(--border-color);
 
   .modal-title {
@@ -407,13 +413,13 @@ textarea {
 }
 
 .modal-body {
-  padding: $spacing-lg;
+  padding: var(--card-padding);
   overflow: auto;
   max-height: 65vh;
 }
 
 .modal-footer {
-  padding: $spacing-md $spacing-lg;
+  padding: var(--card-padding-nested) var(--card-padding);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: flex-end;

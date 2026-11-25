@@ -233,7 +233,8 @@
 }
 
 .main-content {
-  padding: 24px clamp(16px, 2vw, 32px) 40px;
+  padding: var(--space-page);
+  padding-bottom: 40px;
 }
 
 @media (max-width: $breakpoint-mobile) {
@@ -267,7 +268,8 @@
   }
 
   .main-content {
-    padding: 16px 16px 24px;
+    padding: var(--space-page);
+    padding-bottom: 24px;
   }
 
   .main-content.main-content-logs {

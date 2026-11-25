@@ -23,6 +23,14 @@
   --destructive-foreground: #ffffff;
   --ring: #7170ff;
   --radius: 0.5rem;
+
+  /* One spacing scale for every page and card. */
+  --space-page: 24px;
+  --space-section: 24px;
+  --card-gap: 16px;
+  --card-padding: 20px;
+  --card-padding-nested: 16px;
+  --card-radius: 12px;
   --success: #4cb782;
   --warning: #f0bf00;
 
@@ -40,6 +48,19 @@
   --text-tertiary: #8e949e;
   --text-quaternary: #8e949e;
   --text-muted: var(--text-tertiary);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-page: 16px;
+    --space-section: 16px;
+    --card-gap: 12px;
+    --card-padding: 16px;
+    --card-padding-nested: 16px;
+  }
+}
+
+:root {
 
   --border: #3c3f46;
   --input: #6b6e76;

@@ -8,7 +8,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(44px, 6.5vh, 76px);
+  gap: var(--space-section);
 }
 
 /* ---------- 环境层（ambient）---------- */
@@ -245,10 +245,10 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
-  padding: clamp($spacing-lg, 2.5vw, 28px);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-primary);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   box-shadow: var(--shadow);
 }
 
@@ -371,7 +371,7 @@
   z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: $spacing-md;
+  gap: var(--card-gap);
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -386,10 +386,10 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: $spacing-lg;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-primary);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   box-shadow: var(--shadow);
   transition: border-color $transition-fast;
 
@@ -493,10 +493,10 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-  padding: clamp($spacing-lg, 2.4vw, 28px);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-primary);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
   box-shadow: var(--shadow);
 }
 
@@ -850,7 +850,7 @@
 .ctaGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: $spacing-md;
+  gap: var(--card-gap);
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));

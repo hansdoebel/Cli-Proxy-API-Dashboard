@@ -5,7 +5,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-section);
   width: 100%;
   min-width: 0;
 }
@@ -61,12 +61,12 @@
 
 .skeletonGrid {
   display: grid;
-  gap: 16px;
+  gap: var(--card-gap);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
 }
 
 @include mobile {
   .page {
-    gap: 16px;
+    gap: var(--space-section);
   }
 }

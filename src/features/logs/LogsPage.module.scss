@@ -5,7 +5,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--space-section);
   min-width: 0;
   min-height: 0;
 }

@@ -17,6 +17,7 @@ import { LiveWire } from './components/LiveWire';
 import { Meter } from './components/Meter';
 import { Sparkline } from './components/Sparkline';
 import { ThroughputChart } from './components/ThroughputChart';
+import { Card } from '@/components/ui/shadcn/card';
 import { useCountUp, useRevealGroup, useRevealOnScroll } from '@/hooks/motion';
 import { providerLabel, splitWindowMinutes, toneForSuccessRate, type MeterTone } from './utils';
 import styles from './dashboard.module.scss';
@@ -228,7 +229,7 @@ export function DashboardPage() {
           </div>
         </div>
 
-        <div className={styles.heroPanel} data-reveal="scale">
+        <Card className={styles.heroPanel} data-reveal="scale">
           <div className={styles.heroPanelTop}>
             <span className={styles.heroPanelLabel}>{t('dashboard.hero_requests_label')}</span>
             {connected && (
@@ -269,7 +270,7 @@ export function DashboardPage() {
               <b>{traffic.totalFailure.toLocaleString()}</b>
             </span>
           </div>
-        </div>
+        </Card>
 
         <div className={styles.heroWire}>
           <LiveWire
@@ -282,7 +283,8 @@ export function DashboardPage() {
       {/* ---------- KPI ---------- */}
       <section className={styles.statsRow} ref={statsRef} aria-label={t('dashboard.stats_aria')}>
         {statTiles.map((tile) => (
-          <article
+          <Card
+            as="article"
             key={tile.key}
             className={styles.statTile}
             data-reveal
@@ -304,7 +306,7 @@ export function DashboardPage() {
                 className={styles.statMeter}
               />
             )}
-          </article>
+          </Card>
         ))}
       </section>
 
@@ -314,9 +316,9 @@ export function DashboardPage() {
           <span className={styles.eyebrow}>{t('dashboard.traffic_eyebrow')}</span>
           <h2 className={styles.sectionTitle}>{t('dashboard.traffic_title')}</h2>
         </header>
-        <div className={styles.panel}>
+        <Card className={styles.panel}>
           <ThroughputChart traffic={traffic} />
-        </div>
+        </Card>
       </section>
 
       {/* ---------- Provider fleet ---------- */}
@@ -325,7 +327,7 @@ export function DashboardPage() {
           <span className={styles.eyebrow}>{t('dashboard.fleet_eyebrow')}</span>
           <h2 className={styles.sectionTitle}>{t('dashboard.fleet_title')}</h2>
         </header>
-        <div className={styles.panel}>
+        <Card className={styles.panel}>
           {providers.length === 0 ? (
             <p className={styles.emptyNote}>{t('dashboard.fleet_empty')}</p>
           ) : (
@@ -368,12 +370,12 @@ export function DashboardPage() {
               ))}
             </ul>
           )}
-        </div>
+        </Card>
       </section>
 
       {/* ---------- Credential health + runtime ---------- */}
       <section className={styles.detailGrid} ref={detailRef}>
-        <div className={styles.panel} data-reveal>
+        <Card className={styles.panel} data-reveal>
           <header className={styles.panelHead}>
             <span className={styles.eyebrow}>{t('dashboard.health_eyebrow')}</span>
             <h2 className={styles.panelTitle}>{t('dashboard.health_title')}</h2>
@@ -444,9 +446,9 @@ export function DashboardPage() {
               </Link>
             </>
           )}
-        </div>
+        </Card>
 
-        <div className={styles.panel} data-reveal>
+        <Card className={styles.panel} data-reveal>
           <header className={styles.panelHead}>
             <span className={styles.eyebrow}>{t('dashboard.runtime_eyebrow')}</span>
             <h2 className={styles.panelTitle}>{t('dashboard.runtime_title')}</h2>
@@ -480,7 +482,7 @@ export function DashboardPage() {
               →
             </span>
           </Link>
-        </div>
+        </Card>
       </section>
 
       {/* ---------- CTA ---------- */}
