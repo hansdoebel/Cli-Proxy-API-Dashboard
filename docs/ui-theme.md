@@ -1,65 +1,110 @@
 # UI theme
 
-The management panel uses a Stripe-inspired palette on shadcn/ui tokens. Stripe’s internal Sail system is private, so these values come from public brand surfaces, published captures of stripe.com, and Stripe’s own dashboard dark appearance adapted for contrast. They are not a copy of private token files.
+The panel ships with two palettes. **Linear dark is the default.** Stripe light and Stripe dark stay in the theme menu as an alternate. Both are readings of public surfaces, not copies of private token files.
 
-## Sources
+The theme menu (header) offers Linear Dark, Linear Light, Stripe Light, Stripe Dark, and Follow system. Follow system uses the Linear palette and the OS color scheme. A saved `auto`, `dark`, or unknown value from older builds migrates to Linear Dark; `light` and `white` migrate to Linear Light.
+
+## Linear
+
+Linear’s product UI is dark-first. The values below are public measurements and community restatements of [linear.app](https://linear.app), not Linear’s private token source.
 
 | Source | What it contributes |
 | --- | --- |
-| [stripe.com brand colors](https://stripe.com), captured by [UIColours on 15 January 2025](https://uicolours.com/sites/stripe) | Blurple `#635BFF`, navy `#0A2540`, slate `#425466`, cloud `#F6F9FC`, white `#FFFFFF`, hairline `#E3E8EE` |
-| [stripe.com design extraction (Reseed)](https://www.reseedapp.com/demo/stripe) | CTA blurple `#533AFD` used as the primary hover, border `#E6ECF2` (we keep the more common dashboard hairline `#E3E8EE`) |
-| [Stripe design notes (designsystems.one)](https://www.designsystems.one/design-systems/stripe-design) | Success `#24B47E`, plus the same navy / cloud / blurple roles. Marked there as an unofficial reading of public surfaces |
-| Stripe.js / Elements error red, widely published as `#DF1B41` | Danger. An older public citation uses `#CD3D64`; the panel uses `#DF1B41` |
-| dashboard.stripe.com appearance | Light dashboard is white cards on the cloud canvas with navy text and blurple actions. Dark mode exists in the dashboard appearance menu. Sail does not publish those dark hex values, so the dark theme below is a navy adaptation of the same roles (community restatements such as the [Cuelark Stripe theme](https://ui.cuelark.com/themes/stripe) describe the same direction: deep navy, not neutral gray, with blurple lifted for contrast) |
+| [Faundr design reference](https://faundr.dev/resources/design-md/linear/DESIGN.md), measured from linear.app on 2026-10-28 | Night `#08090A`, graphite `#0F1011`, raised `#161718`, snow `#F7F8F8`, steel `#8A8F98`, dim `#62666D`, hairline `#23252A`, indigo `#5E6AD2`, status green `#27A644`, red `#EB5757`, yellow `#F0BF00` |
+| [Cuelark Linear theme](https://ui.cuelark.com/themes/linear) | Same dark canvas and indigo, plus a light variant (`#F9F8F9` / `#FFFFFF` / `#282A30` / `#E9E8EA`) and focus indigo `#7170FF` |
+| [BRAND-Atoms Linear](https://www.brand-atoms.com/brands/linear/) | Mercury white `#F4F5F8`, indigo hover `#7A87F0`, product success `#4CB782` |
+| [designsystems.one Linear](https://www.designsystems.one/design-systems/linear) | Accent `#5E6AD2`, success `#4CB782`, error `#EB5757` |
 
-Warning amber is not a single published Stripe dashboard token. `#F5A623` is the amber used for status marks; `#B54708` is the text color chosen so warning copy stays readable on white. It is separate from danger on purpose.
+The app uses indigo for primary actions (the in-product accent), not the light-gray marketing “Sign up” pill. Success uses the product green `#4CB782` rather than the darker marketing green. Warning marks use `#F0BF00`; warning text uses `#9A7200` on light surfaces so it stays readable.
 
-Söhne is Stripe’s commercial product face. This panel does not bundle it. The font stack names Söhne when a machine has it, then `ui-sans-serif` / system UI, so the single-file build does not request a remote font.
+### Linear dark (default)
 
-## Light
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--background` | `#08090A` | Page canvas |
+| `--card` | `#0F1011` | Sidebar, cards, inputs |
+| `--popover` | `#161718` | Menus and dialogs |
+| `--foreground` | `#F7F8F8` | Primary text |
+| `--text-secondary` | `#8A8F98` | Secondary text |
+| `--text-tertiary` | `#62666D` | Meta text |
+| `--border` | `#23252A` | Hairlines |
+| `--input` | `#34343A` | Input borders |
+| `--primary` | `#5E6AD2` | Indigo actions and active nav |
+| `--primary-hover` | `#4F5BC4` | Primary hover (darkened so white label text stays above 4.5:1) |
+| `--primary-active` | `#4450B8` | Primary pressed |
+| `--ring` | `#7170FF` | Focus ring |
+| `--success` | `#4CB782` | Success |
+| `--warning` / `--amber-color` | `#F0BF00` | Warning marks |
+| `--destructive` | `#EB5757` | Danger |
+| `--danger-hover` | `#D94848` | Danger hover |
 
-Default (`:root`, theme “Light”, and system light). Theme “Pure White” uses the same ink and blurple with a `#FFFFFF` page background.
+White on `#5E6AD2` is about 4.7:1. The hover and pressed indigos are darker, so the label stays at least that strong.
+
+### Linear light
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| `--background` | `#F4F5F8` | Page canvas |
+| `--card` | `#FFFFFF` | Surfaces |
+| `--foreground` | `#282A30` | Primary text |
+| `--text-secondary` | `#6F6E77` | Secondary text |
+| `--border` | `#E9E8EA` | Hairlines |
+| `--primary` | `#5E6AD2` | Indigo actions |
+| `--success` | `#1F8A4D` | Success text and marks on white |
+| `--warning` | `#9A7200` | Warning text |
+| `--destructive` | `#EB5757` | Danger |
+
+## Stripe
+
+Kept as a selectable backup. See the previous notes: [stripe.com brand colors](https://stripe.com) captured by [UIColours on 15 January 2025](https://uicolours.com/sites/stripe), the [Reseed extraction](https://www.reseedapp.com/demo/stripe) for the `#533AFD` hover, and [designsystems.one](https://www.designsystems.one/design-systems/stripe-design) for success `#24B47E`. Danger is the published Elements red `#DF1B41`. Stripe dark is a navy adaptation; Sail does not publish dashboard-dark hex values.
+
+### Stripe light
 
 | Token | Hex | Role |
 | --- | --- | --- |
 | `--background` | `#F6F9FC` | Page canvas |
-| `--card` | `#FFFFFF` | Sidebar, cards, dialogs, inputs |
-| `--foreground` | `#0A2540` | Headings and primary text |
-| `--muted-foreground` | `#425466` | Secondary text |
-| `--text-tertiary` | `#6B7C93` | Meta text |
-| `--text-quaternary` | `#8898AA` | Placeholders and quiet marks |
+| `--card` | `#FFFFFF` | Surfaces |
+| `--foreground` | `#0A2540` | Primary text |
+| `--text-secondary` | `#425466` | Secondary text |
 | `--border` | `#E3E8EE` | Hairlines |
-| `--input` | `#D5DBE4` | Input borders |
-| `--primary` | `#635BFF` | Blurple actions, active nav, focus ring |
+| `--primary` | `#635BFF` | Blurple |
 | `--primary-hover` | `#533AFD` | Primary hover |
-| `--primary-foreground` | `#FFFFFF` | Text on blurple |
-| `--muted` / `--accent` | `#EEF2F7` / `#E6EBF1` | Wells and hover fills |
-| `--success` | `#24B47E` | Success, live traffic |
+| `--success` | `#24B47E` | Success |
 | `--warning` | `#B54708` | Warning text |
-| `--amber-color` | `#F5A623` | Warning marks |
-| `--destructive` | `#DF1B41` | Danger and failed requests |
+| `--destructive` | `#DF1B41` | Danger |
+| `--danger-hover` | `#C41636` | Danger hover |
 
-Shadows use Stripe’s cool navy tint: `rgb(50 50 93 / …)` rather than pure black.
-
-## Dark
-
-Applied with `data-theme="dark"` (and the `dark` class for Tailwind).
+### Stripe dark
 
 | Token | Hex | Role |
 | --- | --- | --- |
 | `--background` | `#0A1628` | Page canvas |
 | `--card` | `#10213A` | Surfaces |
-| `--popover` | `#142847` | Menus and dialogs |
 | `--foreground` | `#F6F9FC` | Primary text |
-| `--muted-foreground` | `#ADBDCC` | Secondary text |
+| `--text-secondary` | `#ADBDCC` | Secondary text |
 | `--border` | `#24395A` | Hairlines |
-| `--primary` | `#7A73FF` | Blurple lifted for navy backgrounds |
+| `--primary` | `#7A73FF` | Blurple lifted for navy |
+| `--primary-hover` | `#918BFF` | Primary hover, still under white-text contrast |
 | `--success` | `#3ECF8E` | Success |
-| `--warning` / `--amber-color` | `#FFC14D` | Warning |
+| `--warning` | `#FFC14D` | Warning |
 | `--destructive` | `#FF4D6A` | Danger |
+| `--danger-hover` | `#FF6B84` | Danger hover |
+
+## Buttons and interactive states
+
+Shared `.btn` rules in `src/styles/components.scss` and the shadcn button in `src/components/ui/shadcn/button.tsx` both read these tokens. They do not hard-code a dark-mode text color.
+
+| State | Primary | Secondary | Ghost | Destructive |
+| --- | --- | --- | --- | --- |
+| Rest | `--primary` / white label | `--bg-tertiary` fill, `--border`, `--text-primary` | Transparent, `--text-secondary` | `--danger-color` / white label |
+| Hover | `--primary-hover` | `--bg-hover`, `--border-hover` | `--accent` fill, `--text-primary` | `--danger-hover` |
+| Focus | 2px `--background` gap plus 2px `--ring` | Same | Same | Same |
+| Disabled | 45% opacity, no hover repaint | Same | Same | Same |
+
+Ink pills elsewhere (Add provider, Connect) use `--text-primary` on `--bg-secondary`, so they flip with the palette: a light pill on Linear dark, a dark pill on Linear light.
 
 ## Where the tokens live
 
-- `src/styles/themes.scss` defines the shadcn variables and the legacy names (`--bg-*`, `--text-*`, `--primary-color`) as aliases, so existing SCSS modules pick up the palette.
-- `src/styles/tailwind.css` maps those variables into Tailwind color utilities for `src/components/ui/shadcn/`.
-- Tailwind is loaded without Preflight. Feature SCSS modules stay the styling for existing pages.
+- `src/styles/themes.scss` — `:root` is Linear dark. `[data-palette='linear'][data-theme='light']` is Linear light. `[data-palette='stripe']` selects the Stripe light or dark block.
+- `src/styles/tailwind.css` maps the same variables into Tailwind for shadcn.
+- `html` starts as `data-palette="linear" data-theme="dark"` so the first paint matches the default.

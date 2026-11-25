@@ -97,9 +97,11 @@ export function ProviderPicker({ groups, variant = 'sheet', onPick }: ProviderPi
     </li>
   );
 
+  const showFeatured = variant !== 'page' && featured.length > 0;
+
   return (
     <div className={`${styles.picker} ${variant === 'page' ? styles.pickerPage : ''}`}>
-      {featured.length > 0 ? (
+      {showFeatured ? (
         <section className={`${styles.section} ${styles.sectionFeatured}`}>
           <h3 className={styles.heading}>
             {t('providersPage.picker.featured')}

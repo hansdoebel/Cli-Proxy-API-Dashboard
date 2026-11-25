@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Bảng điều khiển",
-    "quick_start": "Bắt đầu nhanh",
     "ai_providers": "AI Provider",
     "auth_files": "File xác thực",
     "oauth": "Đăng nhập OAuth",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "Tổng quan vận hành",
-    "quick_start": "Thiết lập APIKEY.FUN",
     "ai_providers": "Định tuyến model upstream",
     "auth_files": "File xác thực & credential",
     "oauth": "Ủy quyền OAuth",
@@ -1950,10 +1948,11 @@
   },
   "theme": {
     "switch": "Giao diện",
-    "light": "Sáng",
-    "white": "Trắng tinh",
-    "dark": "Tối",
-    "auto": "Theo hệ thống"
+    "auto": "Theo hệ thống",
+    "linear_dark": "Linear tối",
+    "linear_light": "Linear sáng",
+    "stripe_light": "Stripe sáng",
+    "stripe_dark": "Stripe tối"
   },
   "sidebar": {
     "toggle_expand": "Mở rộng thanh bên",
@@ -2409,7 +2408,8 @@
       "connect": "Kết nối",
       "connected": "Đã kết nối {{count}}",
       "onboardingTitle": "Kết nối nhà cung cấp AI đầu tiên",
-      "moreQuickConnect": "Thêm đối tác kết nối nhanh"
+      "moreQuickConnect": "Thêm đối tác kết nối nhanh",
+      "onboardingHint": "Chọn API chính thức hoặc thêm endpoint tương thích OpenAI."
     }
   },
   "devin_quota": {

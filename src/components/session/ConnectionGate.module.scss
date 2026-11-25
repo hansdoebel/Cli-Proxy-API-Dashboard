@@ -4,7 +4,11 @@
   place-items: center;
   padding: 24px 16px;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 60%),
+    radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      color-mix(in srgb, var(--primary) 18%, transparent),
+      transparent 60%
+    ),
     var(--background);
   color: var(--foreground);
 }

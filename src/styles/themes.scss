@@ -1,94 +1,98 @@
 /**
- * Stripe dashboard palette. Token sources and the dark-mode adaptation live in docs/ui-theme.md.
- * Legacy names (--bg-*, --text-*, --primary-color) alias the shadcn variables so existing SCSS follows the same theme.
+ * Color themes. Linear dark is the default (:root). Stripe is opt-in via data-palette="stripe".
+ * Sources and both palettes are documented in docs/ui-theme.md.
+ * Legacy names (--bg-*, --text-*, --primary-color) alias the shadcn variables.
  */
 
 :root {
-  --background: #f6f9fc;
-  --foreground: #0a2540;
-  --card: #ffffff;
-  --card-foreground: #0a2540;
-  --popover: #ffffff;
-  --popover-foreground: #0a2540;
-  --primary: #635bff;
+  /* Linear dark — product UI measured from linear.app */
+  --background: #08090a;
+  --foreground: #f7f8f8;
+  --card: #0f1011;
+  --card-foreground: #f7f8f8;
+  --popover: #161718;
+  --popover-foreground: #f7f8f8;
+  --primary: #5e6ad2;
   --primary-foreground: #ffffff;
-  --secondary: #eef2f7;
-  --secondary-foreground: #0a2540;
-  --muted: #eef2f7;
-  --muted-foreground: #425466;
-  --accent: #e6ebf1;
-  --accent-foreground: #0a2540;
-  --destructive: #df1b41;
+  --secondary: #1c1c1f;
+  --secondary-foreground: #f7f8f8;
+  --muted: #1c1c1f;
+  --accent: #232326;
+  --accent-foreground: #f7f8f8;
+  --destructive: #eb5757;
   --destructive-foreground: #ffffff;
-  --border: #e3e8ee;
-  --input: #d5dbe4;
-  --ring: #635bff;
+  --border: #23252a;
+  --input: #34343a;
+  --ring: #7170ff;
   --radius: 0.5rem;
-  --success: #24b47e;
-  --warning: #b54708;
+  --success: #4cb782;
+  --warning: #f0bf00;
 
   --bg-secondary: var(--background);
   --bg-primary: var(--card);
   --bg-tertiary: var(--muted);
-  --bg-hover: #e6ebf1;
-  --bg-quinary: #f8fafc;
-  --bg-error-light: rgb(223 27 65 / 0.08);
-  --floating-surface: var(--card);
-  --floating-shadow: 0 13px 27px -5px rgb(50 50 93 / 0.18), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+  --bg-hover: #232326;
+  --bg-quinary: #08090a;
+  --bg-error-light: rgb(235 87 87 / 0.14);
+  --floating-surface: #161718;
+  --floating-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
 
   --text-primary: var(--foreground);
-  --text-secondary: #425466;
-  --text-tertiary: #6b7c93;
-  --text-quaternary: #8898aa;
+  --text-secondary: #8a8f98;
+  --text-tertiary: #62666d;
+  --text-quaternary: #4a4e55;
   --text-muted: var(--text-tertiary);
 
   --border-color: var(--border);
   --border-secondary: var(--border-color);
   --border-primary: var(--input);
-  --border-hover: #c1ccd6;
+  --border-hover: #3e3e44;
 
   --primary-color: var(--primary);
-  --primary-hover: #533afd;
-  --primary-active: #4434f0;
+  --primary-hover: #4f5bc4;
+  --primary-active: #4450b8;
   --primary-contrast: var(--primary-foreground);
+  --danger-hover: #d94848;
 
   --success-color: var(--success);
-  --quota-medium-color: #e3a008;
-  --warning-color: var(--warning);
+  --quota-medium-color: #f0bf00;
+  --warning-color: #c49a12;
   --error-color: var(--destructive);
   --danger-color: var(--destructive);
   --info-color: var(--primary);
 
-  --warning-bg: rgb(181 71 8 / 0.1);
-  --warning-border: rgb(181 71 8 / 0.35);
-  --warning-text: #9a3412;
+  --warning-bg: rgb(240 191 0 / 0.14);
+  --warning-border: rgb(240 191 0 / 0.4);
+  --warning-text: #f0bf00;
 
-  --success-badge-bg: #e7f7ef;
-  --success-badge-text: #0e6245;
-  --success-badge-border: #9ed9bf;
+  --success-badge-bg: rgb(76 183 130 / 0.16);
+  --success-badge-text: #8ee0b4;
+  --success-badge-border: rgb(76 183 130 / 0.4);
 
-  --failure-badge-bg: rgb(223 27 65 / 0.1);
-  --failure-badge-text: #a10f2b;
-  --failure-badge-border: rgb(223 27 65 / 0.35);
+  --failure-badge-bg: rgb(235 87 87 / 0.16);
+  --failure-badge-text: #ffb4b4;
+  --failure-badge-border: rgb(235 87 87 / 0.42);
 
-  --count-badge-bg: rgb(99 91 255 / 0.12);
-  --count-badge-text: var(--primary-active);
+  --count-badge-bg: rgb(94 106 210 / 0.22);
+  --count-badge-text: #c5caf5;
 
-  --shadow: 0 2px 5px rgb(50 50 93 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
-  --shadow-lg: 0 13px 27px -5px rgb(50 50 93 / 0.16), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.45);
+  --tooltip-bg: #232326;
+  --tooltip-fg: #f7f8f8;
 
   --radius-md: 8px;
 
   --primary-8: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  --primary-10: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  --primary-10: color-mix(in srgb, var(--primary-color) 12%, transparent);
   --primary-30: color-mix(in srgb, var(--primary-color) 30%, transparent);
-  --amber-color: #f5a623;
-  --amber-text: #9a3412;
+  --amber-color: #f0bf00;
+  --amber-text: #f0bf00;
   --amber-10: color-mix(in srgb, var(--amber-color) 14%, transparent);
   --amber-30: color-mix(in srgb, var(--amber-color) 32%, transparent);
   --destructive-color: var(--destructive);
-  --destructive-10: color-mix(in srgb, var(--destructive-color) 10%, transparent);
-  --destructive-30: color-mix(in srgb, var(--destructive-color) 30%, transparent);
+  --destructive-10: color-mix(in srgb, var(--destructive-color) 12%, transparent);
+  --destructive-30: color-mix(in srgb, var(--destructive-color) 32%, transparent);
   --muted-bg: var(--muted);
   --muted-foreground: var(--text-secondary);
   --accent-bg: var(--accent);
@@ -100,23 +104,130 @@
   --glass-bg-secondary: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
   --glass-border: color-mix(in srgb, var(--border-color) 80%, transparent);
 
-  --viz-success: #24b47e;
-  --viz-failure: #df1b41;
+  --viz-success: #4cb782;
+  --viz-failure: #eb5757;
 
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --dur-press: 160ms;
   --dur-hover: 200ms;
 }
 
-[data-theme='white'] {
-  --background: #ffffff;
+[data-palette='linear'][data-theme='light'] {
+  --background: #f4f5f8;
+  --foreground: #282a30;
+  --card: #ffffff;
+  --card-foreground: #282a30;
+  --popover: #ffffff;
+  --popover-foreground: #282a30;
+  --primary: #5e6ad2;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f0f2;
+  --secondary-foreground: #282a30;
+  --muted: #f1f0f2;
+  --accent: #eeedef;
+  --accent-foreground: #282a30;
+  --destructive: #eb5757;
+  --destructive-foreground: #ffffff;
+  --border: #e9e8ea;
+  --input: #dcdbdd;
+  --ring: #5e6ad2;
+  --success: #1f8a4d;
+  --warning: #9a7200;
+
+  --bg-hover: #eeedef;
   --bg-quinary: #ffffff;
-  --muted: #f6f9fc;
-  --secondary: #f6f9fc;
-  --accent: #eef2f7;
+  --bg-error-light: rgb(235 87 87 / 0.1);
+  --floating-surface: #ffffff;
+  --floating-shadow: 0 12px 28px rgb(0 0 0 / 0.08);
+
+  --text-secondary: #6f6e77;
+  --text-tertiary: #8a8f98;
+  --text-quaternary: #a1a1aa;
+  --border-hover: #d4d4d6;
+  --primary-hover: #4f5bc4;
+  --primary-active: #4450b8;
+  --danger-hover: #d94848;
+  --quota-medium-color: #c49a12;
+  --warning-color: #9a7200;
+  --warning-bg: rgb(240 191 0 / 0.16);
+  --warning-border: rgb(154 114 0 / 0.35);
+  --warning-text: #9a7200;
+  --success-badge-bg: #e7f6ee;
+  --success-badge-text: #146c3e;
+  --success-badge-border: #9ed9bf;
+  --failure-badge-bg: rgb(235 87 87 / 0.1);
+  --failure-badge-text: #a33b3b;
+  --failure-badge-border: rgb(235 87 87 / 0.35);
+  --count-badge-bg: rgb(94 106 210 / 0.12);
+  --count-badge-text: #3f4cb0;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 12px 28px rgb(0 0 0 / 0.08);
+  --tooltip-bg: #282a30;
+  --tooltip-fg: #f7f8f8;
+  --amber-color: #f0bf00;
+  --amber-text: #9a7200;
+  --viz-success: #1f8a4d;
+  --viz-failure: #eb5757;
 }
 
-[data-theme='dark'] {
+[data-palette='stripe'][data-theme='light'] {
+  --background: #f6f9fc;
+  --foreground: #0a2540;
+  --card: #ffffff;
+  --card-foreground: #0a2540;
+  --popover: #ffffff;
+  --popover-foreground: #0a2540;
+  --primary: #635bff;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f7;
+  --secondary-foreground: #0a2540;
+  --muted: #eef2f7;
+  --accent: #e6ebf1;
+  --accent-foreground: #0a2540;
+  --destructive: #df1b41;
+  --destructive-foreground: #ffffff;
+  --border: #e3e8ee;
+  --input: #d5dbe4;
+  --ring: #635bff;
+  --success: #24b47e;
+  --warning: #b54708;
+
+  --bg-hover: #e6ebf1;
+  --bg-quinary: #f8fafc;
+  --bg-error-light: rgb(223 27 65 / 0.08);
+  --floating-surface: #ffffff;
+  --floating-shadow: 0 13px 27px -5px rgb(50 50 93 / 0.18), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+  --text-secondary: #425466;
+  --text-tertiary: #6b7c93;
+  --text-quaternary: #8898aa;
+  --border-hover: #c1ccd6;
+  --primary-hover: #533afd;
+  --primary-active: #4434f0;
+  --danger-hover: #c41636;
+  --quota-medium-color: #e3a008;
+  --warning-color: #b54708;
+  --warning-bg: rgb(181 71 8 / 0.1);
+  --warning-border: rgb(181 71 8 / 0.35);
+  --warning-text: #9a3412;
+  --success-badge-bg: #e7f7ef;
+  --success-badge-text: #0e6245;
+  --success-badge-border: #9ed9bf;
+  --failure-badge-bg: rgb(223 27 65 / 0.1);
+  --failure-badge-text: #a10f2b;
+  --failure-badge-border: rgb(223 27 65 / 0.35);
+  --count-badge-bg: rgb(99 91 255 / 0.12);
+  --count-badge-text: #4434f0;
+  --shadow: 0 2px 5px rgb(50 50 93 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 13px 27px -5px rgb(50 50 93 / 0.16), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+  --tooltip-bg: #0a2540;
+  --tooltip-fg: #f6f9fc;
+  --amber-color: #f5a623;
+  --amber-text: #9a3412;
+  --viz-success: #24b47e;
+  --viz-failure: #df1b41;
+}
+
+[data-palette='stripe'][data-theme='dark'] {
   --background: #0a1628;
   --foreground: #f6f9fc;
   --card: #10213a;
@@ -128,7 +239,6 @@
   --secondary: #1a2f4d;
   --secondary-foreground: #f6f9fc;
   --muted: #1a2f4d;
-  --muted-foreground: #adbdcc;
   --accent: #1f3657;
   --accent-foreground: #f6f9fc;
   --destructive: #ff4d6a;
@@ -144,40 +254,34 @@
   --bg-error-light: rgb(255 77 106 / 0.16);
   --floating-surface: #142847;
   --floating-shadow: 0 16px 36px rgb(0 0 0 / 0.45);
-
   --text-secondary: #adbdcc;
   --text-tertiary: #8ea0b8;
   --text-quaternary: #6d82a0;
-
   --border-hover: #3a5680;
-
-  --primary-hover: #8d87ff;
+  --primary-hover: #918bff;
   --primary-active: #aaa6ff;
-
+  --danger-hover: #ff6b84;
   --quota-medium-color: #ffd36a;
+  --warning-color: #ffc14d;
   --warning-bg: rgb(255 193 77 / 0.16);
   --warning-border: rgb(255 193 77 / 0.4);
   --warning-text: #ffd98a;
-
   --success-badge-bg: rgb(62 207 142 / 0.16);
   --success-badge-text: #8af0c0;
   --success-badge-border: rgb(62 207 142 / 0.4);
-
   --failure-badge-bg: rgb(255 77 106 / 0.16);
   --failure-badge-text: #ffb3c0;
   --failure-badge-border: rgb(255 77 106 / 0.45);
-
   --count-badge-bg: rgb(122 115 255 / 0.22);
   --count-badge-text: #d5d2ff;
-
   --shadow: 0 1px 3px rgb(0 0 0 / 0.35);
   --shadow-lg: 0 16px 36px rgb(0 0 0 / 0.4);
-
+  --tooltip-bg: #142847;
+  --tooltip-fg: #f6f9fc;
   --amber-color: #ffc14d;
   --amber-text: #ffd98a;
   --viz-success: #3ecf8e;
   --viz-failure: #ff6b86;
-  --glass-border: color-mix(in srgb, var(--border-color) 70%, transparent);
 }
 
 @media (max-width: 768px),

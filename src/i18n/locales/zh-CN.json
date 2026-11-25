@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "仪表盘",
-    "quick_start": "快速开始",
     "ai_providers": "AI 提供商",
     "auth_files": "认证文件",
     "oauth": "OAuth 登录",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "运行总览",
-    "quick_start": "快速配置",
     "ai_providers": "上游模型路由",
     "auth_files": "Auth 文件与凭证",
     "oauth": "OAuth 授权登录",
@@ -1998,10 +1996,11 @@
   },
   "theme": {
     "switch": "主题",
-    "light": "浅色",
-    "white": "纯白",
-    "dark": "暗色",
-    "auto": "跟随系统"
+    "auto": "跟随系统",
+    "linear_dark": "线性深色",
+    "linear_light": "线性浅色",
+    "stripe_light": "Stripe 浅色",
+    "stripe_dark": "Stripe 深色"
   },
   "sidebar": {
     "toggle_expand": "展开侧边栏",
@@ -2455,7 +2454,8 @@
       "connect": "接入",
       "connected": "已接入 {{count}}",
       "onboardingTitle": "接入第一个 AI 提供商",
-      "moreQuickConnect": "更多快速接入"
+      "moreQuickConnect": "更多快速接入",
+      "onboardingHint": "选择官方 API，或添加 OpenAI 兼容接口。"
     }
   },
   "claude_reset": {

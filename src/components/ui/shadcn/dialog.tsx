@@ -15,7 +15,7 @@ function DialogOverlay({
 }: ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>) {
   return (
     <DialogPrimitive.Overlay
-      className={cn('fixed inset-0 z-[2000] bg-[rgb(10_37_64/0.48)]', className)}
+      className={cn('fixed inset-0 z-[2000] bg-[rgb(8_9_10/0.72)]', className)}
       {...props}
     />
   );

@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Панель",
-    "quick_start": "Быстрый старт",
     "ai_providers": "Поставщики AI",
     "auth_files": "Файлы аутентификации",
     "oauth": "OAuth вход",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "Обзор работы",
-    "quick_start": "Настройка APIKEY.FUN",
     "ai_providers": "Маршрутизация моделей",
     "auth_files": "Файлы и учётные данные",
     "oauth": "Авторизация OAuth",
@@ -2019,10 +2017,11 @@
   },
   "theme": {
     "switch": "Тема",
-    "light": "Светлая",
-    "white": "Чисто-белая",
-    "dark": "Тёмная",
-    "auto": "Следовать системе"
+    "auto": "Следовать системе",
+    "linear_dark": "Linear — тёмная",
+    "linear_light": "Linear — светлая",
+    "stripe_light": "Stripe — светлая",
+    "stripe_dark": "Stripe — тёмная"
   },
   "sidebar": {
     "toggle_expand": "Развернуть боковую панель",
@@ -2482,7 +2481,8 @@
       "connect": "Подключить",
       "connected": "Подключено: {{count}}",
       "onboardingTitle": "Подключите первого AI-провайдера",
-      "moreQuickConnect": "Другие партнёры быстрого подключения"
+      "moreQuickConnect": "Другие партнёры быстрого подключения",
+      "onboardingHint": "Выберите официальный API или добавьте OpenAI-совместимый адрес."
     }
   },
   "claude_reset": {

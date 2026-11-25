@@ -31,7 +31,6 @@ import {
   IconSidebarOauth,
   IconSidebarPlugins,
   IconSidebarProviders,
-  IconSidebarQuickStart,
   IconSidebarQuota,
   IconSidebarRouting,
   IconSidebarSystem,
@@ -53,8 +52,6 @@ import {
   resolvePluginAssetURL,
   type PluginResourceEntry,
 } from '@/features/plugins/pluginResources';
-import { APIKEY_FUN_DISPLAY_NAME } from '@/features/providers/sponsor';
-import { hasApiKeyFunConfig } from '@/features/providers/sponsorBundle';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import { isSupportedLanguage } from '@/utils/language';
@@ -63,7 +60,6 @@ import type { Theme } from '@/types';
 
 const sidebarIcons: Record<string, ReactNode> = {
   dashboard: <IconSidebarDashboard size={18} />,
-  quickStart: <IconSidebarQuickStart size={18} />,
   aiProviders: <IconSidebarProviders size={18} />,
   authFiles: <IconSidebarAuthFiles size={18} />,
   oauth: <IconSidebarOauth size={18} />,
@@ -275,47 +271,58 @@ const THEME_CARDS: Array<{
   colors: { bg: string; card: string; border: string; text: string; textMuted: string };
 }> = [
   {
-    key: 'auto',
-    labelKey: 'theme.auto',
+    key: 'linear-dark',
+    labelKey: 'theme.linear_dark',
     colors: {
-      bg: 'linear-gradient(135deg, #f6f9fc 0 50%, #0a1628 50% 100%)',
-      card: 'linear-gradient(135deg, #ffffff 0 50%, #10213a 50% 100%)',
-      border: '#e3e8ee',
-      text: '#0a2540',
-      textMuted: 'linear-gradient(135deg, #8898aa 0 50%, #8ea0b8 50% 100%)',
+      bg: '#08090a',
+      card: '#0f1011',
+      border: '#23252a',
+      text: '#f7f8f8',
+      textMuted: '#8a8f98',
     },
   },
   {
-    key: 'white',
-    labelKey: 'theme.white',
+    key: 'linear-light',
+    labelKey: 'theme.linear_light',
     colors: {
-      bg: '#ffffff',
+      bg: '#f4f5f8',
       card: '#ffffff',
-      border: '#e3e8ee',
-      text: '#0a2540',
-      textMuted: '#8898aa',
+      border: '#e9e8ea',
+      text: '#282a30',
+      textMuted: '#6f6e77',
     },
   },
   {
-    key: 'light',
-    labelKey: 'theme.light',
+    key: 'stripe-light',
+    labelKey: 'theme.stripe_light',
     colors: {
       bg: '#f6f9fc',
       card: '#ffffff',
       border: '#e3e8ee',
       text: '#0a2540',
-      textMuted: '#8898aa',
+      textMuted: '#425466',
     },
   },
   {
-    key: 'dark',
-    labelKey: 'theme.dark',
+    key: 'stripe-dark',
+    labelKey: 'theme.stripe_dark',
     colors: {
       bg: '#0a1628',
       card: '#10213a',
       border: '#24395a',
       text: '#f6f9fc',
-      textMuted: '#8ea0b8',
+      textMuted: '#adbdcc',
+    },
+  },
+  {
+    key: 'auto',
+    labelKey: 'theme.auto',
+    colors: {
+      bg: 'linear-gradient(135deg, #f4f5f8 0 50%, #08090a 50% 100%)',
+      card: 'linear-gradient(135deg, #ffffff 0 50%, #0f1011 50% 100%)',
+      border: '#23252a',
+      text: '#282a30',
+      textMuted: 'linear-gradient(135deg, #6f6e77 0 50%, #8a8f98 50% 100%)',
     },
   },
 ];
@@ -332,8 +339,6 @@ export function MainLayout() {
 
   const fetchConfig = useConfigStore((state) => state.fetchConfig);
   const clearCache = useConfigStore((state) => state.clearCache);
-  const config = useConfigStore((state) => state.config);
-
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
   const language = useLanguageStore((state) => state.language);
@@ -615,15 +620,6 @@ export function MainLayout() {
       })
     : [];
 
-  const isApiKeyFunConfigured = hasApiKeyFunConfig(config);
-  const quickStartNavItem: SidebarNavLinkItem = {
-    path: '/quick-start',
-    label: isApiKeyFunConfigured ? APIKEY_FUN_DISPLAY_NAME : undefined,
-    labelKey: isApiKeyFunConfigured ? undefined : 'nav.quick_start',
-    metaKey: 'nav_meta.quick_start',
-    icon: sidebarIcons.quickStart,
-  };
-
   const navGroups: SidebarNavGroup[] = [
     {
       id: 'operate',
@@ -635,7 +631,6 @@ export function MainLayout() {
           metaKey: 'nav_meta.dashboard',
           icon: sidebarIcons.dashboard,
         },
-        ...(!isApiKeyFunConfigured ? [quickStartNavItem] : []),
       ],
     },
     {
@@ -671,7 +666,6 @@ export function MainLayout() {
           metaKey: 'nav_meta.routing',
           icon: sidebarIcons.routing,
         },
-        ...(isApiKeyFunConfigured ? [quickStartNavItem] : []),
       ],
     },
     {
@@ -1171,13 +1165,11 @@ export function MainLayout() {
                   aria-haspopup="menu"
                   aria-expanded={themeMenuOpen}
                 >
-                  {theme === 'auto'
-                    ? headerIcons.autoTheme
-                    : theme === 'dark'
-                      ? headerIcons.moon
-                      : theme === 'white'
-                        ? headerIcons.whiteTheme
-                        : headerIcons.sun}
+              {theme === 'auto'
+                ? headerIcons.autoTheme
+                : theme === 'linear-dark' || theme === 'stripe-dark'
+                  ? headerIcons.moon
+                  : headerIcons.sun}
                 </Button>
                 {themeMenuOpen && (
                   <div

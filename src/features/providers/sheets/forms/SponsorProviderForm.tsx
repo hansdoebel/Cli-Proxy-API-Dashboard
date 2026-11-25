@@ -62,7 +62,6 @@ interface SponsorProviderFormProps {
   mode: 'create' | 'edit';
   mutating: boolean;
   formId: string;
-  variant?: 'quickStart';
   onSubmit: (input: ProviderEntryFormInput) => Promise<void>;
   onDirtyChange?: (dirty: boolean) => void;
 }
@@ -760,7 +759,6 @@ export function SponsorProviderForm({
   mode,
   mutating,
   formId,
-  variant,
   onSubmit,
   onDirtyChange,
 }: SponsorProviderFormProps) {
@@ -883,9 +881,7 @@ export function SponsorProviderForm({
     }
   };
 
-  const formClassName = [styles.form, variant === 'quickStart' ? styles.quickStartForm : '']
-    .filter(Boolean)
-    .join(' ');
+  const formClassName = styles.form;
   const aggregationConflict =
     mode === 'edit'
       ? getSponsorAggregationConflict(getSponsorRaw(resource, definition.brand))

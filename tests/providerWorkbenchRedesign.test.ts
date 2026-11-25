@@ -264,6 +264,17 @@ describe('provider picker', () => {
     expect(html).toContain(en.providersPage.picker.oneKey.replace('{{count}}', '2'));
   });
 
+  test('the first-run page keeps official APIs and hides the recommended quick-connect block', () => {
+    const html = render(
+      createElement(ProviderPicker, { groups: catalogue, variant: 'page', onPick: () => {} })
+    );
+    expect(html).not.toContain(en.providersPage.picker.featured);
+    expect(html).not.toContain(en.providersPage.picker.featuredBadge);
+    expect(html).toContain(en.providersPage.picker.official);
+    expect(html).toContain('Gemini');
+    expect(html).toContain(en.providersPage.picker.custom);
+  });
+
   test('edits the full connected partner bundle but allows another ordinary connection', () => {
     const bundle = fennoAIToResource({
       openai: [],

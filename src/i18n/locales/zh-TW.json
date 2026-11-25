@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "儀表板",
-    "quick_start": "快速開始",
     "ai_providers": "AI 供應商",
     "auth_files": "驗證檔案",
     "oauth": "OAuth 登入",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "運行總覽",
-    "quick_start": "APIKEY.FUN 快速設定",
     "ai_providers": "上游模型路由",
     "auth_files": "Auth 檔案與憑證",
     "oauth": "OAuth 授權登入",
@@ -1998,10 +1996,11 @@
   },
   "theme": {
     "switch": "主題",
-    "light": "淺色",
-    "white": "純白",
-    "dark": "深色",
-    "auto": "跟隨系統"
+    "auto": "跟隨系統",
+    "linear_dark": "線性深色",
+    "linear_light": "線性淺色",
+    "stripe_light": "Stripe 淺色",
+    "stripe_dark": "Stripe 深色"
   },
   "sidebar": {
     "toggle_expand": "展開側邊欄",
@@ -2455,7 +2454,8 @@
       "connect": "接入",
       "connected": "已接入 {{count}}",
       "onboardingTitle": "接入第一個 AI 提供商",
-      "moreQuickConnect": "更多快速接入"
+      "moreQuickConnect": "更多快速接入",
+      "onboardingHint": "選擇官方 API，或新增 OpenAI 相容介面。"
     }
   },
   "claude_reset": {

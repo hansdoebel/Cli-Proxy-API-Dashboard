@@ -12,7 +12,6 @@ export interface ProvidersHeaderSummary {
 
 interface ProvidersHeaderProps {
   title: string;
-  /** Omitted on the quick-start route, which manages a single bundle. */
   summary?: ProvidersHeaderSummary;
   isFetching: boolean;
   onRefresh: () => void;

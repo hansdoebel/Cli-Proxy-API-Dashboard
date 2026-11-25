@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "quick_start": "Quick Start",
     "ai_providers": "AI Providers",
     "auth_files": "Auth Files",
     "oauth": "OAuth Login",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "Operations overview",
-    "quick_start": "APIKEY.FUN setup",
     "ai_providers": "Upstream model routing",
     "auth_files": "Auth files & credentials",
     "oauth": "OAuth authorization",
@@ -2005,10 +2003,11 @@
   },
   "theme": {
     "switch": "Theme",
-    "light": "Light",
-    "white": "Pure White",
-    "dark": "Dark",
-    "auto": "Follow system"
+    "auto": "Follow system",
+    "linear_dark": "Linear Dark",
+    "linear_light": "Linear Light",
+    "stripe_light": "Stripe Light",
+    "stripe_dark": "Stripe Dark"
   },
   "sidebar": {
     "toggle_expand": "Expand sidebar",
@@ -2464,7 +2463,8 @@
       "connect": "Connect",
       "connected": "{{count}} connected",
       "onboardingTitle": "Connect your first AI provider",
-      "moreQuickConnect": "More quick-connect partners"
+      "moreQuickConnect": "More quick-connect partners",
+      "onboardingHint": "Pick an official API, or add an OpenAI-compatible endpoint."
     }
   },
   "claude_reset": {

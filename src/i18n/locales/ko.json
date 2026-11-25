@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "대시보드",
-    "quick_start": "빠른 시작",
     "ai_providers": "AI 공급자",
     "auth_files": "인증 파일",
     "oauth": "OAuth 로그인",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "운영 개요",
-    "quick_start": "APIKEY.FUN 설정",
     "ai_providers": "업스트림 모델 라우팅",
     "auth_files": "인증 파일 및 자격 증명",
     "oauth": "OAuth 권한 부여",
@@ -2005,10 +2003,11 @@
   },
   "theme": {
     "switch": "테마",
-    "light": "라이트",
-    "white": "순백",
-    "dark": "다크",
-    "auto": "시스템 설정 따름"
+    "auto": "시스템 설정 따름",
+    "linear_dark": "Linear 다크",
+    "linear_light": "Linear 라이트",
+    "stripe_light": "Stripe 라이트",
+    "stripe_dark": "Stripe 다크"
   },
   "sidebar": {
     "toggle_expand": "사이드바 펼치기",
@@ -2464,7 +2463,8 @@
       "connect": "연결",
       "connected": "{{count}}개 연결됨",
       "onboardingTitle": "첫 AI 제공자를 연결하세요",
-      "moreQuickConnect": "빠른 연결 파트너 더 보기"
+      "moreQuickConnect": "빠른 연결 파트너 더 보기",
+      "onboardingHint": "공식 API를 고르거나 OpenAI 호환 엔드포인트를 추가하세요."
     }
   },
   "claude_reset": {

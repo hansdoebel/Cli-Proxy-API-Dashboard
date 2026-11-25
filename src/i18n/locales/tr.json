@@ -103,7 +103,6 @@
   },
   "nav": {
     "dashboard": "Pano",
-    "quick_start": "Hızlı Başlangıç",
     "ai_providers": "AI Sağlayıcıları",
     "auth_files": "Kimlik Dosyaları",
     "oauth": "OAuth Girişi",
@@ -123,7 +122,6 @@
   },
   "nav_meta": {
     "dashboard": "İşletim Özeti",
-    "quick_start": "APIKEY.FUN Kurulumu",
     "ai_providers": "Yukarı Akış Model Yönlendirmesi",
     "auth_files": "Kimlik Dosyaları ve Kimlik Bilgileri",
     "oauth": "OAuth Yetkilendirmesi",
@@ -2005,10 +2003,11 @@
   },
   "theme": {
     "switch": "Tema",
-    "light": "Açık",
-    "white": "Saf Beyaz",
-    "dark": "Koyu",
-    "auto": "Sistemi İzle"
+    "auto": "Sistemi İzle",
+    "linear_dark": "Linear koyu",
+    "linear_light": "Linear açık",
+    "stripe_light": "Stripe açık",
+    "stripe_dark": "Stripe koyu"
   },
   "sidebar": {
     "toggle_expand": "Kenar Çubuğunu Genişlet",
@@ -2464,7 +2463,8 @@
       "connect": "Bağla",
       "connected": "{{count}} bağlı",
       "onboardingTitle": "İlk yapay zekâ sağlayıcınızı bağlayın",
-      "moreQuickConnect": "Diğer hızlı bağlantı ortakları"
+      "moreQuickConnect": "Diğer hızlı bağlantı ortakları",
+      "onboardingHint": "Resmi bir API seçin veya OpenAI uyumlu bir uç nokta ekleyin."
     }
   },
   "claude_reset": {

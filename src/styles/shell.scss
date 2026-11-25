@@ -211,10 +211,10 @@
 }
 
 .nav-tooltip {
-  border: 1px solid rgb(255 255 255 / 0.08);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background: #0a2540;
-  color: #f6f9fc;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-fg);
 }
 
 .main-content {
